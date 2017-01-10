@@ -1,8 +1,10 @@
 # dadi_pipeline
+# Daniel Portik, Postdoc, University of Texas at Arlington
 
 This workflow is designed to work with the Python package dadi (https://bitbucket.org/gutenkunstlab/dadi) and assumes you already 
 have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing your own 
 dadi scripts. A good resource for all dadi-related questions is the user group: https://groups.google.com/forum/#!forum/dadi-user.
+Before using these scripts, read over the user manual for dadi and try running the program with their example files.
 
 To begin, you will need a SNPs input text file. Mine is generated as part of a STACKs pipeline I have written, which converts the 
 haplotypes tsv file into the correct format. Depending on the program you've used to generate your SNP data file, you may or may not
@@ -49,5 +51,10 @@ by deleting relevant sections of the loops, but adding models will require addin
 
 I noticed that optimizations sometimes fail, crashing the script. If this happened repeatedly, I blocked out the code for this model and 
 skipped it - sometimes they were too complex for a given data set. Sometimes the optimizations don't completely fail, but display 
-optimization warnings. These aren't translated to the output files, so pay attention to the program output and make sure this isn't 
+severe warnings. These aren't translated to the output files, so pay attention to the program output and make sure this isn't 
 a problem - the likelihoods from these are bizarre and should not be used. 
+
+The scripts here are all tailored to run the example file I've provided. You should be able to perform each step by only editing the 
+path to the example file. 
+
+Questions can be sent to daniel.portik@uta.edu
