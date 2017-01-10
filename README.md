@@ -1,5 +1,4 @@
 # dadi_pipeline
-# Daniel Portik, Postdoc, University of Texas at Arlington
 
 This workflow is designed to work with the Python package dadi (https://bitbucket.org/gutenkunstlab/dadi) and assumes you already 
 have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing your own 
@@ -58,3 +57,6 @@ The scripts here are all tailored to run the example file I've provided. You sho
 path to the example file. 
 
 Questions can be sent to daniel.portik@uta.edu
+Daniel Portik
+Postdoctoral Researcher
+University of Texas at Arlington
