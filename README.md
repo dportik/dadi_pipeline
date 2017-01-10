@@ -15,7 +15,8 @@ working directory when running the other scripts (they import these models) I as
 2D-spectra. If you have outgroup data in your SNP input file, you can easily change this option in the script. None of the scripts 
 are fully automated, as they are inherently specific to the input file being used. You'll need to hand edit sections of the script to match your data set.
 
-The general overview is:
+The general overview is
+
 1. run dadi_2D_initial_optimization.py
   -Initial optimizations are performed by generating 20 sets of randomly perturbed parameters and optimizing each parameter set 
   using the Nelder-Mead method (optimize_log_fmin), running each optimization algorithm for a maximum of 100 iterations. Each 
@@ -25,8 +26,8 @@ The general overview is:
 
 2. run dadi_2D_final_optimization.py
   -Final optimizations should use the best param sets from each model resulting from the previous script. These parameters are also
-  perturbed to start optimizations, just less so than in the previous step. For each replicate, a perturbed parameter set is then optimized
-  using the Nelder-Mead method (optimize_log_fmin), running each optimization algorithm for a maximum of 60 iterations. Each 
+  perturbed to start optimizations, just less so than in the previous step. For each replicate, a perturbed parameter set is then
+  optimized using the Nelder-Mead method (optimize_log_fmin), running each optimization algorithm for a maximum of 60 iterations. Each 
   optimized parameter set is used to simulate the 2D-JSFS, and the multinomial approach is used to estimate the log-likelihood 
   of the 2D-JSFS given the model. The output of this script: {outfile}_OPTIMZED_model_results.txt, is tab-delimited and can be opened in 
   excel. It reports rep number, ln-lik, AIC, params, etc. You can select the best replicate for each model from here.
@@ -37,6 +38,7 @@ The general overview is:
   Output pdf files will be created for each plot run.
   
 Sections of the scripts which require hand editing are flagged with a #**************
+
 You'll need to figure out the best projections for your data set, often requiring a down-projection. The grid choice will 
 depend on the projection values, and also needs to be changed. You can choose the number of reps in model searching, and 
 will need to change output file naming schemes.
