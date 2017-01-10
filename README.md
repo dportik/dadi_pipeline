@@ -12,7 +12,7 @@ instructions on the basic format.
 
 Any number of demographic models can be created and tested by the user, I have written my pipeline to explore 14 models of joint 
 demographic history for two-population comparisons. These models are written in the TwoD_models.py script, which must be in the same
-working directory when running the other scripts (they import these models) I assume outgroup data are lacking and create folded 
+working directory when running the other scripts (they import these models). I assume outgroup data are lacking and create folded 
 2D-spectra. If you have outgroup data in your SNP input file, you can easily change this option in the script. None of the scripts 
 are fully automated, as they are inherently specific to the input file being used. You'll need to hand edit sections of the script to match your data set.
 
@@ -57,6 +57,11 @@ The scripts here are all tailored to run the example file I've provided. You sho
 path to the example file. 
 
 Questions can be sent to: daniel.portik@uta.edu
+
 # Daniel Portik
+
 Postdoctoral Researcher
+
 University of Texas at Arlington
+
+December 2015
