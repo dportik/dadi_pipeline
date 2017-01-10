@@ -44,14 +44,17 @@ You'll need to figure out the best projections for your data set, often requirin
 depend on the projection values, and also needs to be changed. You can choose the number of reps in model searching, and 
 will need to change output file naming schemes.
 
-The point of this script was to automate functions of dadi and produce nice looking output files. You can create your own set of models
-and perform similar analyses using the basic structure of these scripts, or use the set of 14 models here. The model set here can be reduced
-by deleting relevant sections of the loops, but adding models will require adding substantial blocks of code within the loops I designed.
+The point of this script was to automate functions of dadi and produce output files that summarize a large number of replicates run for 
+many different models. You can create your own set of models and perform similar analyses using the basic structure of these scripts, or
+use the set of 14 models here. The model set here can be reduced by either blocking out or deleting relevant sections of the loops, but
+adding models will require adding code within the loops I designed. This should be straightforward to imitate the style of the code, and
+change relevant names, output text, parameter numbers, and AIC penalty depending on the model. 
 
 I noticed that optimizations sometimes fail, crashing the script. If this happened repeatedly, I blocked out the code for this model and 
-skipped it - sometimes they were too complex for a given data set. Sometimes the optimizations don't completely fail, but display 
-severe warnings. These aren't translated to the output files, so pay attention to the program output and make sure this isn't 
-a problem - the likelihoods from these are bizarre and should not be used. 
+skipped it - sometimes they were too complex for a given data set, particularly with a low number of segregating sites or low number of 
+individuals. Sometimes the optimizations don't completely fail, but display severe warnings. These aren't translated to the output 
+files, so pay attention to the program output and make sure this isn't a problem - the likelihoods from these are bizarre and should 
+not be used! 
 
 The scripts here are all tailored to run the example file I've provided. You should be able to perform each step by only editing the 
 path to the example file. 
