@@ -56,7 +56,7 @@ a problem - the likelihoods from these are bizarre and should not be used.
 The scripts here are all tailored to run the example file I've provided. You should be able to perform each step by only editing the 
 path to the example file. 
 
-Questions can be sent to daniel.portik@uta.edu
-Daniel Portik
+Questions can be sent to: daniel.portik@uta.edu
+# Daniel Portik
 Postdoctoral Researcher
 University of Texas at Arlington
