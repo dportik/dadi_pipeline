@@ -1,0 +1,1794 @@
+Neutral model, no split:
+parameter set = [none]
+	Replicate 1: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 2: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 3: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 4: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 5: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 6: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 7: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 8: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 9: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 10: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 11: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 12: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 13: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 14: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 15: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 16: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 17: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 18: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 19: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+	Replicate 20: 
+		log-likelihood = 			-17757.366
+		Theta = 					1165.028
+		AIC = 						35514.732
+
+Bottlegrowth Model, No Divergence:
+parameter set = [nu1, nu2, T]
+	Replicate 1: 
+		parameters = 				[ 0.01000154  0.73999852  0.13444088]
+		log-likelihood = 			-16878.135
+		Theta = 					5628.712
+		AIC = 						33762.27
+
+	Replicate 2: 
+		parameters = 				[ 8.27715532  4.91858886  0.59585891]
+		log-likelihood = 			-16933.247
+		Theta = 					482.807
+		AIC = 						33872.494
+
+	Replicate 3: 
+		parameters = 				[ 0.01101485  0.79370211  0.14412249]
+		log-likelihood = 			-16878.246
+		Theta = 					5240.249
+		AIC = 						33762.492
+
+	Replicate 4: 
+		parameters = 				[ 0.01007744  0.74540644  0.13528157]
+		log-likelihood = 			-16878.144
+		Theta = 					5592.851
+		AIC = 						33762.288
+
+	Replicate 5: 
+		parameters = 				[ 0.01001038  0.73529038  0.1342016 ]
+		log-likelihood = 			-16878.149
+		Theta = 					5642.461
+		AIC = 						33762.298
+
+	Replicate 6: 
+		parameters = 				[ 0.01016446  0.75030475  0.13533254]
+		log-likelihood = 			-16878.18
+		Theta = 					5555.955
+		AIC = 						33762.36
+
+	Replicate 7: 
+		parameters = 				[ 0.01000051  0.74089372  0.13429785]
+		log-likelihood = 			-16878.136
+		Theta = 					5625.828
+		AIC = 						33762.272
+
+	Replicate 8: 
+		parameters = 				[ 0.78227296  0.01000046  9.99987546]
+		log-likelihood = 			-17762.052
+		Theta = 					116155.707
+		AIC = 						35530.104
+
+	Replicate 9: 
+		parameters = 				[ 0.01006779  0.76516658  0.1354777 ]
+		log-likelihood = 			-16878.248
+		Theta = 					5530.285
+		AIC = 						33762.496
+
+	Replicate 10: 
+		parameters = 				[ 8.27864857  4.91939928  0.59631938]
+		log-likelihood = 			-16933.247
+		Theta = 					482.657
+		AIC = 						33872.494
+
+	Replicate 11: 
+		parameters = 				[ 0.44952725  0.01000931  9.99178115]
+		log-likelihood = 			-17761.458
+		Theta = 					116096.097
+		AIC = 						35528.916
+
+	Replicate 12: 
+		parameters = 				[ 8.27914888  4.91745501  0.59588662]
+		log-likelihood = 			-16933.247
+		Theta = 					482.82
+		AIC = 						33872.494
+
+	Replicate 13: 
+		parameters = 				[ 0.02226898  1.33752378  0.22942705]
+		log-likelihood = 			-16879.643
+		Theta = 					3122.178
+		AIC = 						33765.286
+
+	Replicate 14: 
+		parameters = 				[ 16.64532486   4.09960622   0.56346539]
+		log-likelihood = 			-16934.45
+		Theta = 					485.675
+		AIC = 						33874.9
+
+	Replicate 15: 
+		parameters = 				[ 0.0102717   0.75573073  0.13814588]
+		log-likelihood = 			-16878.268
+		Theta = 					5514.724
+		AIC = 						33762.536
+
+	Replicate 16: 
+		parameters = 				[ 0.01018248  0.75747224  0.13551301]
+		log-likelihood = 			-16878.202
+		Theta = 					5527.986
+		AIC = 						33762.404
+
+	Replicate 17: 
+		parameters = 				[ 8.15234681  4.92677563  0.59540716]
+		log-likelihood = 			-16933.249
+		Theta = 					483.435
+		AIC = 						33872.498
+
+	Replicate 18: 
+		parameters = 				[ 0.01471958  0.99081807  0.17494374]
+		log-likelihood = 			-16878.654
+		Theta = 					4212.927
+		AIC = 						33763.308
+
+	Replicate 19: 
+		parameters = 				[ 0.01001432  0.7399225   0.13440844]
+		log-likelihood = 			-16878.137
+		Theta = 					5625.874
+		AIC = 						33762.274
+
+	Replicate 20: 
+		parameters = 				[ 8.28046438  4.91760451  0.59585448]
+		log-likelihood = 			-16933.247
+		Theta = 					482.817
+		AIC = 						33872.494
+
+Split with No Migration:
+parameter set = [nu1, nu2, T]
+	Replicate 1: 
+		parameters = 				[ 3.93235587  1.616489    1.72645282]
+		log-likelihood = 			-788.036
+		Theta = 					343.432
+		AIC = 						1582.072
+
+	Replicate 2: 
+		parameters = 				[ 3.92612315  1.61445568  1.72427944]
+		log-likelihood = 			-788.035
+		Theta = 					343.843
+		AIC = 						1582.07
+
+	Replicate 3: 
+		parameters = 				[ 3.92567645  1.61411034  1.72391467]
+		log-likelihood = 			-788.035
+		Theta = 					343.892
+		AIC = 						1582.07
+
+	Replicate 4: 
+		parameters = 				[ 3.93028629  1.61567119  1.72557232]
+		log-likelihood = 			-788.035
+		Theta = 					343.583
+		AIC = 						1582.07
+
+	Replicate 5: 
+		parameters = 				[ 3.92467644  1.61385839  1.72363375]
+		log-likelihood = 			-788.035
+		Theta = 					343.951
+		AIC = 						1582.07
+
+	Replicate 6: 
+		parameters = 				[ 3.92701685  1.61589768  1.72507219]
+		log-likelihood = 			-788.042
+		Theta = 					343.717
+		AIC = 						1582.084
+
+	Replicate 7: 
+		parameters = 				[ 3.95796585  1.63361694  1.74395145]
+		log-likelihood = 			-788.062
+		Theta = 					340.944
+		AIC = 						1582.124
+
+	Replicate 8: 
+		parameters = 				[ 3.94513654  1.6267453   1.7370857 ]
+		log-likelihood = 			-788.051
+		Theta = 					342.014
+		AIC = 						1582.102
+
+	Replicate 9: 
+		parameters = 				[ 3.91583     1.61271942  1.72114879]
+		log-likelihood = 			-788.043
+		Theta = 					344.441
+		AIC = 						1582.086
+
+	Replicate 10: 
+		parameters = 				[ 3.92878216  1.61477878  1.72462656]
+		log-likelihood = 			-788.035
+		Theta = 					343.721
+		AIC = 						1582.07
+
+	Replicate 11: 
+		parameters = 				[ 3.92554431  1.61645883  1.72641572]
+		log-likelihood = 			-788.036
+		Theta = 					343.664
+		AIC = 						1582.072
+
+	Replicate 12: 
+		parameters = 				[ 3.92799546  1.61430431  1.7241178 ]
+		log-likelihood = 			-788.035
+		Theta = 					343.795
+		AIC = 						1582.07
+
+	Replicate 13: 
+		parameters = 				[ 3.93004189  1.61538964  1.72527606]
+		log-likelihood = 			-788.035
+		Theta = 					343.619
+		AIC = 						1582.07
+
+	Replicate 14: 
+		parameters = 				[ 3.93661673  1.61763923  1.727676  ]
+		log-likelihood = 			-788.036
+		Theta = 					343.176
+		AIC = 						1582.072
+
+	Replicate 15: 
+		parameters = 				[ 3.933834    1.61661053  1.7265771 ]
+		log-likelihood = 			-788.036
+		Theta = 					343.371
+		AIC = 						1582.072
+
+	Replicate 16: 
+		parameters = 				[ 3.92796509  1.61440453  1.72422307]
+		log-likelihood = 			-788.035
+		Theta = 					343.786
+		AIC = 						1582.07
+
+	Replicate 17: 
+		parameters = 				[ 3.9257804   1.61480274  1.72464632]
+		log-likelihood = 			-788.035
+		Theta = 					343.82
+		AIC = 						1582.07
+
+	Replicate 18: 
+		parameters = 				[ 3.926524    1.61433584  1.72415169]
+		log-likelihood = 			-788.035
+		Theta = 					343.841
+		AIC = 						1582.07
+
+	Replicate 19: 
+		parameters = 				[ 3.92971067  1.61407883  1.72388432]
+		log-likelihood = 			-788.036
+		Theta = 					343.759
+		AIC = 						1582.072
+
+	Replicate 20: 
+		parameters = 				[ 3.92565779  1.61428154  1.72409834]
+		log-likelihood = 			-788.035
+		Theta = 					343.876
+		AIC = 						1582.07
+
+Split with Symmetric Migration:
+parameter set = [nu1, nu2, T, m]
+	Replicate 1: 
+		parameters = 				[ 7.26892525  2.38971858  4.47913119  0.016586  ]
+		log-likelihood = 			-704.646
+		Theta = 					184.525
+		AIC = 						1417.292
+
+	Replicate 2: 
+		parameters = 				[  1.28018869e+01   5.35337026e+00   9.63716904e+00   1.19934677e-02]
+		log-likelihood = 			-690.974
+		Theta = 					96.453
+		AIC = 						1389.948
+
+	Replicate 3: 
+		parameters = 				[  0.96826777  29.93521968   0.38244319   3.72369319]
+		log-likelihood = 			-8388.697
+		Theta = 					594.301
+		AIC = 						16785.394
+
+	Replicate 4: 
+		parameters = 				[ 2.03000933  0.75011229  0.74391596  0.01237911]
+		log-likelihood = 			-907.665
+		Theta = 					616.661
+		AIC = 						1823.33
+
+	Replicate 5: 
+		parameters = 				[ 8.04119183  3.51274362  5.31810004  0.0118369 ]
+		log-likelihood = 			-669.958
+		Theta = 					155.987
+		AIC = 						1347.916
+
+	Replicate 6: 
+		parameters = 				[ 8.32807229  3.65842754  5.55838571  0.01163649]
+		log-likelihood = 			-669.933
+		Theta = 					150.289
+		AIC = 						1347.866
+
+	Replicate 7: 
+		parameters = 				[ 6.79199337  2.74634466  3.77068124  0.01603133]
+		log-likelihood = 			-678.417
+		Theta = 					196.512
+		AIC = 						1364.834
+
+	Replicate 8: 
+		parameters = 				[ 6.2527601   2.99965866  5.04700744  0.01852334]
+		log-likelihood = 			-692.719
+		Theta = 					181.672
+		AIC = 						1393.438
+
+	Replicate 9: 
+		parameters = 				[ 6.67713069  2.91297763  4.41199159  0.01414898]
+		log-likelihood = 			-671.572
+		Theta = 					185.759
+		AIC = 						1351.144
+
+	Replicate 10: 
+		parameters = 				[ 8.52997773  3.73919046  5.72843479  0.01131176]
+		log-likelihood = 			-669.934
+		Theta = 					146.669
+		AIC = 						1347.868
+
+	Replicate 11: 
+		parameters = 				[ 8.12757035  3.53264005  5.38999301  0.01143435]
+		log-likelihood = 			-670.085
+		Theta = 					154.417
+		AIC = 						1348.17
+
+	Replicate 12: 
+		parameters = 				[ 8.30892475  3.63535352  5.53927482  0.01171039]
+		log-likelihood = 			-669.927
+		Theta = 					150.787
+		AIC = 						1347.854
+
+	Replicate 13: 
+		parameters = 				[ 3.02022454  1.07879968  1.25657429  0.01014233]
+		log-likelihood = 			-772.628
+		Theta = 					443.886
+		AIC = 						1553.256
+
+	Replicate 14: 
+		parameters = 				[ 2.95088051  1.00364197  1.41187931  0.02604882]
+		log-likelihood = 			-763.099
+		Theta = 					439.266
+		AIC = 						1534.198
+
+	Replicate 15: 
+		parameters = 				[ 1.71492116  1.9400685   1.37043672  0.01000032]
+		log-likelihood = 			-1047.267
+		Theta = 					475.377
+		AIC = 						2102.534
+
+	Replicate 16: 
+		parameters = 				[ 0.16212627  0.08627727  4.21194759  1.98250073]
+		log-likelihood = 			-2213.578
+		Theta = 					3709.632
+		AIC = 						4435.156
+
+	Replicate 17: 
+		parameters = 				[ 5.65874678  2.17502073  2.64287386  0.01751544]
+		log-likelihood = 			-697.773
+		Theta = 					247.903
+		AIC = 						1403.546
+
+	Replicate 18: 
+		parameters = 				[ 2.93654544  1.11855391  1.262081    0.0174726 ]
+		log-likelihood = 			-762.868
+		Theta = 					445.73
+		AIC = 						1533.736
+
+	Replicate 19: 
+		parameters = 				[ 8.73590867  3.85355642  5.8471321   0.01080494]
+		log-likelihood = 			-670.089
+		Theta = 					143.392
+		AIC = 						1348.178
+
+	Replicate 20: 
+		parameters = 				[ 1.92447343  0.81700898  0.78315196  0.01001067]
+		log-likelihood = 			-896.272
+		Theta = 					613.805
+		AIC = 						1800.544
+
+Split with Asymmetric Migration:
+parameter set = [nu1, nu2, T, m12, m21]
+	Replicate 1: 
+		parameters = 				[ 3.27477801  1.36630643  2.08793036  0.03903948  0.05170418]
+		log-likelihood = 			-744.891
+		Theta = 					360.024
+		AIC = 						1499.782
+
+	Replicate 2: 
+		parameters = 				[ 0.44287311  0.16008143  3.76730788  0.05053398  2.191333  ]
+		log-likelihood = 			-1669.959
+		Theta = 					1794.65
+		AIC = 						3349.918
+
+	Replicate 3: 
+		parameters = 				[ 1.81761148  0.60850623  1.04119873  0.28653917  0.01045523]
+		log-likelihood = 			-1250.296
+		Theta = 					625.287
+		AIC = 						2510.592
+
+	Replicate 4: 
+		parameters = 				[ 2.00035738  0.67646018  1.02250824  0.16055306  0.11088323]
+		log-likelihood = 			-1056.569
+		Theta = 					590.658
+		AIC = 						2123.138
+
+	Replicate 5: 
+		parameters = 				[ 1.91246854  0.47857907  1.2453438   0.01084352  0.7134811 ]
+		log-likelihood = 			-1297.165
+		Theta = 					608.725
+		AIC = 						2604.33
+
+	Replicate 6: 
+		parameters = 				[ 3.28097028  0.66971204  1.32872695  0.01131616  0.50469574]
+		log-likelihood = 			-1174.717
+		Theta = 					451.855
+		AIC = 						2359.434
+
+	Replicate 7: 
+		parameters = 				[ 1.34192689  0.6997314   0.86263073  0.06737641  0.07732088]
+		log-likelihood = 			-973.051
+		Theta = 					706.407
+		AIC = 						1956.102
+
+	Replicate 8: 
+		parameters = 				[ 4.1762791   3.63453921  4.93013342  0.01011695  0.01036436]
+		log-likelihood = 			-860.491
+		Theta = 					205.957
+		AIC = 						1730.982
+
+	Replicate 9: 
+		parameters = 				[ 3.27795589  1.24822934  1.58653738  0.02605218  0.07035575]
+		log-likelihood = 			-754.536
+		Theta = 					394.404
+		AIC = 						1519.072
+
+	Replicate 10: 
+		parameters = 				[ 0.51810222  0.33716451  0.61032195  1.03514163  0.30741039]
+		log-likelihood = 			-2071.26
+		Theta = 					1234.607
+		AIC = 						4152.52
+
+	Replicate 11: 
+		parameters = 				[ 2.25398702  0.90467601  1.14765824  0.05638258  0.05979767]
+		log-likelihood = 			-830.44
+		Theta = 					523.223
+		AIC = 						1670.88
+
+	Replicate 12: 
+		parameters = 				[ 2.17969325  1.05609607  2.43598461  0.08505163  0.28873315]
+		log-likelihood = 			-1218.459
+		Theta = 					433.006
+		AIC = 						2446.918
+
+	Replicate 13: 
+		parameters = 				[ 3.06120549  1.00012694  1.46273272  0.02359221  0.04120242]
+		log-likelihood = 			-760.769
+		Theta = 					428.991
+		AIC = 						1531.538
+
+	Replicate 14: 
+		parameters = 				[ 0.42978056  0.14721841  6.68516899  0.01109414  2.442273  ]
+		log-likelihood = 			-1657.201
+		Theta = 					1909.131
+		AIC = 						3324.402
+
+	Replicate 15: 
+		parameters = 				[ 1.19159999  0.40500337  0.48597198  0.2027282   0.01170061]
+		log-likelihood = 			-1286.571
+		Theta = 					876.579
+		AIC = 						2583.142
+
+	Replicate 16: 
+		parameters = 				[ 1.24208787  1.10701672  0.81008395  0.01051833  1.05125517]
+		log-likelihood = 			-2254.447
+		Theta = 					687.687
+		AIC = 						4518.894
+
+	Replicate 17: 
+		parameters = 				[ 3.49691133  0.70616829  1.47214792  0.01275915  0.23096794]
+		log-likelihood = 			-952.603
+		Theta = 					424.68
+		AIC = 						1915.206
+
+	Replicate 18: 
+		parameters = 				[ 0.16414848  0.05633037  6.84599586  0.02784122  6.38502125]
+		log-likelihood = 			-1657.216
+		Theta = 					4996.28
+		AIC = 						3324.432
+
+	Replicate 19: 
+		parameters = 				[ 1.7107005   0.82391874  1.09201546  0.05092685  0.04727175]
+		log-likelihood = 			-869.335
+		Theta = 					597.93
+		AIC = 						1748.67
+
+	Replicate 20: 
+		parameters = 				[ 0.89403309  0.50687381  0.62312424  0.14422266  0.0836352 ]
+		log-likelihood = 			-1214.461
+		Theta = 					911.672
+		AIC = 						2438.922
+
+Split with Secondary Contact, Asymmetrical Gene Flow:
+parameter set = [nu1, nu2, m12, m21, T, Tsc]
+	Replicate 1: 
+		parameters = 				[  3.55990741e+00   1.60672759e+00   5.65762339e-02   1.04913890e-02
+   1.37373971e-03   2.51081974e+00]
+		log-likelihood = 			-767.61
+		Theta = 					320.782
+		AIC = 						1547.22
+
+	Replicate 2: 
+		parameters = 				[ 0.37909244  0.26669022  1.65047288  0.02493409  1.34917981  8.23717961]
+		log-likelihood = 			-2017.849
+		Theta = 					1713.903
+		AIC = 						4047.698
+
+	Replicate 3: 
+		parameters = 				[  1.78422717e+00   5.15979847e-01   1.08585436e+00   1.33102600e+01
+   6.45079649e-01   8.57841022e-04]
+		log-likelihood = 			-966.69
+		Theta = 					699.594
+		AIC = 						1945.38
+
+	Replicate 4: 
+		parameters = 				[ 9.59598428  3.90375342  0.01077046  0.05469704  4.42882672  9.71109814]
+		log-likelihood = 			-1045.594
+		Theta = 					102.258
+		AIC = 						2103.188
+
+	Replicate 5: 
+		parameters = 				[  3.19449859   2.0616613    0.8160076   15.61217716   0.18202762
+   0.27491432]
+		log-likelihood = 			-9160.455
+		Theta = 					568.656
+		AIC = 						18332.91
+
+	Replicate 6: 
+		parameters = 				[ 0.8342619   0.27444021  0.16895339  1.53851559  0.81344795  6.99797989]
+		log-likelihood = 			-1915.892
+		Theta = 					973.234
+		AIC = 						3843.784
+
+	Replicate 7: 
+		parameters = 				[ 0.06767485  0.04391259  7.51644346  1.60769091  0.09435507  7.10719081]
+		log-likelihood = 			-2111.551
+		Theta = 					9084.056
+		AIC = 						4235.102
+
+	Replicate 8: 
+		parameters = 				[ 3.22736357  1.25843554  0.23032225  1.63451371  1.48353851  0.00717123]
+		log-likelihood = 			-704.396
+		Theta = 					402.909
+		AIC = 						1420.792
+
+	Replicate 9: 
+		parameters = 				[ 2.96922708  0.99386064  0.0256327   0.03730416  0.57502948  0.88866931]
+		log-likelihood = 			-759.151
+		Theta = 					434.586
+		AIC = 						1530.302
+
+	Replicate 10: 
+		parameters = 				[ 1.94287344  1.30900532  0.1551335   0.20775563  2.04205671  0.04342185]
+		log-likelihood = 			-879.294
+		Theta = 					446.909
+		AIC = 						1770.588
+
+	Replicate 11: 
+		parameters = 				[ 2.4898671   0.75114431  0.01437701  0.54048851  0.88554088  0.1327209 ]
+		log-likelihood = 			-926.694
+		Theta = 					531.561
+		AIC = 						1865.388
+
+	Replicate 12: 
+		parameters = 				[ 0.93116177  0.45410801  0.02879416  0.72124411  0.23070973  0.71294335]
+		log-likelihood = 			-1416.132
+		Theta = 					879.634
+		AIC = 						2844.264
+
+	Replicate 13: 
+		parameters = 				[ 1.05908104  0.3535605   0.03703242  1.0979396   0.01838363  9.72062839]
+		log-likelihood = 			-1700.161
+		Theta = 					779.437
+		AIC = 						3412.322
+
+	Replicate 14: 
+		parameters = 				[ 1.62225724  0.56547683  0.01003707  0.61747022  1.64215223  9.90553448]
+		log-likelihood = 			-1660.193
+		Theta = 					498.088
+		AIC = 						3332.386
+
+	Replicate 15: 
+		parameters = 				[ 0.95234814  1.07110638  0.06883216  1.36492883  9.9095672   8.42075893]
+		log-likelihood = 			-2794.691
+		Theta = 					677.452
+		AIC = 						5601.382
+
+	Replicate 16: 
+		parameters = 				[ 5.4263533   2.29398868  0.01484922  0.01516345  0.54598035  2.69654432]
+		log-likelihood = 			-675.591
+		Theta = 					233.685
+		AIC = 						1363.182
+
+	Replicate 17: 
+		parameters = 				[  2.20718870e+00   1.08767330e+00   1.95082647e+01   2.18997391e+00
+   1.25675168e+00   7.17031277e-04]
+		log-likelihood = 			-831.452
+		Theta = 					499.657
+		AIC = 						1674.904
+
+	Replicate 18: 
+		parameters = 				[ 0.60041045  0.2253147   0.01059184  1.67390428  0.19330787  4.33129183]
+		log-likelihood = 			-1661.867
+		Theta = 					1333.213
+		AIC = 						3335.734
+
+	Replicate 19: 
+		parameters = 				[ 3.21373688  1.35437997  0.01472193  0.10512105  1.48611544  0.01156432]
+		log-likelihood = 			-766.28
+		Theta = 					398.247
+		AIC = 						1544.56
+
+	Replicate 20: 
+		parameters = 				[ 10.92171755   1.65420728   0.01795039   0.20302074   0.01475611
+   7.18277904]
+		log-likelihood = 			-1385.674
+		Theta = 					137.203
+		AIC = 						2783.348
+
+Split with Secondary Contact, Symmetrical Gene Flow:
+parameter set = [nu1, nu2, m1, T, Tsc]
+	Replicate 1: 
+		parameters = 				[ 6.62221727  2.90739022  0.0299099   3.71056531  0.36040096]
+		log-likelihood = 			-647.521
+		Theta = 					191.405
+		AIC = 						1305.042
+
+	Replicate 2: 
+		parameters = 				[ 4.00830119  8.49397864  4.09375729  0.94462885  0.12477901]
+		log-likelihood = 			-8797.293
+		Theta = 					293.748
+		AIC = 						17604.586
+
+	Replicate 3: 
+		parameters = 				[ 7.69751551  3.17816998  0.01429089  1.22131229  3.6627441 ]
+		log-likelihood = 			-670.608
+		Theta = 					166.542
+		AIC = 						1351.216
+
+	Replicate 4: 
+		parameters = 				[  8.23259613e+00   3.57675031e+00   1.05914563e-02   6.94788795e-03
+   5.46183215e+00]
+		log-likelihood = 			-670.88
+		Theta = 					152.473
+		AIC = 						1351.76
+
+	Replicate 5: 
+		parameters = 				[ 0.68265631  0.36391476  0.47447215  1.29041351  9.20265413]
+		log-likelihood = 			-2213.501
+		Theta = 					881.877
+		AIC = 						4437.002
+
+	Replicate 6: 
+		parameters = 				[ 8.45158934  3.74736071  0.01117294  1.70734235  3.92411872]
+		log-likelihood = 			-668.218
+		Theta = 					148.024
+		AIC = 						1346.436
+
+	Replicate 7: 
+		parameters = 				[ 5.32393426  2.30378523  0.33269351  3.00828902  0.01994705]
+		log-likelihood = 			-657.145
+		Theta = 					240.463
+		AIC = 						1324.29
+
+	Replicate 8: 
+		parameters = 				[ 0.53506667  1.05052206  0.57038147  9.9977356   8.94254604]
+		log-likelihood = 			-3222.555
+		Theta = 					659.609
+		AIC = 						6455.11
+
+	Replicate 9: 
+		parameters = 				[ 1.08743257  0.56281442  0.14544848  0.12676552  0.96074938]
+		log-likelihood = 			-1168.308
+		Theta = 					770.342
+		AIC = 						2346.616
+
+	Replicate 10: 
+		parameters = 				[  5.17046002e+00   2.38848993e+00   2.60203974e+00   2.84087765e+00
+   1.47823296e-03]
+		log-likelihood = 			-671.289
+		Theta = 					246.769
+		AIC = 						1352.578
+
+	Replicate 11: 
+		parameters = 				[ 2.503766    0.96222903  0.09432208  1.03616604  0.05136502]
+		log-likelihood = 			-765.645
+		Theta = 					503.659
+		AIC = 						1541.29
+
+	Replicate 12: 
+		parameters = 				[ 0.79322268  0.25835667  0.42923827  0.67585401  1.15094254]
+		log-likelihood = 			-2080.783
+		Theta = 					946.777
+		AIC = 						4171.566
+
+	Replicate 13: 
+		parameters = 				[ 7.88452235  3.45418184  0.01196326  0.01416797  5.16801188]
+		log-likelihood = 			-670.017
+		Theta = 					159.158
+		AIC = 						1350.034
+
+	Replicate 14: 
+		parameters = 				[ 4.68269247  1.96346672  0.11086147  2.4660368   0.07455081]
+		log-likelihood = 			-656.148
+		Theta = 					275.429
+		AIC = 						1322.296
+
+	Replicate 15: 
+		parameters = 				[ 10.27883366   4.59948529   0.01841352   5.28592383   0.95528574]
+		log-likelihood = 			-663.518
+		Theta = 					126.759
+		AIC = 						1337.036
+
+	Replicate 16: 
+		parameters = 				[ 10.65905667   0.99251844   2.74717531   2.92873521   1.13006176]
+		log-likelihood = 			-7275.229
+		Theta = 					235.8
+		AIC = 						14560.458
+
+	Replicate 17: 
+		parameters = 				[ 1.42026805  0.63495675  0.0775617   0.00475646  0.88339122]
+		log-likelihood = 			-972.425
+		Theta = 					699.818
+		AIC = 						1954.85
+
+	Replicate 18: 
+		parameters = 				[ 2.7278585   0.93680347  0.02903513  0.37858217  0.992478  ]
+		log-likelihood = 			-777.893
+		Theta = 					461.674
+		AIC = 						1565.786
+
+	Replicate 19: 
+		parameters = 				[ 0.71952794  0.46942822  0.27436073  0.07735933  0.74684421]
+		log-likelihood = 			-1461.538
+		Theta = 					978.289
+		AIC = 						2933.076
+
+	Replicate 20: 
+		parameters = 				[ 1.03703887  0.59775898  0.17991743  0.05686006  0.82402835]
+		log-likelihood = 			-1195.862
+		Theta = 					801.065
+		AIC = 						2401.724
+
+Split with Ancient Asymmetrical Migration:
+parameter set = [nu1, nu2, m12, m21, T, Tam]
+	Replicate 1: 
+		parameters = 				[ 2.79057556  1.04525905  7.57690321  2.46494376  0.02737659  1.11225678]
+		log-likelihood = 			-820.838
+		Theta = 					471.637
+		AIC = 						1653.676
+
+	Replicate 2: 
+		parameters = 				[ 12.30688454   5.03700214   4.12044371   0.52166828   3.86622307
+   5.12622784]
+		log-likelihood = 			-815.253
+		Theta = 					107.484
+		AIC = 						1642.506
+
+	Replicate 3: 
+		parameters = 				[ 0.43143116  4.16997693  0.22869121  0.69642049  1.39618456  9.90747841]
+		log-likelihood = 			-6503.503
+		Theta = 					195.276
+		AIC = 						13019.006
+
+	Replicate 4: 
+		parameters = 				[ 1.95457291  0.87443443  0.01099333  3.14657784  0.82702953  0.83021584]
+		log-likelihood = 			-967.538
+		Theta = 					524.874
+		AIC = 						1947.076
+
+	Replicate 5: 
+		parameters = 				[  3.20178545   1.06902522  19.96604818   1.20634836   2.6085476
+   1.20827938]
+		log-likelihood = 			-857.396
+		Theta = 					417.349
+		AIC = 						1726.792
+
+	Replicate 6: 
+		parameters = 				[  2.67250325   1.864326     0.06068788  19.64729065   9.51466363
+   1.78455816]
+		log-likelihood = 			-1136.226
+		Theta = 					305.008
+		AIC = 						2284.452
+
+	Replicate 7: 
+		parameters = 				[  4.63659196   1.7420585   19.43713544   0.57656327   9.25179138
+   1.97664763]
+		log-likelihood = 			-847.273
+		Theta = 					271.675
+		AIC = 						1706.546
+
+	Replicate 8: 
+		parameters = 				[  1.00912872   1.24084976   1.53129629  17.9015216    9.90833893
+   1.21776355]
+		log-likelihood = 			-1480.04
+		Theta = 					612.679
+		AIC = 						2972.08
+
+	Replicate 9: 
+		parameters = 				[  1.01897272   0.35631874  14.11371772   0.72404311   9.97310673
+   0.37879871]
+		log-likelihood = 			-905.141
+		Theta = 					1236.166
+		AIC = 						1822.282
+
+	Replicate 10: 
+		parameters = 				[ 4.92148275  2.4090253   0.01241082  4.6048802   0.9558224   2.17320951]
+		log-likelihood = 			-831.469
+		Theta = 					246.431
+		AIC = 						1674.938
+
+	Replicate 11: 
+		parameters = 				[ 0.34266666  3.75155482  0.0601348   0.90962468  0.05365846  9.0362584 ]
+		log-likelihood = 			-6724.793
+		Theta = 					222.244
+		AIC = 						13461.586
+
+	Replicate 12: 
+		parameters = 				[ 2.25043158  0.81353738  0.06356713  0.18942115  1.20313419  0.02032447]
+		log-likelihood = 			-913.228
+		Theta = 					525.007
+		AIC = 						1838.456
+
+	Replicate 13: 
+		parameters = 				[  3.95371971   1.6589575    0.03451684  10.70408597   0.10203438
+   1.70989959]
+		log-likelihood = 			-792.618
+		Theta = 					336.449
+		AIC = 						1597.236
+
+	Replicate 14: 
+		parameters = 				[  1.6569304    0.52431671  16.02645371   1.05462179   0.78363369
+   0.56082717]
+		log-likelihood = 			-942.632
+		Theta = 					787.227
+		AIC = 						1897.264
+
+	Replicate 15: 
+		parameters = 				[  1.33872873   0.56805561  12.71776028   1.02120305   2.37778089
+   0.67127887]
+		log-likelihood = 			-932.166
+		Theta = 					820.388
+		AIC = 						1876.332
+
+	Replicate 16: 
+		parameters = 				[ 3.29994268  0.99975289  5.66315083  3.75837579  0.70081611  0.96492396]
+		log-likelihood = 			-918.53
+		Theta = 					414.858
+		AIC = 						1849.06
+
+	Replicate 17: 
+		parameters = 				[ 6.45716381  2.68340246  0.90887149  1.24280255  1.00837581  2.6979389 ]
+		log-likelihood = 			-837.074
+		Theta = 					202.917
+		AIC = 						1686.148
+
+	Replicate 18: 
+		parameters = 				[  1.75462729   1.03051017   0.1696992   19.45165342   3.31111419
+   1.0199533 ]
+		log-likelihood = 			-1114.683
+		Theta = 					493.842
+		AIC = 						2241.366
+
+	Replicate 19: 
+		parameters = 				[  6.30020581e-01   4.05478412e-01   1.36611848e-02   1.48413875e+01
+   5.66502836e+00   3.74093355e-01]
+		log-likelihood = 			-1157.599
+		Theta = 					1297.935
+		AIC = 						2327.198
+
+	Replicate 20: 
+		parameters = 				[  3.17290192   1.08163275  19.84246451   1.52660451   1.55155896
+   1.1815781 ]
+		log-likelihood = 			-855.443
+		Theta = 					420.12
+		AIC = 						1722.886
+
+Split with Ancient Symmetrical Migration:
+parameter set = [nu1, nu2, m, T, Tam]
+	Replicate 1: 
+		parameters = 				[  2.68551185   1.2393557   16.41344258   0.10081448   1.3726136 ]
+		log-likelihood = 			-829.443
+		Theta = 					435.509
+		AIC = 						1668.886
+
+	Replicate 2: 
+		parameters = 				[ 3.92620521  1.61594574  0.01250581  0.22388149  1.506102  ]
+		log-likelihood = 			-788.168
+		Theta = 					343.447
+		AIC = 						1586.336
+
+	Replicate 3: 
+		parameters = 				[ 3.53344669  1.43855352  1.08002039  0.10850114  1.47033805]
+		log-likelihood = 			-793.157
+		Theta = 					374.568
+		AIC = 						1596.314
+
+	Replicate 4: 
+		parameters = 				[ 5.42605509  2.31203511  0.07380416  2.06113056  1.08589192]
+		log-likelihood = 			-780.392
+		Theta = 					235.932
+		AIC = 						1570.784
+
+	Replicate 5: 
+		parameters = 				[ 8.99944794  4.05098536  0.01008406  6.28042677  0.02785271]
+		log-likelihood = 			-673.49
+		Theta = 					136.675
+		AIC = 						1356.98
+
+	Replicate 6: 
+		parameters = 				[ 3.51849714  1.45643111  0.01715736  0.0455653   1.58463364]
+		log-likelihood = 			-791.871
+		Theta = 					370.902
+		AIC = 						1593.742
+
+	Replicate 7: 
+		parameters = 				[ 1.18196885  0.64761769  0.87165135  9.5820392   0.68230155]
+		log-likelihood = 			-1633.934
+		Theta = 					581.264
+		AIC = 						3277.868
+
+	Replicate 8: 
+		parameters = 				[ 6.68972734  2.22983428  0.04925077  2.90491344  0.77075667]
+		log-likelihood = 			-767.352
+		Theta = 					206.836
+		AIC = 						1544.704
+
+	Replicate 9: 
+		parameters = 				[ 3.84019947  1.58248131  3.84064075  0.05418895  1.6542957 ]
+		log-likelihood = 			-790.138
+		Theta = 					348.906
+		AIC = 						1590.276
+
+	Replicate 10: 
+		parameters = 				[ 1.00421809  0.64718613  2.1728817   0.02628219  0.61655465]
+		log-likelihood = 			-1136.353
+		Theta = 					831.7
+		AIC = 						2282.706
+
+	Replicate 11: 
+		parameters = 				[  4.3057856    1.03135252  18.92855929   0.9484218    0.98588208]
+		log-likelihood = 			-986.622
+		Theta = 					356.072
+		AIC = 						1983.244
+
+	Replicate 12: 
+		parameters = 				[ 2.6266485   0.1005852   3.12534018  0.11994644  2.3005641 ]
+		log-likelihood = 			-3691.942
+		Theta = 					433.78
+		AIC = 						7393.884
+
+	Replicate 13: 
+		parameters = 				[ 4.0177859   1.63772407  0.04134319  0.03148657  1.72360386]
+		log-likelihood = 			-788.143
+		Theta = 					338.191
+		AIC = 						1586.286
+
+	Replicate 14: 
+		parameters = 				[ 1.4842198   0.72675208  1.97230844  0.15568611  0.64512747]
+		log-likelihood = 			-982.611
+		Theta = 					685.474
+		AIC = 						1975.222
+
+	Replicate 15: 
+		parameters = 				[ 3.9284423   1.62282478  0.4532801   0.04299228  1.68777106]
+		log-likelihood = 			-788.237
+		Theta = 					343.084
+		AIC = 						1586.474
+
+	Replicate 16: 
+		parameters = 				[ 4.8194604   1.98665266  0.06735433  0.87470285  1.41285588]
+		log-likelihood = 			-796.494
+		Theta = 					281.022
+		AIC = 						1602.988
+
+	Replicate 17: 
+		parameters = 				[  0.97580099   0.28930742  19.99604143   9.87818573   0.37690266]
+		log-likelihood = 			-1364.127
+		Theta = 					1023.122
+		AIC = 						2738.254
+
+	Replicate 18: 
+		parameters = 				[ 0.93060307  0.08027834  0.9928794   0.32437109  1.45222608]
+		log-likelihood = 			-4509.456
+		Theta = 					912.361
+		AIC = 						9028.912
+
+	Replicate 19: 
+		parameters = 				[  3.94818434e+00   1.59173444e+00   1.24263887e+00   2.29395759e-08
+   1.73745257e+00]
+		log-likelihood = 			-788.361
+		Theta = 					343.106
+		AIC = 						1586.722
+
+	Replicate 20: 
+		parameters = 				[ 0.58639596  0.03310631  1.29345387  0.10843106  0.71466287]
+		log-likelihood = 			-4600.589
+		Theta = 					1247.322
+		AIC = 						9211.178
+
+Split with No Migration, size change:
+parameter set = [nu1b, nu2b, nu1r, nu2r, T1, T2]
+	Replicate 1: 
+		parameters = 				[ 2.62899507  0.89847185  5.90564484  1.05605143  1.0026333   0.13743275]
+		log-likelihood = 			-771.36
+		Theta = 					443.719
+		AIC = 						1554.72
+
+	Replicate 2: 
+		parameters = 				[ 0.34658811  0.73451065  3.2397003   0.9590451   0.30963754  0.45822425]
+		log-likelihood = 			-604.317
+		Theta = 					590.591
+		AIC = 						1220.634
+
+	Replicate 3: 
+		parameters = 				[ 14.05218033   2.16829416   2.62166478   1.38436625   0.38097733
+   0.95595827]
+		log-likelihood = 			-900.552
+		Theta = 					430.856
+		AIC = 						1813.104
+
+	Replicate 4: 
+		parameters = 				[ 0.60344444  0.43838672  3.44701177  1.06780934  0.31267684  0.83396839]
+		log-likelihood = 			-696.125
+		Theta = 					469.897
+		AIC = 						1404.25
+
+	Replicate 5: 
+		parameters = 				[ 0.17762345  0.1501781   1.58572297  2.7181873   2.98186575  1.12595587]
+		log-likelihood = 			-3340.423
+		Theta = 					405.542
+		AIC = 						6692.846
+
+	Replicate 6: 
+		parameters = 				[ 0.27566102  0.60716623  2.75361612  0.96478598  0.23970146  0.45353628]
+		log-likelihood = 			-606.164
+		Theta = 					630.914
+		AIC = 						1224.328
+
+	Replicate 7: 
+		parameters = 				[  0.16957217  11.73672739   1.12174231   0.54773899   0.10170119
+   0.43054294]
+		log-likelihood = 			-971.855
+		Theta = 					894.847
+		AIC = 						1955.71
+
+	Replicate 8: 
+		parameters = 				[ 0.87193542  1.03926297  4.67372652  1.88036637  0.71790215  0.5361389 ]
+		log-likelihood = 			-590.218
+		Theta = 					417.522
+		AIC = 						1192.436
+
+	Replicate 9: 
+		parameters = 				[ 0.01024424  1.43128904  4.53939164  2.07965265  0.23447089  2.4475103 ]
+		log-likelihood = 			-1021.694
+		Theta = 					296.243
+		AIC = 						2055.388
+
+	Replicate 10: 
+		parameters = 				[ 0.05203648  0.17853055  0.90728479  0.46101284  0.04668223  0.30798108]
+		log-likelihood = 			-1033.797
+		Theta = 					1112.989
+		AIC = 						2079.594
+
+	Replicate 11: 
+		parameters = 				[  2.3174686    1.54421114  10.36545904   3.19294728   1.60445893
+   0.26532041]
+		log-likelihood = 			-663.397
+		Theta = 					318.953
+		AIC = 						1338.794
+
+	Replicate 12: 
+		parameters = 				[ 0.46105388  0.47056775  3.78052092  1.7902496   0.3765935   0.44682741]
+		log-likelihood = 			-588.664
+		Theta = 					527.395
+		AIC = 						1189.328
+
+	Replicate 13: 
+		parameters = 				[ 0.87046576  0.61322524  1.15284561  0.41295865  0.50051773  0.0827005 ]
+		log-likelihood = 			-1127.251
+		Theta = 					885.672
+		AIC = 						2266.502
+
+	Replicate 14: 
+		parameters = 				[ 1.33561375  1.22381758  7.36726984  3.89778586  0.97309125  2.09865355]
+		log-likelihood = 			-766.498
+		Theta = 					205.793
+		AIC = 						1544.996
+
+	Replicate 15: 
+		parameters = 				[  0.34610312  29.89168968   3.34404821   0.67701073   0.29100135
+   0.53831761]
+		log-likelihood = 			-683.957
+		Theta = 					574.457
+		AIC = 						1379.914
+
+	Replicate 16: 
+		parameters = 				[  3.62254199e+00   1.19419816e+00   4.69737494e-02   1.63768882e+00
+   1.32041262e+00   1.59625498e-04]
+		log-likelihood = 			-822.648
+		Theta = 					408.294
+		AIC = 						1657.296
+
+	Replicate 17: 
+		parameters = 				[ 0.43510509  1.80284173  3.71914187  1.00215915  0.40643654  0.52932759]
+		log-likelihood = 			-620.273
+		Theta = 					519.344
+		AIC = 						1252.546
+
+	Replicate 18: 
+		parameters = 				[ 3.45234628  1.18932894  1.06780146  0.5594595   1.24328924  0.00406401]
+		log-likelihood = 			-827.004
+		Theta = 					422.703
+		AIC = 						1666.008
+
+	Replicate 19: 
+		parameters = 				[  0.90918018  11.00235341   6.59990673   2.63063612   0.96734226
+   1.24635852]
+		log-likelihood = 			-693.566
+		Theta = 					261.929
+		AIC = 						1399.132
+
+	Replicate 20: 
+		parameters = 				[ 0.5650586   0.21361089  3.67854784  1.53487799  0.16429631  0.80505265]
+		log-likelihood = 			-648.733
+		Theta = 					451.272
+		AIC = 						1309.466
+
+Split with No Mig, Size Change, Secondary Contact, Asymmetrical Gene Flow:
+parameter set = [nu1b, nu2b, nu1r, nu2r, T1, T2, m12, m21]
+	Replicate 1: 
+		parameters = 				[ 0.04854413  0.14222123  0.63160536  0.2990694   0.21370953  0.54357499
+  0.9345628   0.83051281]
+		log-likelihood = 			-1945.468
+		Theta = 					1305.656
+		AIC = 						3906.936
+
+	Replicate 2: 
+		parameters = 				[ 7.6899444   0.68632495  0.80402706  0.61735731  5.20302627  3.47101873
+  1.30700144  0.01057695]
+		log-likelihood = 			-2311.077
+		Theta = 					862.621
+		AIC = 						4638.154
+
+	Replicate 3: 
+		parameters = 				[ 0.01624396  0.40337377  1.21689602  0.76688944  0.03658249  0.96992735
+  0.11993414  0.02788093]
+		log-likelihood = 			-860.261
+		Theta = 					747.781
+		AIC = 						1736.522
+
+	Replicate 4: 
+		parameters = 				[ 2.26398181  1.08482008  8.8516358   2.32630116  1.42718774  0.08638007
+  0.07176869  0.24119363]
+		log-likelihood = 			-597.473
+		Theta = 					420.725
+		AIC = 						1210.946
+
+	Replicate 5: 
+		parameters = 				[  1.52246805e+01   2.13738582e+00   2.27278331e-01   7.89887658e-02
+   1.22337691e-03   2.01542438e+00   3.35121717e-02   4.63643524e+00]
+		log-likelihood = 			-1660.26
+		Theta = 					3594.542
+		AIC = 						3336.52
+
+	Replicate 6: 
+		parameters = 				[ 0.19597971  1.52194675  1.91199375  0.51219031  0.3055728   0.3667191
+  0.60977802  0.01407229]
+		log-likelihood = 			-1375.4
+		Theta = 					781.972
+		AIC = 						2766.8
+
+	Replicate 7: 
+		parameters = 				[  9.00884481e+00   4.17152115e+00   2.91560929e+00   1.80339779e-01
+   5.85353705e+00   5.23937823e-03   1.21990324e+00   1.80392623e+00]
+		log-likelihood = 			-713.617
+		Theta = 					143.114
+		AIC = 						1443.234
+
+	Replicate 8: 
+		parameters = 				[ 0.13948249  3.31857382  0.34743273  0.24313983  0.68827257  8.67043881
+  1.71694349  0.1024916 ]
+		log-likelihood = 			-2034.123
+		Theta = 					1833.261
+		AIC = 						4084.246
+
+	Replicate 9: 
+		parameters = 				[  9.16494892e-01   2.87190394e+01   4.56853270e+00   8.13921592e-01
+   1.14276279e+00   3.02521009e-01   1.84509567e-01   1.53914943e-02]
+		log-likelihood = 			-875.803
+		Theta = 					427.988
+		AIC = 						1767.606
+
+	Replicate 10: 
+		parameters = 				[ 0.68353855  0.01049126  0.97625354  0.58653804  0.0286044   0.65090781
+  0.17125929  0.08043844]
+		log-likelihood = 			-1100.86
+		Theta = 					889.908
+		AIC = 						2217.72
+
+	Replicate 11: 
+		parameters = 				[  2.98622143e+01   5.13074403e-01   1.02813176e+00   3.23456225e-01
+   3.58621355e-03   4.75588863e-01   3.05076336e-01   7.86516839e-01]
+		log-likelihood = 			-1706.608
+		Theta = 					955.941
+		AIC = 						3429.216
+
+	Replicate 12: 
+		parameters = 				[ 0.30570561  9.0267353   3.53924771  0.62582516  0.36208386  0.44567116
+  0.32257076  0.01001601]
+		log-likelihood = 			-1134.268
+		Theta = 					589.788
+		AIC = 						2284.536
+
+	Replicate 13: 
+		parameters = 				[  1.40085408e+01   2.34192497e+00   4.66229468e-01   2.15639764e-01
+   1.01109042e-02   7.06360843e+00   4.17769594e-01   1.02584379e+00]
+		log-likelihood = 			-2073.027
+		Theta = 					1361.525
+		AIC = 						4162.054
+
+	Replicate 14: 
+		parameters = 				[ 0.28416161  1.01201991  1.1756435   1.48772157  0.47453592  0.45435507
+  0.27663137  0.01450341]
+		log-likelihood = 			-1118.889
+		Theta = 					683.354
+		AIC = 						2253.778
+
+	Replicate 15: 
+		parameters = 				[ 2.64848268  4.38468484  0.90276744  0.40803211  0.11601726  0.4221243
+  0.15191718  0.07199847]
+		log-likelihood = 			-1352.113
+		Theta = 					927.745
+		AIC = 						2720.226
+
+	Replicate 16: 
+		parameters = 				[ 3.16777477  0.08622635  0.7326567   0.38227335  1.68813847  9.86683189
+  0.07145769  0.656037  ]
+		log-likelihood = 			-1916.809
+		Theta = 					856.295
+		AIC = 						3849.618
+
+	Replicate 17: 
+		parameters = 				[ 0.01135745  0.30060966  0.86466341  0.60988646  1.51389087  1.26577583
+  0.09251654  0.45893699]
+		log-likelihood = 			-1744.591
+		Theta = 					736.556
+		AIC = 						3505.182
+
+	Replicate 18: 
+		parameters = 				[ 0.69530956  0.38219732  0.76251931  0.39469265  0.35753642  0.36401253
+  1.04437358  0.62086491]
+		log-likelihood = 			-2222.793
+		Theta = 					1016.429
+		AIC = 						4461.586
+
+	Replicate 19: 
+		parameters = 				[ 0.06019456  0.04879362  0.98389333  0.57432824  0.1001468   0.60505182
+  0.13157152  0.77437067]
+		log-likelihood = 			-1109.377
+		Theta = 					998.264
+		AIC = 						2234.754
+
+	Replicate 20: 
+		parameters = 				[ 0.77244491  0.57248889  1.29815388  0.6136849   0.86405992  9.70519538
+  0.41567456  0.11649583]
+		log-likelihood = 			-2144.594
+		Theta = 					529.969
+		AIC = 						4305.188
+
+Split with No Mig, Size Change, Secondary Contact, Symmetrical Gene Flow:
+parameter set = [nu1b, nu2b, nu1r, nu2r, T1, T2, m]
+	Replicate 1: 
+		parameters = 				[ 13.66980929   6.15849241   0.19958939   0.10652629   1.65776983
+   4.09639367   1.65192366]
+		log-likelihood = 			-2216.139
+		Theta = 					3022.799
+		AIC = 						4446.278
+
+	Replicate 2: 
+		parameters = 				[  2.85381634e+00   1.07157460e+00   2.00994596e+00   9.65464776e-01
+   1.17307348e+00   1.56004537e-04   9.06595478e-01]
+		log-likelihood = 			-808.197
+		Theta = 					462.376
+		AIC = 						1630.394
+
+	Replicate 3: 
+		parameters = 				[ 2.9616926   0.01003973  1.54127858  0.84842658  0.01911372  0.92571686
+  0.10925782]
+		log-likelihood = 			-879.218
+		Theta = 					654.198
+		AIC = 						1772.436
+
+	Replicate 4: 
+		parameters = 				[ 0.39795623  1.13919786  4.40443606  1.41800793  0.59967262  0.71371194
+  0.02354581]
+		log-likelihood = 			-460.662
+		Theta = 					432.993
+		AIC = 						935.324
+
+	Replicate 5: 
+		parameters = 				[ 5.89064577  0.80294888  1.61973747  1.07158317  0.97073045  0.04922882
+  0.22451992]
+		log-likelihood = 			-961.504
+		Theta = 					426.789
+		AIC = 						1937.008
+
+	Replicate 6: 
+		parameters = 				[ 2.37895396  6.48978237  3.90562959  1.63515347  0.06923847  1.92977086
+  0.01690831]
+		log-likelihood = 			-701.021
+		Theta = 					329.151
+		AIC = 						1416.042
+
+	Replicate 7: 
+		parameters = 				[ 0.17075496  2.02064051  3.84374901  1.43805354  0.23694385  1.05341067
+  0.02859716]
+		log-likelihood = 			-498.063
+		Theta = 					419.089
+		AIC = 						1010.126
+
+	Replicate 8: 
+		parameters = 				[  2.58359293   5.91410009  16.72020093   3.15407891   2.75663311
+   6.98034649   2.23407684]
+		log-likelihood = 			-8577.191
+		Theta = 					120.493
+		AIC = 						17168.382
+
+	Replicate 9: 
+		parameters = 				[ 1.24736828  1.0163753   6.00770969  1.94141006  1.10593213  0.22479616
+  0.05575749]
+		log-likelihood = 			-519.493
+		Theta = 					455.611
+		AIC = 						1052.986
+
+	Replicate 10: 
+		parameters = 				[ 2.86036895  1.08379583  0.7057479   0.37427426  1.69315708  9.84975745
+  0.45758396]
+		log-likelihood = 			-2215.819
+		Theta = 					853.093
+		AIC = 						4445.638
+
+	Replicate 11: 
+		parameters = 				[  5.85578903e-02   8.50955804e+00   2.38204799e+00   8.95650236e-01
+   3.44880771e-03   1.23816832e+00   5.90133001e-02]
+		log-likelihood = 			-801.363
+		Theta = 					506.429
+		AIC = 						1616.726
+
+	Replicate 12: 
+		parameters = 				[ 0.02474803  0.29510409  1.72742643  1.02831183  1.01509026  0.60078431
+  0.1215187 ]
+		log-likelihood = 			-927.916
+		Theta = 					675.816
+		AIC = 						1869.832
+
+	Replicate 13: 
+		parameters = 				[ 1.63052097  0.72785376  0.82769188  0.49791622  0.74807286  0.00818859
+  0.46927445]
+		log-likelihood = 			-944.575
+		Theta = 					681.746
+		AIC = 						1903.15
+
+	Replicate 14: 
+		parameters = 				[  2.93179254   1.61096681  11.01624186   4.19733403   2.36905833
+   0.26116975   0.03945043]
+		log-likelihood = 			-507.647
+		Theta = 					273.139
+		AIC = 						1029.294
+
+	Replicate 15: 
+		parameters = 				[ 1.08707473  0.14973686  2.1587822   0.75187248  0.16582627  0.47934915
+  0.12954389]
+		log-likelihood = 			-911.744
+		Theta = 					653.574
+		AIC = 						1837.488
+
+	Replicate 16: 
+		parameters = 				[  4.31828707e-02   2.98792367e+01   3.49642203e-01   1.51402936e-01
+   2.70933545e-02   7.23063826e-01   1.29792333e+00]
+		log-likelihood = 			-2425.339
+		Theta = 					1830.76
+		AIC = 						4864.678
+
+	Replicate 17: 
+		parameters = 				[ 0.28546008  6.26801542  0.61260073  0.301263    0.36150466  7.7218014
+  0.5173372 ]
+		log-likelihood = 			-2215.44
+		Theta = 					1001.872
+		AIC = 						4444.88
+
+	Replicate 18: 
+		parameters = 				[ 5.28153634  3.07583069  1.48874353  5.32022923  0.19839421  0.46358768
+  3.7949809 ]
+		log-likelihood = 			-8711.175
+		Theta = 					488.781
+		AIC = 						17436.35
+
+	Replicate 19: 
+		parameters = 				[  2.49798845e+01   8.51929381e-01   2.81242134e-01   2.44710197e-01
+   6.30672068e-01   1.73856438e-02   3.59484600e-02]
+		log-likelihood = 			-1427.858
+		Theta = 					513.617
+		AIC = 						2869.716
+
+	Replicate 20: 
+		parameters = 				[ 0.17883606  1.79871744  3.45827329  1.50706271  0.24816407  0.7487516
+  0.02365494]
+		log-likelihood = 			-528.903
+		Theta = 					476.152
+		AIC = 						1071.806
+
+Split with Ancient Asymmetrical Migration, Size Change:
+parameter set = [nu1b, nu2b, nu1r, nu2r, T1, T2, m12, m21]
+	Replicate 1: 
+		parameters = 				[ 0.96515434  0.2108506   3.19573288  0.86843521  2.55593663  0.95153282
+  3.20453493  7.74122811]
+		log-likelihood = 			-874.084
+		Theta = 					465.036
+		AIC = 						1764.168
+
+	Replicate 2: 
+		parameters = 				[ 26.28410655   0.21834322   1.35114154   0.62862737   0.04512423
+   0.49682977   0.3619008    0.51313126]
+		log-likelihood = 			-1061.895
+		Theta = 					771.98
+		AIC = 						2139.79
+
+	Replicate 3: 
+		parameters = 				[  0.24382107   0.05626944   0.78996937   0.32281725   0.81125422
+   0.29775105  19.62284279  13.8369571 ]
+		log-likelihood = 			-791.804
+		Theta = 					1777.435
+		AIC = 						1599.608
+
+	Replicate 4: 
+		parameters = 				[  3.26385280e+00   2.75232160e+01   2.60321178e+00   4.21994882e+00
+   3.80701475e+00   1.79213313e+00   1.00274523e-02   3.51313588e+00]
+		log-likelihood = 			-1518.898
+		Theta = 					250.889
+		AIC = 						3053.796
+
+	Replicate 5: 
+		parameters = 				[  4.19952458   1.62677918   4.52958197   1.51865347   9.75963978
+   1.83081356  13.52972979   1.11578735]
+		log-likelihood = 			-888.605
+		Theta = 					281.453
+		AIC = 						1793.21
+
+	Replicate 6: 
+		parameters = 				[ 0.98842362  0.82247346  5.76090481  2.57897406  1.76144412  2.26961777
+  2.41516312  0.87581119]
+		log-likelihood = 			-758.424
+		Theta = 					238.279
+		AIC = 						1532.848
+
+	Replicate 7: 
+		parameters = 				[ 8.14913442  4.51492846  3.39610226  1.16078209  0.09794809  1.29810525
+  2.47185614  0.34005899]
+		log-likelihood = 			-819.237
+		Theta = 					406.024
+		AIC = 						1654.474
+
+	Replicate 8: 
+		parameters = 				[ 8.50733398  0.26243531  2.90293302  1.23054532  0.08381735  1.1793554
+  2.47533129  1.39163522]
+		log-likelihood = 			-804.7
+		Theta = 					442.863
+		AIC = 						1625.4
+
+	Replicate 9: 
+		parameters = 				[ 0.11784946  2.16386304  2.45624975  0.88291393  0.00707823  0.79952347
+  0.66469296  1.03106848]
+		log-likelihood = 			-850.611
+		Theta = 					558.242
+		AIC = 						1717.222
+
+	Replicate 10: 
+		parameters = 				[ 0.04527841  0.2807569   0.88122988  0.54138906  0.05647675  0.28418231
+  0.07104778  0.84523847]
+		log-likelihood = 			-1108.854
+		Theta = 					1112.516
+		AIC = 						2233.708
+
+	Replicate 11: 
+		parameters = 				[ 0.44345171  1.13116023  7.26993936  2.42418427  3.16343886  1.23189833
+  0.37458392  0.58187062]
+		log-likelihood = 			-583.614
+		Theta = 					271.72
+		AIC = 						1183.228
+
+	Replicate 12: 
+		parameters = 				[ 0.87005936  0.17927905  3.19344193  1.27084472  0.50892697  0.4145374
+  0.13903452  1.62894301]
+		log-likelihood = 			-670.153
+		Theta = 					567.053
+		AIC = 						1356.306
+
+	Replicate 13: 
+		parameters = 				[ 0.37068009  0.06742439  3.11562542  1.92082425  1.29989186  1.00096171
+  0.03314125  2.24369422]
+		log-likelihood = 			-813.267
+		Theta = 					468.789
+		AIC = 						1642.534
+
+	Replicate 14: 
+		parameters = 				[ 0.14868093  3.55392638  2.77601858  0.67548653  0.15644241  0.54315611
+  0.28189108  1.84327041]
+		log-likelihood = 			-665.417
+		Theta = 					651.904
+		AIC = 						1346.834
+
+	Replicate 15: 
+		parameters = 				[  1.04018902  16.28730357   1.91584038   0.74090959   1.01843428
+   0.55678275   0.45257511   1.15364784]
+		log-likelihood = 			-989.689
+		Theta = 					545.687
+		AIC = 						1995.378
+
+	Replicate 16: 
+		parameters = 				[ 0.17895549  1.07217916  1.03638967  0.31315412  1.22344006  0.23665041
+  0.23898324  6.28455964]
+		log-likelihood = 			-704.257
+		Theta = 					1576.507
+		AIC = 						1424.514
+
+	Replicate 17: 
+		parameters = 				[ 0.16493493  1.90632072  4.22429396  1.51840307  0.42579221  0.95436398
+  2.04714245  0.51195345]
+		log-likelihood = 			-597.072
+		Theta = 					406.507
+		AIC = 						1210.144
+
+	Replicate 18: 
+		parameters = 				[  1.6190278    0.99755826  14.30521493   0.44377243   1.0102665
+   9.60866908   0.9897449    0.02775424]
+		log-likelihood = 			-3502.247
+		Theta = 					99.676
+		AIC = 						7020.494
+
+	Replicate 19: 
+		parameters = 				[  0.30044506   7.41649804   2.88331869   0.85622302   0.80039204
+   0.9602566    0.10192827  11.0705096 ]
+		log-likelihood = 			-806.442
+		Theta = 					577.743
+		AIC = 						1628.884
+
+	Replicate 20: 
+		parameters = 				[ 1.99708553  1.58011066  1.85650822  0.08604227  0.44884474  1.9840186
+  0.36336471  0.15501912]
+		log-likelihood = 			-4024.985
+		Theta = 					516.778
+		AIC = 						8065.97
+
+Split with Ancient Symmetrical Migration, Size Change:
+parameter set = [nu1b, nu2b, nu1r, nu2r, T1, T2, m]
+	Replicate 1: 
+		parameters = 				[  0.94242724   2.58511376  10.87045377   3.86404326   5.05774359
+   1.99828185   0.26165181]
+		log-likelihood = 			-564.066
+		Theta = 					164.243
+		AIC = 						1142.132
+
+	Replicate 2: 
+		parameters = 				[ 0.10175643  2.35694676  3.93727976  1.59077475  0.58152305  1.36721659
+  3.47834665]
+		log-likelihood = 			-731.704
+		Theta = 					387.166
+		AIC = 						1477.408
+
+	Replicate 3: 
+		parameters = 				[ 1.77950522  0.94969542  2.83542826  1.34891403  0.06755471  1.42551411
+  0.6380691 ]
+		log-likelihood = 			-806.572
+		Theta = 					419.216
+		AIC = 						1627.144
+
+	Replicate 4: 
+		parameters = 				[ 10.18935857   0.16189055   2.82408342   0.6577942    1.38638834
+   0.57666166   0.27122099]
+		log-likelihood = 			-1611.069
+		Theta = 					406.014
+		AIC = 						3236.138
+
+	Replicate 5: 
+		parameters = 				[ 9.84947824  0.62213713  5.42602516  2.38446997  0.72559047  1.52378552
+  0.34394658]
+		log-likelihood = 			-797.566
+		Theta = 					264.751
+		AIC = 						1609.132
+
+	Replicate 6: 
+		parameters = 				[ 0.60317176  0.26807068  4.66599766  2.19583345  1.97937575  0.91528524
+  0.74929964]
+		log-likelihood = 			-601.358
+		Theta = 					374.3
+		AIC = 						1216.716
+
+	Replicate 7: 
+		parameters = 				[ 0.26494727  0.94156592  4.36249964  1.64921234  2.04308808  1.09565494
+  1.60539621]
+		log-likelihood = 			-630.663
+		Theta = 					379.376
+		AIC = 						1275.326
+
+	Replicate 8: 
+		parameters = 				[ 0.16059335  1.72341333  1.2415062   0.4744735   2.1853139   0.32639807
+  1.25437582]
+		log-likelihood = 			-1011.507
+		Theta = 					874.282
+		AIC = 						2037.014
+
+	Replicate 9: 
+		parameters = 				[  2.18702801   0.8446678   10.53364337  11.77084562   2.00539685
+   0.25915412   0.07401944]
+		log-likelihood = 			-651.855
+		Theta = 					321.461
+		AIC = 						1317.71
+
+	Replicate 10: 
+		parameters = 				[ 4.47714236  0.06572645  4.76572591  4.92631899  9.8135802   2.86840847
+  1.89020773]
+		log-likelihood = 			-1163.505
+		Theta = 					220.379
+		AIC = 						2341.01
+
+	Replicate 11: 
+		parameters = 				[ 0.0224149   0.23993654  0.53918882  1.84317286  0.44489941  9.66904862
+  1.38135692]
+		log-likelihood = 			-6412.296
+		Theta = 					314.615
+		AIC = 						12838.592
+
+	Replicate 12: 
+		parameters = 				[  5.7498877    0.06880556   2.18331189   1.2379854    1.00833721
+   1.44858076  19.06379296]
+		log-likelihood = 			-920.742
+		Theta = 					531.168
+		AIC = 						1855.484
+
+	Replicate 13: 
+		parameters = 				[ 23.96595111   1.05988402   3.06602468   0.87641632   0.12173163
+   0.81908801  11.67568233]
+		log-likelihood = 			-923.59
+		Theta = 					489.171
+		AIC = 						1861.18
+
+	Replicate 14: 
+		parameters = 				[ 10.06879952   1.05111176   0.68111742   0.0411661    0.92986489
+   0.93821257   0.08737786]
+		log-likelihood = 			-5292.506
+		Theta = 					863.604
+		AIC = 						10599.012
+
+	Replicate 15: 
+		parameters = 				[ 7.83585107  0.29239478  3.37803287  1.57698869  0.26314535  1.14245786
+  1.16021458]
+		log-likelihood = 			-803.617
+		Theta = 					393.595
+		AIC = 						1621.234
+
+	Replicate 16: 
+		parameters = 				[  1.06471326e+00   4.43181275e-01   4.27162207e+00   1.83370787e+00
+   4.12812771e-03   1.91583669e+00   2.94842135e+00]
+		log-likelihood = 			-788.961
+		Theta = 					315.465
+		AIC = 						1591.922
+
+	Replicate 17: 
+		parameters = 				[ 1.24679708  0.4469214   5.18116718  2.3255369   0.40172269  1.95457917
+  1.7318864 ]
+		log-likelihood = 			-767.31
+		Theta = 					273.518
+		AIC = 						1548.62
+
+	Replicate 18: 
+		parameters = 				[  0.45647276   0.08986782  12.1689624    0.45892577   2.00174408
+   9.96659046   0.20000701]
+		log-likelihood = 			-3540.594
+		Theta = 					107.901
+		AIC = 						7095.188
+
+	Replicate 19: 
+		parameters = 				[ 0.09796644  0.7329126   1.9722356   0.60464046  3.18202676  0.42176104
+  2.73158421]
+		log-likelihood = 			-619.024
+		Theta = 					879.354
+		AIC = 						1252.048
+
+	Replicate 20: 
+		parameters = 				[  3.55835256   0.21238351   1.77182395   0.76082274   3.87929783
+   0.65331407  19.87683038]
+		log-likelihood = 			-918.045
+		Theta = 					679.408
+		AIC = 						1850.09
+
