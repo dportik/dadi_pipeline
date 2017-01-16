@@ -39,6 +39,19 @@ if you are having trouble with the standard code. Upgrading numpy may
 resolve the issue.
 ###########################################################
 
+**Note, if you see this error when plotting:
+"ValueError: Data has no positive values, and therefore can not be log-scaled."
+You will need to change the vmin in the plotting routine from None to something <1.
+You'll need to track the installation path for dadi and change the code in the
+Plotting.py script.
+
+I used the following change with good results:
+def plot_2d_comp_multinom(model, data, vmin=0.05 , vmax=None,
+                          resid_range=None, fig_num=None,
+                          pop_ids=None, residual='Anscombe',
+                          adjust=True):
+                          
+                          
 ############################################
 Written for Python 2.7.3
 External Dependencies:
