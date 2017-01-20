@@ -44,17 +44,19 @@ file naming schemes. You'll need to hand edit sections of the script to match yo
 
 Sections of the scripts which require hand editing are flagged with a #**************
 
-The point of this script was to automate functions of dadi and produce output files that summarize a large number of replicates run for 
+The point of this workflow was to automate functions of dadi and produce output files that summarize a large number of replicates run for 
 many different models. You can create your own set of models and perform similar analyses using the basic structure of these scripts, or
 use the set of 14 models here. The model set here can be reduced by either blocking out or deleting relevant sections of the loops, but
 adding models will require adding code within the loops I designed. This should be straightforward to imitate the style of the code, and
-change relevant names, output text, parameter numbers, and AIC penalty depending on the model. 
+change relevant names, output text, parameter numbers, and AIC penalty depending on the model. I'm sure a more generic function could
+be used to load in models and parameters and run optimizations, but I found this code intuitive and easy to follow so I could troubleshoot
+the many issues I had along the way.
 
 I noticed that optimizations sometimes fail, crashing the script. If this happened repeatedly, I blocked out the code for this model and 
 skipped it - sometimes they were too complex for a given data set, particularly with a low number of segregating sites or low number of 
-individuals. Sometimes the optimizations don't completely fail, but display severe warnings. These aren't translated to the output 
-files, so pay attention to the program output and make sure this isn't a problem - the likelihoods from these are bizarre and should 
-not be used! 
+individuals. Sometimes the optimizations don't completely fail, but display severe warnings (that extrapolation may have failed. These
+aren't translated to the output files, so pay attention to the program output and make sure this isn't a problem - the likelihoods from
+these can be bizarre and should not be used in your model comparisons! 
 
 The scripts here are all tailored to run the example file I've provided. You should be able to perform each step by only editing the 
 path to the example file. 
