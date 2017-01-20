@@ -51,7 +51,7 @@ def plot_2d_comp_multinom(model, data, vmin=0.01, vmax=None,
                           pop_ids=None, residual='Anscombe',
                           adjust=True):
                           
-If you can't locate the Plottin.py script duplicate its contents in another
+If you can't locate the Plotting.py script duplicate its contents in another
 local script (put in same directory as this), call it Plotting2.py, and
 edit the script with the above changes.
 
