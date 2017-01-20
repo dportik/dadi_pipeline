@@ -35,14 +35,14 @@ The general overview is
   -Manually insert the best param set for each model from the previous step. There is NO OPTIMIZATION here, so the values will not change
   in the final model. The idea is simply to run each model and then plot the results, a spectrum of the data and model, plus residuals.
   Output pdf files will be created for each plot run.
-  
-Sections of the scripts which require hand editing are flagged with a #**************
 
 I assume outgroup data are lacking and create folded  2D-spectra. If you have outgroup data in your SNP input file, you can easily change
-this option in the script. None of the scripts are fully automated, as they are inherently specific to the input file being used. You'll
-need to hand edit sections of the script to match your data set. You'll need to figure out the best projections for your data set, often
-requiring a down-projection. The grid choice will depend on the projection values, and also needs to be changed. You can choose the 
-number of reps in model searching, and will need to change output file naming schemes.
+this option in the script. None of the scripts are fully automated, as they are inherently specific to the input file being used.  You'll
+need to figure out the best projections for your data set, often requiring a down-projection. The grid choice will depend on the
+projection values, and also needs to be changed. You can choose the number of reps in model searching, and will need to change output 
+file naming schemes. You'll need to hand edit sections of the script to match your data set.
+
+Sections of the scripts which require hand editing are flagged with a #**************
 
 The point of this script was to automate functions of dadi and produce output files that summarize a large number of replicates run for 
 many different models. You can create your own set of models and perform similar analyses using the basic structure of these scripts, or
