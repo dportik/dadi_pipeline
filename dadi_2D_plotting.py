@@ -53,14 +53,14 @@ def plot_2d_comp_multinom(model, data, vmin=0.01, vmax=None,
                           
 If you can't locate the Plotting.py script duplicate its contents in another
 local script (put in same directory as this), call it Plotting2.py, and
-edit the script with the above changes.
+edit that script with the above changes.
 
-Then, at the top of this script also import Plotting2.py, then at line 673
+Then, at the top of this script also add 'import Plotting2' then at line 673
 (in the plotter function) change: 
 dadi.Plotting.plot_2d_comp_multinom(model, data, resid_range = 3)
 to 
 Plotting2.plot_2d_comp_multinom(model, data, resid_range = 3)
-This will work around not editing the actual dadi scripts in your system.
+This provides a workaround so as to avoid editing the actual dadi scripts in your system.
 
 ############################################
 Written for Python 2.7.3
