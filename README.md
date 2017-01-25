@@ -54,7 +54,7 @@ the many issues I had along the way.
 
 I noticed that optimizations sometimes fail, crashing the script. If this happened repeatedly, I blocked out the code for this model and 
 skipped it - sometimes they were too complex for a given data set, particularly with a low number of segregating sites or low number of 
-individuals. Sometimes the optimizations don't completely fail, but display severe warnings (that extrapolation may have failed. These
+individuals. Sometimes the optimizations don't completely fail, but display severe warnings (that extrapolation may have failed). These
 aren't translated to the output files, so pay attention to the program output and make sure this isn't a problem - the likelihoods from
 these can be bizarre and should not be used in your model comparisons! 
 
