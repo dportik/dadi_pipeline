@@ -12,7 +12,7 @@ instructions on the basic format.
 
 Any number of demographic models can be created and tested by the user, I have written my pipeline to explore 14 models of joint 
 demographic history for two-population comparisons. These models are written in the TwoD_models.py script, which must be in the same
-working directory when running the other scripts (they import these models). 
+working directory when running the other scripts (they import these models). A visual summary of these models is included as a png file.
 
 The general overview is
 
