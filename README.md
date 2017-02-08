@@ -61,7 +61,7 @@ these can be bizarre and should not be used in your model comparisons!
 The scripts here are all tailored to run the example file I've provided. You should be able to perform each step by only editing the 
 path to the example file. 
 
-Questions can be sent to: daniel.portik@uta.edu
+Contact: daniel.portik@uta.edu
 
 # Daniel Portik
 
