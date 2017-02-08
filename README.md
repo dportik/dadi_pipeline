@@ -28,7 +28,7 @@ The general overview is
   perturbed to start optimizations, just less so than in the previous step. For each replicate, a perturbed parameter set is then
   optimized using the Nelder-Mead method (optimize_log_fmin), running each optimization algorithm for a maximum of 60 iterations. Each 
   optimized parameter set is used to simulate the 2D-JSFS, and the multinomial approach is used to estimate the log-likelihood 
-  of the 2D-JSFS given the model. The output of this script: {outfile}_OPTIMZED_model_results.txt, is tab-delimited and can be opened in 
+  of the 2D-JSFS given the model. The output of this script: {outfile}_OPTIMIZED_model_results.txt, is tab-delimited and can be opened in 
   excel. It reports rep number, ln-lik, AIC, params, etc. You can select the best replicate for each model from here.
   
 3. run dadi_2D_plotting.py
