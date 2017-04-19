@@ -12,14 +12,14 @@ outgroup information to polarize SNPs), but can easily be modified to created un
 spectrum objects.
 
 None of the scripts are fully automated, as they are inherently specific to the input file 
-being used. Sections of the scripts which require hand editing are flagged with a #**************
+being used. Sections of the scripts which require hand editing are flagged with a #**************.
 Look through each script before attempting to run it to understand what needs to be modified.
 At the top of each script, there are also explanations and instructions.
 
 
 The basic workflow involves running the scripts sequentially and in order:
 
-1. run dadi_2D_00_projections.py
+**1. run dadi_2D_00_projections.py**
 
 Determine the best down projection numbers for your data set, to maximize the number of 
 segregating sites. The projection numbers represent the number of alleles, not individuals. 
@@ -32,7 +32,7 @@ Usage:
 `python dadi_2D_00_projections.py`
 
 
-2. run dadi_2D_01_first_optimizations.py
+**2. run dadi_2D_01_first_optimizations.py**
 
 This script will perform optimizations from multiple starting points using a 3-fold perturbed 
 set of random starting values for parameters. As before, you'll need to provide the full path 
@@ -70,7 +70,7 @@ Usage:
 
 
   
-3. run dadi_2D_02_second_optimizations.py
+**3. run dadi_2D_02_second_optimizations.py**
 
 This script will perform optimizations from multiple starting points using a 2-fold perturbed 
 set of USER SELECTED starting values for parameters. These values should come from the best
@@ -94,7 +94,7 @@ Usage:
 `python dadi_2D_02_second_optimizations.py`
 
 
-4. run dadi_2D_03_third_optimizations.py
+**4. run dadi_2D_03_third_optimizations.py**
 
 This script will perform optimizations from multiple starting points using a 1-fold perturbed 
 set of USER SELECTED starting values for parameters. The default is to run 100 replicates
@@ -114,7 +114,7 @@ Usage:
 `python dadi_2D_03_third_optimizations.py`
 
 
-5. run dadi_2D_04_plotting_functions.py
+**5. run dadi_2D_04_plotting_functions.py**
 
 This script will simulate the model using a fixed set of input parameters. That is, no 
 optimizations will occur here, and the assumption is you've searched thoroughly for the 
