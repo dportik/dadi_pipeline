@@ -136,6 +136,8 @@ basic structure of these scripts, or use the relatively simple model set here. T
 set can be reduced by either blocking out or deleting relevant sections of the code, but
 adding models will require adding additional functions in the same style.
 
+**Cautions**
+
 Optimizations sometimes fail and crash the script. The function to call each model is at 
 the bottom of the script, and the default set up is to call each model sequentially. You
 can try running this as is, or create multiple verisions of this script, block out some 
@@ -147,7 +149,25 @@ Be aware of other potential issues when running models, including data being mas
 failures, etc. To troubleshoot these problems, see the manual or head to the user group: 
 https://groups.google.com/forum/#!forum/dadi-user.
 
+I encountered some issues when plotting, some of which required editing or duplicating
+the dadi code to fix. The specific issues and workarounds are detailed at the top of the
+plotting script. 
 
+**Requirements**
+
+These scripts are written for Python 2.7, and to use them requires the most up to date 
+versions of the following Python modules (besides dadi):
+
+-Numpy
+
+-Scipy
+
+-Matplotlib
+
+
+
+
+**Citation**
 
 If you decide to use these scripts or modify the code for your purposes, please cite:
 
@@ -158,7 +178,7 @@ In Review, Molecular Ecology.*
 
 
 
-Daniel Portik
+**Daniel Portik**
 
 Contact: daniel.portik@uta.edu
 
