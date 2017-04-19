@@ -131,7 +131,15 @@ Usage:
 
 The goal of this workflow was to automate functions of dadi to produce useful output files
 resulting from many replicate runs of the model set, and to perform increasingly focused 
-optimizations. You can create your own set of models and perform similar analyses using the 
+optimizations. The first optimization round involves 50 replicates, with the optimize_log_fmin
+function (maxiter=20), using 3-fold perturbed starting parameters (from values=1). The second
+optimization round involves 50 replicates, with the optimize_log_fmin function (maxiter=30), 
+using 2-fold perturbed starting parameters (from user input values). The third optimization 
+round involves 100 replicates, with the optimize_log_fmin function (maxiter=50), using 1-fold 
+perturbed starting parameters (from user input values). This is done for each of the 15
+models included in the Models_2D.py script. 
+
+You can create your own set of models and perform similar analyses using the 
 basic structure of these scripts, or use the relatively simple model set here. This model 
 set can be reduced by either blocking out or deleting relevant sections of the code, but
 adding models will require adding additional functions in the same style.
