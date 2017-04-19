@@ -1,4 +1,4 @@
-# dadi_pipeline
+# older 2D dadi pipeline
 
 This workflow is designed to work with the Python package dadi (https://bitbucket.org/gutenkunstlab/dadi) and assumes you already 
 have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing your own 
