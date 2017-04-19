@@ -11,16 +11,19 @@ example files.
 
 If you decide to use these scripts or modify the code for your purposes, please cite:
 
-Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
+*Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
 Hirschfeld, M., Burger, M., and M.K. Fujita. Evaluating mechanisms of diversification 
 in a Guineo-Congolian forest frog using demographic model selection. 
-In Review, Molecular Ecology.
+In Review, Molecular Ecology.*
 
 
 
 Daniel Portik
+
 Contact: daniel.portik@uta.edu
 
 Postdoctoral Researcher
+
 University of Texas at Arlington
+
 April 2017
