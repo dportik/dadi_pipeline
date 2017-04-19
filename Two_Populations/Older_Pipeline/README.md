@@ -1,170 +1,72 @@
-# Two_Populations
+# dadi_pipeline
 
-Explore 15 demographic models capturing variation in migration rates, periods of isolation, 
-and population size change associated with the divergence between two populations.
+This workflow is designed to work with the Python package dadi (https://bitbucket.org/gutenkunstlab/dadi) and assumes you already 
+have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing your own 
+dadi scripts. A good resource for all dadi-related questions is the user group: https://groups.google.com/forum/#!forum/dadi-user.
+Before using these scripts, read over the user manual for dadi and try running the program with their example files.
 
-To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency
-spectrum object. There are many options for converting files to the correct format, and if 
-you've used STACKS to process your ddRADseq data I have written a conversion script which
-can be found in the Stacks_pipeline repository. Check the dadi website for instructions on 
-the basic format for this file. This pipeline is written to create folded spectra (lacking
-outgroup information to polarize SNPs), but can easily be modified to created unfolded
-spectrum objects.
+To begin, you will need a SNPs input text file. Mine is generated as part of a STACKs pipeline I have written, which converts the 
+haplotypes tsv file into the correct format. Depending on the program you've used to generate your SNP data file, you may or may not
+have easy options to get this formatted correctly. See the example file I've provided here and the explanation on the dadi website for 
+instructions on the basic format.
 
-None of the scripts are fully automated, as they are inherently specific to the input file 
-being used. Sections of the scripts which require hand editing are flagged with a #**************
-Look through each script before attempting to run it to understand what needs to be modified.
-At the top of each script, there are also explanations and instructions.
+Any number of demographic models can be created and tested by the user, I have written my pipeline to explore 14 models of joint 
+demographic history for two-population comparisons. These models are written in the TwoD_models.py script, which must be in the same
+working directory when running the other scripts (they import these models). A visual summary of these models is included as a png file.
 
+The general overview is
 
+1. run dadi_2D_initial_optimization.py
+  -Initial optimizations are performed by generating 20 sets of randomly perturbed parameters and optimizing each parameter set 
+  using the Nelder-Mead method (optimize_log_fmin), running each optimization algorithm for a maximum of 100 iterations. Each 
+  optimized parameter set is used to simulate the 2D-JSFS, and the multinomial approach is used to estimate the log-likelihood 
+  of the 2D-JSFS given the model. The output of this script: {outfile}_INITIAL_model_results.txt, is used to find the best rep 
+  for each model and these parameters are manually inserted into the next script for final optimizations.
 
-The basic workflow involves running the scripts sequentially and in order:
-
-1. run dadi_2D_00_projections.py
-
-Determine the best down projection numbers for your data set, to maximize the number of 
-segregating sites. The projection numbers represent the number of alleles, not individuals. 
-The full path to the SNPs input file must be provided, along with specific population labels 
-within this file, and the projection numbers. The syntax to create the 2D-JSFS will be the 
-same in all subsequent scripts.
-
-Usage:
-
-`python dadi_2D_00_projections.py`
-
-
-2. run dadi_2D_01_first_optimizations.py
-
-This script will perform optimizations from multiple starting points using a 3-fold perturbed 
-set of random starting values for parameters. As before, you'll need to provide the full path 
-to the SNPs input file, the specific population labels, and the projection numbers. You'll
-also need to provide numbers for the grid size to use. The default is to run 50 replicates
-for each of the 15 models, but this can also be edited at the bottom of the script. This 
-script requires the Models_2D.py script to be in same working directory. This is where
-all the population model functions are stored. 
-
-
-The output for each model is a tab-delimited  text file which can be opened and sorted to 
-find the best scoring replicate. The parameter values from this run should be used as the 
-starting values in the next script, "dadi_2D_02_second_optimizations.py". The order of 
-output parameters matches the input order, so they can be copied and pasted from the 
-appropriate output file into the next script within the corresponding parameter list.
-
-The outputs from here will be labeled according to model and a user selected prefix name, 
-and are written to the working directory as:
-
-`Round1_[prefix]_[model_name]_optimized.txt`
-
-Example output file from one model:
-```
-Model	param_set	Replicate	log-likelihood	theta	AIC	optimized_params
-Divergence with no migration	parameter set = [nu1, nu2, T]	1	-443.41	317.15	892.82	0.6795	0.7315	0.141	
-Divergence with no migration	parameter set = [nu1, nu2, T]	2	-179.8	141.7	365.6	4.3798	1.6121	0.7995	
-Divergence with no migration	parameter set = [nu1, nu2, T]	3	-241.28	116.99	488.56	3.1119	17.7282	1.1496	
-Divergence with no migration	parameter set = [nu1, nu2, T]	4	-1763.04	54.2	3532.08	9.0388	0.2684	5.3911	
-Divergence with no migration	parameter set = [nu1, nu2, T]	5	-177.49	150.28	360.98	2.7819	2.6884	0.8431	
-```
-
-Usage:
-
-`python dadi_2D_01_first_optimizations.py`
-
-
+2. run dadi_2D_final_optimization.py
+  -Final optimizations should use the best param sets from each model resulting from the previous script. These parameters are also
+  perturbed to start optimizations, just less so than in the previous step. For each replicate, a perturbed parameter set is then
+  optimized using the Nelder-Mead method (optimize_log_fmin), running each optimization algorithm for a maximum of 60 iterations. Each 
+  optimized parameter set is used to simulate the 2D-JSFS, and the multinomial approach is used to estimate the log-likelihood 
+  of the 2D-JSFS given the model. The output of this script: {outfile}_OPTIMIZED_model_results.txt, is tab-delimited and can be opened in 
+  excel. It reports rep number, ln-lik, AIC, params, etc. You can select the best replicate for each model from here.
   
-3. run dadi_2D_02_second_optimizations.py
+3. run dadi_2D_plotting.py
+  -Manually insert the best param set for each model from the previous step. There is NO OPTIMIZATION here, so the values will not change
+  in the final model. The idea is simply to run each model and then plot the results, a spectrum of the data and model, plus residuals.
+  Output pdf files will be created for each plot run.
 
-This script will perform optimizations from multiple starting points using a 2-fold perturbed 
-set of USER SELECTED starting values for parameters. These values should come from the best
-replicate per model of the previous script. As before, you'll need to provide the full path 
-to the SNPs input file, the specific population labels, and the projection numbers. You'll
-also need to provide numbers for the grid size to use. The default is to run 50 replicates
-for each of the 15 models based on the user selected starting parameters. This  script also 
-requires the Models_2D.py script to be in same working directory.
+I assume outgroup data are lacking and create folded  2D-spectra. If you have outgroup data in your SNP input file, you can easily change
+this option in the script. None of the scripts are fully automated, as they are inherently specific to the input file being used.  You'll
+need to figure out the best projections for your data set, often requiring a down-projection. The grid choice will depend on the
+projection values, and also needs to be changed. You can choose the number of reps in model searching, and will need to change output 
+file naming schemes. You'll need to hand edit sections of the script to match your data set.
 
-The output for each model is an identical style tab-delimited text file. Similar to the 
-previous step, the parameter values from this run should be used as the starting values 
-for the next and final optimization script, "dadi_2D_03_third_optimizations.py".
+Sections of the scripts which require hand editing are flagged with a #**************
 
-The outputs from here will be labeled according to model and a user selected prefix name, 
-and are written to the working directory as:
+The point of this workflow was to automate functions of dadi and produce output files that summarize a large number of replicates run for 
+many different models. You can create your own set of models and perform similar analyses using the basic structure of these scripts, or
+use the set of 14 models here. The model set here can be reduced by either blocking out or deleting relevant sections of the loops, but
+adding models will require adding code within the loops I designed. This should be straightforward to imitate the style of the code, and
+change relevant names, output text, parameter numbers, and AIC penalty depending on the model. I'm sure a more generic function could
+be used to load in models and parameters and run optimizations, but I found this code intuitive and easy to follow so I could troubleshoot
+the many issues I had along the way.
 
-`Round2_[prefix]_[model_name]_optimized.txt`
+I noticed that optimizations sometimes fail, crashing the script. If this happened repeatedly, I blocked out the code for this model and 
+skipped it - sometimes they were too complex for a given data set, particularly with a low number of segregating sites or low number of 
+individuals. Sometimes the optimizations don't completely fail, but display severe warnings (that extrapolation may have failed). These
+aren't translated to the output files, so pay attention to the program output and make sure this isn't a problem - the likelihoods from
+these can be bizarre and should not be used in your model comparisons! 
 
-Usage:
+The scripts here are all tailored to run the example file I've provided. You should be able to perform each step by only editing the 
+path to the example file (and assuming you have the dadi python module already installed!).
 
-`python dadi_2D_02_second_optimizations.py`
-
-
-4. run dadi_2D_03_third_optimizations.py
-
-This script will perform optimizations from multiple starting points using a 1-fold perturbed 
-set of USER SELECTED starting values for parameters. The default is to run 100 replicates
-for each of the 15 models. As before, you'll need to provide the full path to the SNPs input 
-file, the specific population labels, the projection numbers, and grid size. The output for 
-each model is the same style tab-delimited text file which can be opened and sorted to find 
-the best scoring replicate and do AIC comparisons, delta AIC, or weights for the model set. 
-The optimized parameter values for each model should be used for the subsequent plotting script. 
-
-The outputs from here will be labeled according to model and a user selected prefix name, 
-and are written to the working directory as:
-
-`Round3_[prefix]_[model_name]_optimized.txt`
-
-Usage:
-
-`python dadi_2D_03_third_optimizations.py`
-
-
-5. run dadi_2D_04_plotting_functions.py
-
-This script will simulate the model using a fixed set of input parameters. That is, no 
-optimizations will occur here, and the assumption is you've searched thoroughly for the 
-parameter set with the highest likelihood value. The goal of this script is to produce 
-plots of the 2D-JSFS for the data and model, plus the residuals. A pdf file for each of 
-the 15 models will be written for each model to the current working directory. 
-
-Usage:
-
-`python dadi_2D_04_plotting_functions.py`
-
-
-
-The goal of this workflow was to automate functions of dadi to produce useful output files
-resulting from many replicate runs of the model set, and to perform increasingly focused 
-optimizations. You can create your own set of models and perform similar analyses using the 
-basic structure of these scripts, or use the relatively simple model set here. This model 
-set can be reduced by either blocking out or deleting relevant sections of the code, but
-adding models will require adding additional functions in the same style.
-
-Optimizations sometimes fail and crash the script. The function to call each model is at 
-the bottom of the script, and the default set up is to call each model sequentially. You
-can try running this as is, or create multiple verisions of this script, block out some 
-of the models (use hashes, block annotation, or delete), and execute one script version 
-for every core you have available. This will speed things up, and reduce potential 
-crashes from optimization fails. 
-
-Be aware of other potential issues when running models, including data being masked, extrapolation
-failures, etc. To troubleshoot these problems, see the manual or head to the user group: 
-https://groups.google.com/forum/#!forum/dadi-user.
-
-
-
-If you decide to use these scripts or modify the code for your purposes, please cite:
-
-Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
-Hirschfeld, M., Burger, M., and M.K. Fujita. Evaluating mechanisms of diversification 
-in a Guineo-Congolian forest frog using demographic model selection. 
-In Review, Molecular Ecology.
-
-
-
-Daniel Portik
 Contact: daniel.portik@uta.edu
 
+# Daniel Portik
+
 Postdoctoral Researcher
+
 University of Texas at Arlington
-April 2017
 
-
-
- 
+December 2015
