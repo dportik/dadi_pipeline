@@ -69,4 +69,4 @@ Postdoctoral Researcher
 
 University of Texas at Arlington
 
-December 2015
+December 2016
