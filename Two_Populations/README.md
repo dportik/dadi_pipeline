@@ -167,6 +167,16 @@ were not generated. Some of this required editing or duplicating the dadi code t
 specific issues and workarounds are detailed at the top of the plotting script. The most
 common error is very easy to fix, and this is explained in the *Plotting_Error_Fix* section.
 
+**Example Data**
+
+I've provided an example SNPS input file along with the results of each optimization round
+and the final spectrum plots. The scripts above will work with this input file if you
+provide the correct path to its location, as the population IDs, projections, grid size,
+and optimized param lists are all specific to this data set. Note the standard plotting 
+routine will fail for this data set, and the instructions for fixing this common issue are
+available in the *Plotting_Error_Fix* section.
+
+
 **Requirements**
 
 These scripts are written for Python 2.7, and to use them requires the most up to date 
