@@ -45,7 +45,7 @@ all the population model functions are stored.
 
 The output for each model is a tab-delimited  text file which can be opened and sorted to 
 find the best scoring replicate. The parameter values from this run should be used as the 
-starting values in the next script, "dadi_2D_02_second_optimizations.py". The order of 
+starting values in the next script, *dadi_2D_02_second_optimizations.py*. The order of 
 output parameters matches the input order, so they can be copied and pasted from the 
 appropriate output file into the next script within the corresponding parameter list.
 
@@ -82,7 +82,7 @@ requires the Models_2D.py script to be in same working directory.
 
 The output for each model is an identical style tab-delimited text file. Similar to the 
 previous step, the parameter values from this run should be used as the starting values 
-for the next and final optimization script, "dadi_2D_03_third_optimizations.py".
+for the next and final optimization script, *dadi_2D_03_third_optimizations.py*.
 
 The outputs from here will be labeled according to model and a user selected prefix name, 
 and are written to the working directory as:
@@ -172,7 +172,9 @@ These scripts are written for Python 2.7, and to use them requires the most up t
 versions of the following Python modules (besides dadi):
 
 -Numpy
+
 -Scipy
+
 -Matplotlib
 
 
