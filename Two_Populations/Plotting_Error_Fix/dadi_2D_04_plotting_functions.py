@@ -77,7 +77,7 @@ April 2017
 #get snps file 
 
 #**************
-snps1 = "/Users/dan/Dropbox/dadi_inputs/Afrixalus_New2D_Comparisons/North_South/dadi_2pops_Cameroon_South_snps.txt"
+snps1 = "/FULL PATH TO /dadi_2pops_Cameroon_South_snps.txt"
 
 #Create python dictionary from snps file
 dd1 = dadi.Misc.make_data_dict(snps1)
