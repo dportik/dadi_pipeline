@@ -197,7 +197,8 @@ Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
 
 and executing the script. That is, you don't need to edit anything within the *Two_Pop_Model*
 function or eliminate anything from the *Models_2D.py* script to reduce the model set, just
-change the bottom section as above.
+change the bottom section as above. Similar changes will need to be made to the following
+optimization and plotting scripts, but this will be straightforward.
 
 Also, if you feel more strongly about a particular optimization routine, you can change the 
 function from *optimize_log_fmin* to any of the other options available, throughout the code.
