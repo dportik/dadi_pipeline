@@ -1,5 +1,7 @@
 # older 2D dadi pipeline
 
+**This represents my initial attempt to streamline model testing in dadi. Please use the more recent pipeline, rather than this one here. For the sake of continuity, I am keeping these scripts stored here.**
+
 This workflow is designed to work with the Python package dadi (https://bitbucket.org/gutenkunstlab/dadi) and assumes you already 
 have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing your own 
 dadi scripts. A good resource for all dadi-related questions is the user group: https://groups.google.com/forum/#!forum/dadi-user.
