@@ -141,11 +141,68 @@ perturbed starting parameters (from user input values). This is done for each of
 models included in the Models_2D.py script. 
 
 You can create your own set of models and perform similar analyses using the 
-basic structure of these scripts, or use the relatively simple model set here. This model 
-set can be reduced by either blocking out or deleting relevant sections of the code, but
-adding models will require adding additional functions in the same style. Also, if you feel
-more strongly about a particular optimization routine, you can change the function from
-*optimize_log_fmin* to any of the other options available, throughout the code.
+basic structure of these scripts, or use the relatively simple model set here. Adding models
+will require adding additional functions in the same style to all the scripts. The model 
+set can be reduced by either blocking out or deleting relevant sections of the code. As each
+model is called at the bottom of the optimization scripts, eliminating them is fairly simple.
+For example the block of code controlling the models examined at the bottom of the first
+optimization script:
+
+```
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig")
+
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig_size")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig_size")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig_size")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size")
+``` 
+
+can be modified to only include the first four models this way:
+```
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig")
+
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig_size")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig_size")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig_size")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size")
+#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size")
+``` 
+
+or simply by deleting the other calls to the models:
+```
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig")
+Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
+``` 
+
+and executing the script. That is, you don't need to edit anything within the *Two_Pop_Model*
+function or eliminate anything from the *Models_2D.py* script to reduce the model set, just
+change the bottom section as above.
+
+Also, if you feel more strongly about a particular optimization routine, you can change the 
+function from *optimize_log_fmin* to any of the other options available, throughout the code.
+There are many available and some may be more appropriate or faster. 
+
 
 **Cautions**
 
