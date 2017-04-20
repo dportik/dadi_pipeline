@@ -131,18 +131,20 @@ Usage:
 
 The goal of this workflow was to automate functions of dadi to produce useful output files
 resulting from many replicate runs of the model set, and to perform increasingly focused 
-optimizations. The first optimization round involves 50 replicates, with the optimize_log_fmin
+optimizations. The first optimization round involves 50 replicates, with the *optimize_log_fmin*
 function (maxiter=20), using 3-fold perturbed starting parameters (from values=1). The second
-optimization round involves 50 replicates, with the optimize_log_fmin function (maxiter=30), 
+optimization round involves 50 replicates, with the *optimize_log_fmin* function (maxiter=30), 
 using 2-fold perturbed starting parameters (from user input values). The third optimization 
-round involves 100 replicates, with the optimize_log_fmin function (maxiter=50), using 1-fold 
+round involves 100 replicates, with the *optimize_log_fmin* function (maxiter=50), using 1-fold 
 perturbed starting parameters (from user input values). This is done for each of the 15
 models included in the Models_2D.py script. 
 
 You can create your own set of models and perform similar analyses using the 
 basic structure of these scripts, or use the relatively simple model set here. This model 
 set can be reduced by either blocking out or deleting relevant sections of the code, but
-adding models will require adding additional functions in the same style.
+adding models will require adding additional functions in the same style. Also, if you feel
+more strongly about a particular optimization routine, you can change the function from
+*optimize_log_fmin* to any of the other options available, throughout the code.
 
 **Cautions**
 
@@ -155,11 +157,14 @@ crashes from optimization fails.
 
 Be aware of other potential issues when running models, including data being masked, extrapolation
 failures, etc. To troubleshoot these problems, see the manual or head to the user group: 
-https://groups.google.com/forum/#!forum/dadi-user.
+https://groups.google.com/forum/#!forum/dadi-user. They may not always cause the scripts 
+to crash, but if the extrapolation fails the likelihoods can be entirely misleading. Make
+sure you inspect the output when the replicates are running to make sure this isn't the case.
 
-I encountered some issues when plotting, some of which required editing or duplicating
-the dadi code to fix. The specific issues and workarounds are detailed at the top of the
-plotting script. 
+I encountered some specific issues when plotting, which terminated in errors and the plots
+were not generated. Some of this required editing or duplicating the dadi code to fix. These
+specific issues and workarounds are detailed at the top of the plotting script. The most
+common error is very easy to fix, and this is explained in the *Plotting_Error_Fix* section.
 
 **Requirements**
 
@@ -167,9 +172,7 @@ These scripts are written for Python 2.7, and to use them requires the most up t
 versions of the following Python modules (besides dadi):
 
 -Numpy
-
 -Scipy
-
 -Matplotlib
 
 
