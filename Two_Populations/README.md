@@ -39,7 +39,7 @@ set of random starting values for parameters. As before, you'll need to provide 
 to the SNPs input file, the specific population labels, and the projection numbers. You'll
 also need to provide numbers for the grid size to use. The default is to run 50 replicates
 for each of the 15 models, but this can also be edited at the bottom of the script. This 
-script requires the Models_2D.py script to be in same working directory. This is where
+script requires the *Models_2D.py* script to be in same working directory. This is where
 all the population model functions are stored. 
 
 
@@ -78,7 +78,7 @@ replicate per model of the previous script. As before, you'll need to provide th
 to the SNPs input file, the specific population labels, and the projection numbers. You'll
 also need to provide numbers for the grid size to use. The default is to run 50 replicates
 for each of the 15 models based on the user selected starting parameters. This  script also 
-requires the Models_2D.py script to be in same working directory.
+requires the *Models_2D.py* script to be in same working directory.
 
 The output for each model is an identical style tab-delimited text file. Similar to the 
 previous step, the parameter values from this run should be used as the starting values 
@@ -99,7 +99,8 @@ Usage:
 This script will perform optimizations from multiple starting points using a 1-fold perturbed 
 set of USER SELECTED starting values for parameters. The default is to run 100 replicates
 for each of the 15 models. As before, you'll need to provide the full path to the SNPs input 
-file, the specific population labels, the projection numbers, and grid size. The output for 
+file, the specific population labels, the projection numbers, and grid size. This  script 
+also requires the *Models_2D.py* script to be in same working directory. The output for 
 each model is the same style tab-delimited text file which can be opened and sorted to find 
 the best scoring replicate and do AIC comparisons, delta AIC, or weights for the model set. 
 The optimized parameter values for each model should be used for the subsequent plotting script. 
