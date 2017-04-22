@@ -5,7 +5,6 @@ import dadi
 import pylab
 import Models_2D
 import matplotlib.pyplot as plt
-import Plotting2
 
 '''
 usage: python dadi_2D_04_plotting_functions.py
