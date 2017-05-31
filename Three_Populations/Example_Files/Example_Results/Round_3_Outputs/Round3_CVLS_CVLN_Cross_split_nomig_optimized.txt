@@ -1,0 +1,2 @@
+Model	param_set	Replicate	log-likelihood	theta	AIC	optimized_params
+Split with No Migration	parameter set = [nu1, nuA, nu2, nu3, T1, T2]	1	-2302.78	207.32	4617.56	1.8971	0.4417	15.2172	1.0807	0.0176	0.96	

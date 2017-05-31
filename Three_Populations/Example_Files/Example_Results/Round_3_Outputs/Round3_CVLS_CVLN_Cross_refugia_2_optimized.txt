@@ -1,0 +1,2 @@
+Model	param_set	Replicate	log-likelihood	theta	AIC	optimized_params
+Refugia 2 with secondary contact	parameter set = [nu1, nuA, nu2, nu3, m1, m2, T1, T2]	1	-1973.11	361.16	3962.22	1.5337	8.3933	1.2691	0.5862	0.497	0.3036	0.3109	0.9021	

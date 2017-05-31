@@ -1,0 +1,2 @@
+Model	param_set	Replicate	log-likelihood	theta	AIC	optimized_params
+Ancient migration 1	parameter set = [nu1, nuA, nu2, nu3, mA, m1, m2, T1, T2, T3]	1	-2737.18	131.13	5494.36	1.8309	0.1989	3.0436	3.4869	0.1357	1.4922	0.2337	2.0328	6.1089	0.1541	
