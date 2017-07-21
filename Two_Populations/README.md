@@ -253,10 +253,11 @@ versions of the following Python modules (besides dadi):
 
 If you decide to use these scripts or modify the code for your purposes, please cite:
 
+
 *Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
-Hirschfeld, M., Burger, M., and M.K. Fujita. Evaluating mechanisms of diversification 
-in a Guineo-Congolian forest frog using demographic model selection. 
-In Review, Molecular Ecology.*
+Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification 
+in a Guineo-Congolian tropical forest frog using demographic model selection. 
+In press, Molecular Ecology.*
 
 
 
