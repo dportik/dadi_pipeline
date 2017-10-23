@@ -13,17 +13,17 @@ If you decide to use these scripts or modify the code for your purposes, please 
 
 *Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
 Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification 
-in a Guineo-Congolian tropical forest frog using demographic model selection. 
-In press, Molecular Ecology.*
+in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 
+Early View, doi: 10.1111/mec.14266*
 
 
 
 **Daniel Portik**
 
-Contact: daniel.portik@uta.edu
+Contact: daniel.portik@uta.edu -> danielportik@email.arizona.edu
 
 Postdoctoral Researcher
 
-University of Texas at Arlington
+University of Arizona
 
-April 2017
+October 2017
