@@ -1,6 +1,6 @@
 # Two Populations Dadi Pipeline v3
 
-Explore 15 demographic models capturing variation in migration rates, periods of isolation, 
+Explore demographic models capturing variation in migration rates, periods of isolation, 
 and population size change associated with the divergence between two populations.
 
 To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency
