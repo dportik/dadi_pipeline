@@ -1,4 +1,4 @@
-# Two_Populations
+# Two Populations Dadi Pipeline v3
 
 Explore 15 demographic models capturing variation in migration rates, periods of isolation, 
 and population size change associated with the divergence between two populations.
@@ -15,6 +15,42 @@ None of the scripts are fully automated, as they are inherently specific to the 
 being used. Sections of the scripts which require hand editing are flagged with a #**************.
 Look through each script before attempting to run it to understand what needs to be modified.
 At the top of each script, there are also explanations and instructions.
+
+**Version 3 updates** (Oct 2017) 
+Moved all functions out of main scripts and placed in *Optimize_Functions.py*
+script for clarity. The workflow is nearly identical to V2, with less clutter. New models 
+added to the model set, here is a complete list of models (new models marked with +):
+
+1. Standard neutral model, populations never diverge
+2. Split into two populations, no migration.
+3. Split into two populations, with symmetric migration.
+4. Split into two populations, with different migration rates.
+5. Split with symmetric migration followed by isolation.
+6. Split with asymmetric migration followed by isolation.
+7. Split with no gene flow, followed by period of symmetrical gene flow.
+8. Split with no gene flow, followed by period of asymmetrical gene flow.
+9. Split with no migration, then size change with no migration.
+10. Split with symmetric migration, then size change with symmetric migration.
+11. Split with different migration rates, then size change with different migration rates.
+12. Split with symmetrical gene flow, followed by size change with no gene flow.  
+13. Split with asymmetrical gene flow, followed by size change with no gene flow.
+14. Split with no gene flow, followed by size change with symmetrical gene flow.
+15. Split with no gene flow, followed by size change with asymmetrical gene flow.
+16. +Split into two populations, with symmetric migration, two epochs.
+17. +Split into two populations, with different migration rates, two epochs.
+18. +Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
+19. +Split with no gene flow, followed by period of asymmetrical gene flow, then isolation.
+20. +Split with no gene flow, followed by size change with symmetrical gene flow, then isolation.
+21. +Split with no gene flow, followed by size change with asymmetrical gene flow, then isolation.
+22. +Founder event with symmetric migration and population two exponential growth.
+23. +Founder event with asymmetric migration and population two exponential growth.
+24. +Founder event with no migration and population two exponential growth.
+
+A new graphics file with the visual representation has been provided. The example file and
+all associated outputs have been updated to include results from the new models.
+
+
+**Suggested Workflow**
 
 
 The basic workflow involves running the scripts sequentially and in order:
@@ -39,8 +75,8 @@ set of random starting values for parameters. As before, you'll need to provide 
 to the SNPs input file, the specific population labels, and the projection numbers. You'll
 also need to provide numbers for the grid size to use. The default is to run 50 replicates
 for each of the 15 models, but this can also be edited at the bottom of the script. This 
-script requires the *Models_2D.py* script to be in same working directory. This is where
-all the population model functions are stored. 
+script requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
+directory. This is where all the population model functions are stored. 
 
 
 The output for each model is a tab-delimited  text file which can be opened and sorted to 
@@ -78,7 +114,7 @@ replicate per model of the previous script. As before, you'll need to provide th
 to the SNPs input file, the specific population labels, and the projection numbers. You'll
 also need to provide numbers for the grid size to use. The default is to run 50 replicates
 for each of the 15 models based on the user selected starting parameters. This  script also 
-requires the *Models_2D.py* script to be in same working directory.
+requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working directory.
 
 The output for each model is an identical style tab-delimited text file. Similar to the 
 previous step, the parameter values from this run should be used as the starting values 
@@ -100,10 +136,11 @@ This script will perform optimizations from multiple starting points using a 1-f
 set of USER SELECTED starting values for parameters. The default is to run 100 replicates
 for each of the 15 models. As before, you'll need to provide the full path to the SNPs input 
 file, the specific population labels, the projection numbers, and grid size. This  script 
-also requires the *Models_2D.py* script to be in same working directory. The output for 
-each model is the same style tab-delimited text file which can be opened and sorted to find 
-the best scoring replicate and do AIC comparisons, delta AIC, or weights for the model set. 
-The optimized parameter values for each model should be used for the subsequent plotting script. 
+also requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
+directory. The output for each model is the same style tab-delimited text file which can be 
+opened and sorted to find the best scoring replicate and do AIC comparisons, delta AIC, or 
+weights for the model set. The optimized parameter values for each model should be used for 
+the subsequent plotting script. 
 
 The outputs from here will be labeled according to model and a user selected prefix name, 
 and are written to the working directory as:
@@ -121,7 +158,9 @@ This script will simulate the model using a fixed set of input parameters. That 
 optimizations will occur here, and the assumption is you've searched thoroughly for the 
 parameter set with the highest likelihood value. The goal of this script is to produce 
 plots of the 2D-JSFS for the data and model, plus the residuals. A pdf file for each of 
-the 15 models will be written for each model to the current working directory. 
+the 15 models will be written for each model to the current working directory. This script 
+requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
+directory.
 
 Usage:
 
@@ -133,86 +172,67 @@ Usage:
 The goal of this workflow was to automate functions of dadi to produce useful output files
 resulting from many replicate runs of the model set, and to perform increasingly focused 
 optimizations. The first optimization round involves 50 replicates, with the *optimize_log_fmin*
-function (maxiter=20), using 3-fold perturbed starting parameters (from values=1). The second
+function (maxiter=20), using 3-fold perturbed default starting parameters. The second
 optimization round involves 50 replicates, with the *optimize_log_fmin* function (maxiter=30), 
 using 2-fold perturbed starting parameters (from user input values). The third optimization 
 round involves 100 replicates, with the *optimize_log_fmin* function (maxiter=50), using 1-fold 
 perturbed starting parameters (from user input values). This is done for each of the 15
-models included in the Models_2D.py script. 
+models included in the Models_2D.py script. These values worked well in my analyses, but 
+you may wish to change them if optimizations are not performing well or you want to be even
+more thorough.
 
 You can create your own set of models and perform similar analyses using the 
 basic structure of these scripts, or use the relatively simple model set here. Adding models
-will require adding additional functions in the same style to all the scripts. The model 
-set can be reduced by either blocking out or deleting relevant sections of the code. As each
-model is called at the bottom of the optimization scripts, eliminating them is fairly simple.
-For example the block of code controlling the models examined at the bottom of the first
-optimization script:
+will require adding additional functions to the *Models_2D.py* and *Optimize_Functions.py* 
+scripts. Although this is more advanced, the model set can easily be reduced by either 
+blocking out or deleting relevant sections of the first, second, and third optimization 
+scripts. As each model is called at the bottom of the optimization scripts, eliminating 
+them is fairly simple. For example, the partial block of code controlling the models examined at 
+the bottom of the first optimization script:
 
 ```
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig")
-
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig_size")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig_size")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig_size")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_divergence")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_mig")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "sym_mig")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "asym_mig")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
 ``` 
 
-can be modified to only include the first four models this way:
+can be modified to only include the first model this way:
 ```
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig")
-
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig_size")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig_size")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig_size")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size")
-#Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_divergence")
+#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_mig")
+#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "sym_mig")
+#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "asym_mig")
+#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
 ``` 
 
-or simply by deleting the other calls to the models:
+or by deleting the other calls to the models:
 ```
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig")
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig")
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_divergence")
 ``` 
 
-and executing the script. That is, you don't need to edit anything within the *Two_Pop_Model*
-function or eliminate anything from the *Models_2D.py* script to reduce the model set, just
-change the bottom section as above. Similar changes will need to be made to the following
-optimization and plotting scripts, but this will be straightforward.
+and executing the script. That is, you don't need to edit anything within the *Optimize_Round1*
+function found in the *Optimize_Functions* script or eliminate anything from the 
+*Models_2D.py* script to reduce the model set, just change the bottom section as above. 
+Similar changes will need to be made to the following optimization and plotting scripts, 
+but this will be straightforward and nearly identical.
 
 Also, if you feel more strongly about a particular optimization routine, you can change the 
-function from *optimize_log_fmin* to any of the other options available, throughout the code.
-There are many available and some may be more appropriate or faster. 
+function from *optimize_log_fmin* to any of the other options available, inside the 
+*Optimize_Round1*, *Optimize_Round2*, and *Optimize_Round3* functions in the 
+*Optimize_Functions* script. There are many available and some may be more appropriate or 
+perhaps faster for your data sets. 
 
 
 **Cautions**
 
-Optimizations sometimes fail and crash the script. The function to call each model is at 
+Optimizations sometimes fail and crash the script. The commands to call each model are at 
 the bottom of the script, and the default set up is to call each model sequentially. You
 can try running this as is, or create multiple verisions of this script, block out some 
 of the models (use hashes, block annotation, or delete), and execute one script version 
 for every core you have available. This will speed things up, and reduce potential 
-crashes from optimization fails. 
+crashes from optimization fails.
 
 Be aware of other potential issues when running models, including data being masked, extrapolation
 failures, etc. To troubleshoot these problems, see the manual or head to the user group: 
@@ -223,16 +243,51 @@ sure you inspect the output when the replicates are running to make sure this is
 I encountered some specific issues when plotting, which terminated in errors and the plots
 were not generated. Some of this required editing or duplicating the dadi code to fix. These
 specific issues and workarounds are detailed at the top of the plotting script. The most
-common error is very easy to fix, and this is explained in the *Plotting_Error_Fix* section.
+common error is very easy to fix, and this is explained in the next section.
+
+
+**Plotting Errors**
+
+Sometimes you might see this error when plotting:
+
+`ValueError: Data has no positive values, and therefore can not be log-scaled.`
+
+This can be fixed. This stems from an error in the *plot_2d_comp_multinom* function located
+in the dadi *Plotting.py* script. You will need to change the vmin value in this function
+from *None* to something between 0 and 1 (generally a super low decimal value) where it
+is called in the plotting script I've written. I have changed vmin to 0.005-0.01 with good results.
+
+To implement this change open the *dadi_2D_04_plotting_functions.py* and scroll to the 
+bottom section where the code reads:
+```
+def plot_all(sim_model, data, outfile, model_name):
+    print '{0}_{1}.pdf'.format(outfile,model_name), '\n'
+    outname = '{0}_{1}.pdf'.format(outfile,model_name)
+    fig = pylab.figure(1)
+    fig.clear()
+    dadi.Plotting.plot_2d_comp_multinom(sim_model, data, resid_range = 3)
+    fig.savefig(outname)
+```
+
+You'll want to change:
+
+`dadi.Plotting.plot_2d_comp_multinom(model, data, resid_range = 3)`
+
+to:
+
+`dadi.Plotting.plot_2d_comp_multinom(model, data, resid_range = 3, vmin = 0.005)`
+
+
+This should eliminate the ValueError and allow the plotting to continue. You can play around
+with the vmin values to see the resulting effects on the plots. 
+
 
 **Example Data**
 
 I've provided an example SNPS input file along with the results of each optimization round
 and the final spectrum plots. The scripts above will work with this input file if you
 provide the correct path to its location, as the population IDs, projections, grid size,
-and optimized param lists are all specific to this data set. Note the standard plotting 
-routine will fail for this data set, and the instructions for fixing this common issue are
-available in the *Plotting_Error_Fix* section.
+and optimized param lists are all specific to this data set.
 
 
 **Requirements**
@@ -254,21 +309,21 @@ versions of the following Python modules (besides dadi):
 If you decide to use these scripts or modify the code for your purposes, please cite:
 
 *Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
-Hirschfeld, M., Burger, M., and M.K. Fujita. Evaluating mechanisms of diversification 
-in a Guineo-Congolian forest frog using demographic model selection. 
-In Review, Molecular Ecology.*
+Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification 
+in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 
+Early View, doi: 10.1111/mec.14266*
 
 
 
 **Daniel Portik**
 
-Contact: daniel.portik@uta.edu
+Contact: daniel.portik@uta.edu -> danielportik@email.arizona.edu
 
 Postdoctoral Researcher
 
-University of Texas at Arlington
+University of Arizona
 
-April 2017
+October 2017
 
 
 

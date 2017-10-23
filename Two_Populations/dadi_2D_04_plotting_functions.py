@@ -4,13 +4,15 @@ import numpy as np
 import dadi
 import pylab
 import Models_2D
+import Optimize_Functions
+from datetime import datetime
 import matplotlib.pyplot as plt
 
 '''
 usage: python dadi_2D_04_plotting_functions.py
 
-Requires the Models_2D.py script to be in same working directory. This is where
-all the population model functions are stored for this script. 
+Requires the Models_2D.py and Optimize_Functions.py scripts to be in same working directory. 
+This is where all the population models and functions are stored for this script. 
 
 Script will simulate the model using a fixed set of input parameters. That is,
 no optimizations will occur here, and the assumption is you've searched
@@ -68,604 +70,264 @@ Python modules required:
 ############################################
 
 Dan Portik
-daniel.portik@uta.edu
-April 2017
+daniel.portik@uta.edu -> danielportik@email.arizona.edu
+October 2017
 '''
 
+#keep track of start time
+t_begin = datetime.now()
+
+
 #===========================================================================
-#get snps file 
+#get snps file and convert into allele frequency spectrum object in dadi
 
 #**************
-snps1 = "/FULL PATH TO/dadi_2pops_Cameroon_South_snps.txt"
+snps1 = "/FULL PATH TO /dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd1 = dadi.Misc.make_data_dict(snps1)
 
 #**************
 #pop_ids is a list which should match the populations headers of your SNPs file columns
-pop_ids=["Cameroon", "South"]
+pop_ids=["North", "South"]
 #projection sizes, in ALLELES not individuals
-proj_1 = [16,28]
+proj_1 = [16,32]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 
+#print relevant info to screen
 print '\n', '\n', "Data for spectrum:"
 print "projection", proj_1
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
-#======================================================================================
-#create function to run models with fixed user input parameters (presumably from best runs)
-
-def Two_Pop_Plot(pts, fs, model_name, params):
-
-    if model_name == "no_divergence":
-        #####################################
-        #No Divergence
-        #####################################
-        print "---------------------------------------------------"
-        print "No Divergence",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.no_divergence
-        params = []
-        print "parameter set = [none]"
-        
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate theta
-        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-        theta = np.around(theta, 2)
-        print "Theta = ", theta
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*3)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "no_mig":
-        #####################################
-        # Divergence with no migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with no migration",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.no_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate theta
-        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-        theta = np.around(theta, 2)
-        print "Theta = ", theta
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*3)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "sym_mig":
-        #####################################
-        #Divergence with symmetric migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with symmetric migration",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        print "base parameters = ", params
-        
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*4)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "asym_mig":
-        #####################################
-        #Divergence with asymmetric migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with asymmetric migration",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.asym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*5)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "anc_sym_mig":
-        #####################################
-        #Divergence with ancient symmetrical migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient symmetrical migration",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_sym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*5)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "anc_asym_mig":
-        #####################################
-        #Divergence with ancient asymmetrical migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient asymmetrical migration",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_asym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*6)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "sec_contact_sym_mig":
-        #####################################
-        #Divergence and symmetrical secondary contact
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and symmetrical secondary contact",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_sym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*5)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-        
-        
-    elif model_name == "sec_contact_asym_mig":
-        #####################################
-        #Divergence and asymmetrical secondary contact
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and asymmetrical secondary contact",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_asym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-        
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*6)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-
-    ##########################################################################
-    #Similar models but with size change allowed
-    ##########################################################################
-    
-    elif model_name == "no_mig_size":
-        #####################################
-        #Divergence with no migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with no migration, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.no_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*6)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-        
-        
-    elif model_name == "sym_mig_size":
-        #####################################
-        #Divergence with symmetric migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with symmetric migration, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*7)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-        
-
-    elif model_name == "asym_mig_size":
-        #####################################
-        #Divergence with asymmetric migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with asymmetric migration, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.asym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*8)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
- 
- 
-    elif model_name == "anc_sym_mig_size":
-        #####################################
-        #Divergence with ancient symmetrical migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient symmetrical migration, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_sym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*7)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-        
-    elif model_name == "anc_asym_mig_size":
-        #####################################
-        #Divergence with ancient asymmetrical migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient asymmetrical migration, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_asym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*8)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-
-    elif model_name == "sec_contact_sym_mig_size":
-        #####################################
-        #Divergence and symmetrical secondary contact, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and symmetrical secondary contact, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_sym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*7)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-
-           
-    elif model_name == "sec_contact_asym_mig_size":
-        #####################################
-        #Divergence and asymmetrical secondary contact, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and asymmetrical secondary contact, size change",'\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_asym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        print "base parameters = ", params
-
-        #simulate the model with the optimized parameters
-        sim_model = func_exec(params, fs.sample_sizes, pts)
-
-        #calculate likelihood
-        ll = dadi.Inference.ll_multinom(sim_model, fs)
-        ll = np.around(ll, 2)
-        print "likelihood = ", ll
-
-        #calculate AIC 
-        aic = ( -2*( float(ll))) + (2*8)
-        print "AIC = ", aic, '\n', '\n'
-        return sim_model
-        
 
 #======================================================================================
-# Finally, execute model with appropriate arguments, including name for returned model
-# returned_model = Two_Pop_Plot(pts, fs, model_name, params):
+# Now prepare to optimize the models, which is defined in the script 'Optimize_Functions.py'.
 
-# returned_model:  name the simulated model returned by function (to store for plotting later)
+# Function usage:
+# returned_model_name = Optimize_Single(pts, fs, model_name, params)
 
+# Argument definitions:
 # pts:  grid choice (list of three numbers, ex. [20,30,40]
-
 # fs:  spectrum object name
-
 # model_name:  "no_divergence", "no_mig", "sym_mig", "asym_mig", "anc_sym_mig", "anc_asym_mig",
 #        "sec_contact_sym_mig", "sec_contact_asym_mig", "no_mig_size", "sym_mig_size",
 #        "asym_mig_size", "anc_sym_mig_size", "anc_asym_mig_size", "sec_contact_sym_mig_size",
-#        "sec_contact_asym_mig_size"
-
-# params:  list of best parameters to start optimizations from
+#        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
+#		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
+#	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
+#		 "founder_sym", "founder_asym", "founder_nomig"
+# params:  list of best parameter values to optimize with
 
 #===========================================================================
-# enter best param values for each model here, presumably you will get these
-# from the outputs of the previous script
+# Here we need to enter the parameter values for the previous best scoring replicate. Unlike
+# before, these are the EXACT values that will be used to optimize. You should get these
+# from the output of the previous script. The default order of the output file parameters 
+# will be the same order they go in here, so they can just be copy pasted over.
 
-#************** "no_divergence"
+#"no_divergence"
 #leave blank, no parameters
 no_divergence_params = []
 
-#************** "no_mig"
-#3 Values
-no_mig_params = [1.6827,3.8731,2.2595]
-
-#************** "sym_mig"
-#4 Values
-sym_mig_params = [2.6261,5.932,0.0107,4.5966]
-
-#************** "asym_mig"
-#5 Values
-asym_mig_params = [2.432,5.4933,0.0121,0.0109,4.1582]
-
-#************** "anc_sym_mig"
-#5 Values
-anc_sym_mig_params = [1.7253,3.8058,0.0251,2.4635,0.2359]
-
-#************** "anc_asym_mig"
-#6 Values
-anc_asym_mig_params = [1.6635,4.3311,0.0557,0.6685,0.0815,2.3774]
-
-#************** "sec_contact_sym_mig"
-#5 Values
-sec_contact_sym_mig_params = [2.7735,6.5051,0.0218,4.3453,0.4201]
-
-#************** "sec_contact_asym_mig"
-#6 Values
-sec_contact_asym_mig_params = [1.4153,3.1098,0.2271,0.0837,1.9919,0.0014]
-
-#************** "no_mig_size"
-#6 Values
-no_mig_size_params = [0.2166,0.1304,1.8324,3.7265,0.179,0.4558]
-
-#************** "sym_mig_size"
-#7 Values
-sym_mig_size_params = [0.3127,0.2534,1.456,3.8703,0.0243,0.4483,0.3563]
-
-#************** "asym_mig_size"
-#8 Values
-asym_mig_size_params = [0.3101,0.3323,1.2428,2.0772,0.0985,0.0285,0.9026,0.4849]
-
-#************** "anc_sym_mig_size"
-#7 Values
-anc_sym_mig_size_params = [0.2692,0.1682,2.0483,3.8678,0.6095,0.5148,0.6448]
-
-#************** "anc_asym_mig_size"
-#8 Values
-anc_asym_mig_size_params = [0.4814,0.5822,3.9615,8.851,0.4163,0.1136,9.2139,1.1795]
-
-#************** "sec_contact_sym_mig_size"
-#7 Values
-sec_contact_sym_mig_size_params = [0.3245,0.4643,2.3541,5.5444,0.0199,1.0492,1.0659]
-
-#************** "sec_contact_asym_mig_size"
-#8 Values
-sec_contact_asym_mig_size_params = [1.1401,0.1186,0.2519,2.4771,0.8829,0.0836,0.4183,0.26]
-
-
-#===========================================================================
 #**************
-#Input some of the basic reusable arguments here
-pts = [50,60,70]
-fs = fs_1
-outfile = "N_v_S"
 
-#===========================================================================
-# returned_model = Two_Pop_Plot(pts, fs, model_name, params):
+#"no_mig"
+#3 Values
+no_mig_params = [0.1039,0.0992,0.109]
 
-# Each model is executed with one replicate using fixed parameter values.
-# The simulated model is stored as an object to be called on in the
-# subsequent plotting function.
+#"sym_mig"
+#4 Values
+sym_mig_params = [0.1502,0.1371,0.2473,0.188]
 
-no_divergence = Two_Pop_Plot(pts, fs, "no_divergence", no_divergence_params)
-no_mig = Two_Pop_Plot(pts, fs, "no_mig", no_mig_params)
-sym_mig = Two_Pop_Plot(pts, fs, "sym_mig", sym_mig_params)
-asym_mig = Two_Pop_Plot(pts, fs, "asym_mig", asym_mig_params)
-anc_sym_mig = Two_Pop_Plot(pts, fs, "anc_sym_mig", anc_sym_mig_params)
-anc_asym_mig = Two_Pop_Plot(pts, fs, "anc_asym_mig", anc_asym_mig_params)
-sec_contact_sym_mig = Two_Pop_Plot(pts, fs, "sec_contact_sym_mig", sec_contact_sym_mig_params)
-sec_contact_asym_mig = Two_Pop_Plot(pts, fs, "sec_contact_asym_mig", sec_contact_asym_mig_params)
-no_mig_size = Two_Pop_Plot(pts, fs, "no_mig_size", no_mig_size_params)
-sym_mig_size = Two_Pop_Plot(pts, fs, "sym_mig_size", sym_mig_size_params)
-asym_mig_size = Two_Pop_Plot(pts, fs, "asym_mig_size", asym_mig_size_params)
-anc_sym_mig_size = Two_Pop_Plot(pts, fs, "anc_sym_mig_size", anc_sym_mig_size_params)
-anc_asym_mig_size = Two_Pop_Plot(pts, fs, "anc_asym_mig_size", anc_asym_mig_size_params)
-sec_contact_sym_mig_size = Two_Pop_Plot(pts, fs, "sec_contact_sym_mig_size", sec_contact_sym_mig_size_params)
-sec_contact_asym_mig_size = Two_Pop_Plot(pts, fs, "sec_contact_asym_mig_size", sec_contact_asym_mig_size_params)
+#"asym_mig"
+#5 Values
+asym_mig_params = [0.1493,0.1351,0.2418,0.2552,0.1864]
+
+#"anc_sym_mig"
+#5 Values
+anc_sym_mig_params = [0.3381,0.2909,0.2607,0.6751,0.0001]
+
+#"anc_asym_mig"
+#6 Values
+anc_asym_mig_params = [0.1035,0.0966,0.1321,0.8946,0.0309,0.0757]
+
+#"sec_contact_sym_mig"
+#5 Values
+sec_contact_sym_mig_params = [0.359,0.3356,0.1333,0.2051,0.3733]
+
+#"sec_contact_asym_mig"
+#6 Values
+sec_contact_asym_mig_params = [0.1713,0.1529,0.4419,0.6281,0.1888,0.0127]
+
+#"no_mig_size"
+#6 Values
+no_mig_size_params = [3.9744,1.8151,0.0255,0.0333,0.8283,0.0201]
+
+#"sym_mig_size"
+#7 Values
+sym_mig_size_params = [20.181,0.3609,0.2571,0.2502,0.1963,0.0118,0.3336]
+
+#"asym_mig_size"
+#8 Values
+asym_mig_size_params = [2.1611,0.4093,0.0228,0.0856,0.9088,0.2608,0.8099,0.0212]
+
+#"anc_sym_mig_size"
+#7 Values
+anc_sym_mig_size_params = [1.0925,1.029,0.0701,0.0817,0.11,2.661,0.0122]
+
+#"anc_asym_mig_size"
+#8 Values
+anc_asym_mig_size_params = [1.7858,0.9298,0.0698,0.1742,0.1013,0.1285,3.9189,0.0213]
+
+#"sec_contact_sym_mig_size"
+#7 Values
+sec_contact_sym_mig_size_params = [14.2991,1.281,0.0374,0.1584,0.9115,2.249,0.0334]
+
+#"sec_contact_asym_mig_size"
+#8 Values
+sec_contact_asym_mig_size_params = [0.9971,0.4688,0.0202,0.0471,0.2187,1.4038,0.5891,0.0101]
+
+#"sym_mig_twoepoch" 
+# 6 Values
+sym_mig_twoepoch_params = [0.1514,0.1393,0.066,0.269,0.1339,0.0509]
+
+#"asym_mig_twoepoch" 
+# 8 Values
+asym_mig_twoepoch_params = [0.0879,0.1266,2.2299,9.0892,1.9294,0.4392,0.3187,2.7066]
+
+#"sec_contact_sym_mig_three_epoch" 
+# 6 Values
+sec_contact_sym_mig_three_epoch_params = [0.2193,0.204,17.9698,7.5162,0.586,0.2243]
+
+#"sec_contact_asym_mig_three_epoch" 
+# 7 Values
+sec_contact_asym_mig_three_epoch_params = [0.5657,0.3789,1.0008,6.5421,9.9127,0.4171,0.5922]
+
+#"sec_contact_sym_mig_size_three_epoch" 
+# 8 Values
+sec_contact_sym_mig_size_three_epoch_params = [0.2275,11.3693,0.8588,0.8269,0.5425,9.089,1.9292,0.5098]
+
+#"sec_contact_asym_mig_size_three_epoch" 
+# 9 Values
+sec_contact_asym_mig_size_three_epoch_params = [0.0322,1.06,0.4402,0.5182,1.0017,0.4149,5.7379,1.0344,0.2081]
+
+#"founder_sym" 
+# 6 Values
+founder_sym_params = [1.5933,1.4055,0.1415,0.1483,0.4247,0.1949]
+
+#"founder_asym" 
+# 7 Values
+founder_asym_params = [1.5758,2.6038,0.205,0.2628,0.1122,0.5803,0.2188]
+
+#"founder_nomig" 
+# 5 Values
+founder_nomig_params = [1.9544,2.7918,0.1119,0.3278,0.151]
+
 
 #======================================================================================
-#write a plotting function for data and model comparison
+#Input some of the basic reusable arguments here specific to your data set
 
-def plot_all(sim_model, data, outfile, model_name):
+#These are specific to your data set:
+#**************
+#grid choice
+pts = [50,60,70]
+#prefix for output file naming
+outfile = "N_v_S"
+
+#These can be left alone, unless you want more searches:
+#spectrum object name (we defined this above)
+fs = fs_1
+
+#===========================================================================
+# Now call the function with the relevant arguments.
+
+# There are 15 models to optimize.
+# Each model is executed with one replicate using fixed parameter values.
+# The simulated model is stored as an object to be called on in the plotting function.
+
+# Standard neutral model, populations never diverge
+no_divergence = Optimize_Functions.Optimize_Single(pts, fs, "no_divergence", no_divergence_params)
+
+# Split into two populations, no migration.
+no_mig = Optimize_Functions.Optimize_Single(pts, fs, "no_mig", no_mig_params)
+
+# Split into two populations, with symmetric migration.
+sym_mig = Optimize_Functions.Optimize_Single(pts, fs, "sym_mig", sym_mig_params)
+
+# Split into two populations, with different migration rates.
+asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "asym_mig", asym_mig_params)
+
+# Split with symmetric migration followed by isolation.
+anc_sym_mig = Optimize_Functions.Optimize_Single(pts, fs, "anc_sym_mig", anc_sym_mig_params)
+
+# Split with asymmetric migration followed by isolation.
+anc_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "anc_asym_mig", anc_asym_mig_params)
+
+# Split with no gene flow, followed by period of symmetrical gene flow.
+sec_contact_sym_mig = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig", sec_contact_sym_mig_params)
+
+# Split with no gene flow, followed by period of asymmetrical gene flow.
+sec_contact_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig", sec_contact_asym_mig_params)
+
+# Split with no migration, then size change with no migration.
+no_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "no_mig_size", no_mig_size_params)
+
+# Split with symmetric migration, then size change with symmetric migration.
+sym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "sym_mig_size", sym_mig_size_params)
+
+# Split with different migration rates, then size change with different migration rates.
+asym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "asym_mig_size", asym_mig_size_params)
+
+# Split with symmetrical gene flow, followed by size change with no gene flow.  
+anc_sym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "anc_sym_mig_size", anc_sym_mig_size_params)
+
+# Split with asymmetrical gene flow, followed by size change with no gene flow.
+anc_asym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "anc_asym_mig_size", anc_asym_mig_size_params)
+
+# Split with no gene flow, followed by size change with symmetrical gene flow.
+sec_contact_sym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig_size", sec_contact_sym_mig_size_params)
+
+# Split with no gene flow, followed by size change with asymmetrical gene flow.
+sec_contact_asym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig_size", sec_contact_asym_mig_size_params)
+
+# Split into two populations, with symmetric migration, two epochs.
+sym_mig_twoepoch = Optimize_Functions.Optimize_Single(pts, fs, "sym_mig_twoepoch", sym_mig_twoepoch_params)
+
+# Split into two populations, with different migration rates, two epochs.
+asym_mig_twoepoch = Optimize_Functions.Optimize_Single(pts, fs, "asym_mig_twoepoch", asym_mig_twoepoch_params)
+
+# Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
+sec_contact_sym_mig_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig_three_epoch", sec_contact_sym_mig_three_epoch_params)
+
+# Split with no gene flow, followed by period of asymmetrical gene flow, then isolation.
+sec_contact_asym_mig_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig_three_epoch", sec_contact_asym_mig_three_epoch_params)
+
+# Split with no gene flow, followed by size change with symmetrical gene flow, then isolation.
+sec_contact_sym_mig_size_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig_size_three_epoch", sec_contact_sym_mig_size_three_epoch_params)
+
+# Split with no gene flow, followed by size change with asymmetrical gene flow, then isolation.
+sec_contact_asym_mig_size_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig_size_three_epoch", sec_contact_asym_mig_size_three_epoch_params)
+
+# Founder event with symmetric migration and population two exponential growth.
+founder_sym = Optimize_Functions.Optimize_Single(pts, fs, "founder_sym", founder_sym_params)
+
+# Founder event with asymmetric migration and population two exponential growth.
+founder_asym = Optimize_Functions.Optimize_Single(pts, fs, "founder_asym", founder_asym_params)
+
+# Founder event with no migration and population two exponential growth.
+founder_nomig = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig", founder_nomig_params)
+
+
+#======================================================================================
+# Define an editable plotting function for data and model comparison
+
+# See instructions at top for troubleshooting issues with plotting, here is where you
+# would edit the arguments for dadi.Plotting.plot_2d_comp_multinom()
+
+def plot(sim_model, data, outfile, model_name):
     print '{0}_{1}.pdf'.format(outfile,model_name), '\n'
     outname = '{0}_{1}.pdf'.format(outfile,model_name)
     fig = pylab.figure(1)
@@ -674,35 +336,49 @@ def plot_all(sim_model, data, outfile, model_name):
     fig.savefig(outname)
     
 #======================================================================================
+# Call the plotting function for all optimized models
+
+# Function
 # plot_all(sim_model, fs, outfile, model_name)
 
+# Argument defintions:
 # sim_model:  the simulated model returned from function Two_Pop_Plot
-
 # fs:  spectrum object name (ie the "data")
-
 # outfile:  same prefix for output naming of pdf files -> "{0}_{1}.pdf".format(outfile,model_name)
-
 # model_name:  "no_divergence", "no_mig", "sym_mig", "asym_mig", "anc_sym_mig", "anc_asym_mig",
 #        "sec_contact_sym_mig", "sec_contact_asym_mig", "no_mig_size", "sym_mig_size",
 #        "asym_mig_size", "anc_sym_mig_size", "anc_asym_mig_size", "sec_contact_sym_mig_size",
-#        "sec_contact_asym_mig_size"
+#        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
+#		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
+#	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
+#		 "founder_sym", "founder_asym", "founder_nomig"
 
-# call plot function for each model 
+# A plot should pop up with the model for each, close the box and the next will load. They
+# are all saved automatically to the working directory.
 
-plot_all(no_divergence, fs, outfile, "no_divergence")
-plot_all(no_mig, fs, outfile, "no_mig")
-plot_all(sym_mig, fs, outfile, "sym_mig")
-plot_all(asym_mig, fs, outfile, "asym_mig")
-plot_all(anc_sym_mig, fs, outfile, "anc_sym_mig")
-plot_all(anc_asym_mig, fs, outfile, "anc_asym_mig")
-plot_all(sec_contact_sym_mig, fs, outfile, "sec_contact_sym_mig")
-plot_all(sec_contact_asym_mig, fs, outfile, "sec_contact_asym_mig")
-plot_all(no_mig_size, fs, outfile, "no_mig_size")
-plot_all(sym_mig_size, fs, outfile, "sym_mig_size")
-plot_all(asym_mig_size, fs, outfile, "asym_mig_size")
-plot_all(anc_sym_mig_size, fs, outfile, "anc_sym_mig_size")
-plot_all(anc_asym_mig_size, fs, outfile, "anc_asym_mig_size")
-plot_all(sec_contact_sym_mig_size, fs, outfile, "sec_contact_sym_mig_size")
-plot_all(sec_contact_asym_mig_size, fs, outfile, "sec_contact_asym_mig_size")
+plot(no_divergence, fs, outfile, "no_divergence")
+plot(no_mig, fs, outfile, "no_mig")
+plot(sym_mig, fs, outfile, "sym_mig")
+plot(asym_mig, fs, outfile, "asym_mig")
+plot(anc_sym_mig, fs, outfile, "anc_sym_mig")
+plot(anc_asym_mig, fs, outfile, "anc_asym_mig")
+plot(sec_contact_sym_mig, fs, outfile, "sec_contact_sym_mig")
+plot(sec_contact_asym_mig, fs, outfile, "sec_contact_asym_mig")
+plot(no_mig_size, fs, outfile, "no_mig_size")
+plot(sym_mig_size, fs, outfile, "sym_mig_size")
+plot(asym_mig_size, fs, outfile, "asym_mig_size")
+plot(anc_sym_mig_size, fs, outfile, "anc_sym_mig_size")
+plot(anc_asym_mig_size, fs, outfile, "anc_asym_mig_size")
+plot(sec_contact_sym_mig_size, fs, outfile, "sec_contact_sym_mig_size")
+plot(sec_contact_asym_mig_size, fs, outfile, "sec_contact_asym_mig_size")
+plot(sym_mig_twoepoch, fs, outfile, "sym_mig_twoepoch")
+plot(asym_mig_twoepoch, fs, outfile, "asym_mig_twoepoch")
+plot(sec_contact_sym_mig_three_epoch, fs, outfile, "sec_contact_sym_mig_three_epoch")
+plot(sec_contact_asym_mig_three_epoch, fs, outfile, "sec_contact_asym_mig_three_epoch")
+plot(sec_contact_sym_mig_size_three_epoch, fs, outfile, "sec_contact_sym_mig_size_three_epoch")
+plot(sec_contact_asym_mig_size_three_epoch, fs, outfile, "sec_contact_asym_mig_size_three_epoch")
+plot(founder_sym, fs, outfile, "founder_sym")
+plot(founder_asym, fs, outfile, "founder_asym")
+plot(founder_nomig, fs, outfile, "founder_nomig")
 
 #======================================================================================

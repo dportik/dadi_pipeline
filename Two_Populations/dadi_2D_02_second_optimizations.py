@@ -4,14 +4,14 @@ import numpy as np
 import dadi
 import pylab
 import Models_2D
+import Optimize_Functions
 from datetime import datetime
-import matplotlib.pyplot as plt
 
 '''
 usage: python dadi_2D_02_second_optimizations.py
 
-Requires the Models_2D.py script to be in same working directory. This is where
-all the population model functions are stored for this script. 
+Requires the Models_2D.py and Optimize_Functions.py scripts to be in same working directory. 
+This is where all the population models and functions are stored for this script. 
 
 Script will perform optimizations from multiple starting points using a
 2-fold perturbed set of USER SELECTED starting values for parameters. The output for
@@ -45,12 +45,13 @@ Divergence with no migration	parameter set = [nu1, nu2, T]	5	-177.49	150.28	360.
 Requires user to edit sections of code marked with #**************
 
 You'll absolutely need to provide the path to your SNPs input file
-along with your specific projections and population labels. 
+along with your specific projections and population labels. Look through
+the entire script for other sections requiring your attention.
 
 
 ############################################
 Written for Python 2.7
-Python modules required:
+Python dependencies required:
 -Numpy
 -Scipy
 -Matplotlib
@@ -58,25 +59,27 @@ Python modules required:
 ############################################
 
 Dan Portik
-daniel.portik@uta.edu
-April 2017
+daniel.portik@uta.edu -> danielportik@email.arizona.edu
+October 2017
 '''
+#keep track of start time
 t_begin = datetime.now()
 
+
 #===========================================================================
-#get snps file 
+#get snps file and convert into allele frequency spectrum object in dadi
 
 #**************
-snps1 = "/FULL PATH TO/dadi_2pops_Cameroon_South_snps.txt"
+snps1 = "/FULL PATH TO /dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd1 = dadi.Misc.make_data_dict(snps1)
 
 #**************
 #pop_ids is a list which should match the populations headers of your SNPs file columns
-pop_ids=["Cameroon", "South"]
+pop_ids=["North", "South"]
 #projection sizes, in ALLELES not individuals
-proj_1 = [16,28]
+proj_1 = [16,32]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
@@ -87,1085 +90,247 @@ print "projection", proj_1
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
-#======================================================================================
-#create function to run models with user input parameters (presumably from best runs)
-#run optimization 'x' times on perturbed best starting params
-
-def Two_Pop_Models(pts, fs, outfile, reps, y, model_name, params):
-    print '\n',"============================================================================"
-    print "Beginning analysis of {}".format(model_name)
-    print "============================================================================"
-
-    #create output file
-    outname = "Round2_{0}_{1}_optimized.txt".format(outfile,model_name)
-    fh_out = open(outname, 'a')
-    fh_out.write("Model"+'\t'+"param_set"+'\t'+"Replicate"+'\t'+"log-likelihood"+'\t'+"theta"+'\t'+"AIC"+'\t'+"optimized_params"+'\n')
-    fh_out.close()
-    
-    #variable to control number of loops per model (1 to x)
-    x = int(reps) + int(1)
-        
-    if model_name == "no_divergence":
-        #####################################
-        #No Divergence
-        #####################################
-        print "---------------------------------------------------"
-        print "No Divergence",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.no_divergence
-        params = []
-        print "parameter set = [none]"
-        
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-        
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("No divergence model"+'\t')
-            fh_out.write("parameter set = [none]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params, fs.sample_sizes, pts)
-            
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*3)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-            
-            fh_out.write('\n')
-            fh_out.close()
-
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "no_mig":
-        fh_out = open(outname, 'a')
-        #####################################
-        # Divergence with no migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with no migration",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.no_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0]
-        upper_bound = [30, 30, 10]
-        print "parameter set = [nu1, nu2, T]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with no migration"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, T]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*3)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "sym_mig":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with symmetric migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with symmetric migration",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0]
-        upper_bound = [30, 30, 20, 10]
-        print "parameter set = [nu1, nu2, m, T]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with symmetric migration"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, m, T]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*4)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "asym_mig":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with asymmetric migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with asymmetric migration",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.asym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0]
-        upper_bound = [30, 30, 20, 20, 10]
-        print "parameter set = [nu1, nu2, m12, m21, T]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with asymmetric migration"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, m12, m21, T]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*5)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "anc_sym_mig":
-        fh_out = open(outname, 'a') 
-        #####################################
-        #Divergence with ancient symmetrical migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient symmetrical migration",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_sym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 20, 10, 10]
-        print "parameter set = [nu1, nu2, m, T1, T2]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with ancient symmetrical migration"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, m, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*5)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "anc_asym_mig":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with ancient asymmetrical migration
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient asymmetrical migration",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_asym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 20, 20, 10, 10]
-        print "parameter set = [nu1, nu2, m12, m21, T1, T2]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with ancient asymmetrical migration"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, m12, m21, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*6)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "sec_contact_sym_mig":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence and symmetrical secondary contact
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and symmetrical secondary contact",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_sym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 20, 10, 10]
-        print "parameter set = [nu1, nu2, m, T1, T2]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence and symmetrical secondary contact"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, m, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*5)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-        
-        
-    elif model_name == "sec_contact_asym_mig":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence and asymmetrical secondary contact
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and asymmetrical secondary contact",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_asym_mig
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 20, 20, 10, 10]
-        print "parameter set = [nu1, nu2, m12, m21, T1, T2]"
-        
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence and asymmetrical secondary contact"+'\t')
-            fh_out.write("parameter set = [nu1, nu2, m12, m21, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*6)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-
-    ##########################################################################
-    #Similar models but with size change allowed
-    ##########################################################################
-    
-    elif model_name == "no_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with no migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with no migration, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.no_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, T1, T2]"
- 
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with no migration, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*6)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-        
-        
-    elif model_name == "sym_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with symmetric migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with symmetric migration, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 20, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, m, T1, T2]"
- 
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with symmetric migration, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, m, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*7)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-        
-
-    elif model_name == "asym_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with asymmetric migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with asymmetric migration, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.asym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 20, 20, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2]"
- 
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with asymmetric migration, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*8)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
- 
- 
-    elif model_name == "anc_sym_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with ancient symmetrical migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient symmetrical migration, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_sym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 20, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, m, T1, T2]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with ancient symmetrical migration, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, m, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*7)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-        
-    elif model_name == "anc_asym_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence with ancient asymmetrical migration, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence with ancient asymmetrical migration, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.anc_asym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 20, 20, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence with ancient asymmetrical migration, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*8)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-
-    elif model_name == "sec_contact_sym_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence and symmetrical secondary contact, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and symmetrical secondary contact, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_sym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 20, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, m, T1, T2]"
-
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence and symmetrical secondary contact, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, m, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*7)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-
-           
-    elif model_name == "sec_contact_asym_mig_size":
-        fh_out = open(outname, 'a')
-        #####################################
-        #Divergence and asymmetrical secondary contact, size change
-        #####################################
-        print "---------------------------------------------------"
-        print "Divergence and asymmetrical secondary contact, size change",'\n','\n'
-
-        #first call a predefined model
-        model_call = Models_2D.sec_contact_asym_mig_size
-
-        #create an extrapolating function 
-        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
-
-        #create parameter list for optimization, set bounds for search
-        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0, 0]
-        upper_bound = [30, 30, 30, 30, 20, 20, 10, 10]
-        print "parameter set = [nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2]"
-    
-        for i in range(1,x):
-            fh_out = open(outname, 'a')
-            fh_out.write("Divergence and asymmetrical secondary contact, size change"+'\t')
-            fh_out.write("parameter set = [nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2]"+'\t')
-            fh_out.write("{}\t".format(i))
-            print '\n', "Replicate {}:".format(i)
-            print "base parameters = ", params
-
-            #perturb initial guesses
-            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
-
-            #run optimization 
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
-            print '\n',"optimized parameters = ", params_opt
-            
-            #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
-
-            #calculate likelihood
-            ll = dadi.Inference.ll_multinom(sim_model, fs)
-            ll = np.around(ll, 2)
-            print "likelihood = ", ll
-            fh_out.write("{}\t".format(ll))
-
-            #calculate theta
-            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-            theta = np.around(theta, 2)
-            print "Theta = ", theta
-            fh_out.write("{}\t".format(theta))
-
-            #calculate AIC 
-            aic = ( -2*( float(ll))) + (2*8)
-            print "AIC = ", aic, '\n', '\n'
-            fh_out.write("{}\t".format(aic))
-
-            for p in params_opt:
-                p = np.around(p, 4)
-                fh_out.write("{}\t".format(p))
-            fh_out.write('\n')
-            fh_out.close()
-        print "---------------------------------------------------", '\n'
-        
-    
-        
 
 #======================================================================================
-# Finally, execute model with appropriate arguments
-# Two_Pop_Models(pts, fs, outfile, reps, maxiter, model_name, params):
+# Now prepare to run the optimization round 2 function, which is defined in the 
+# script 'Optimize_Functions.py'.
 
+# Function:
+# Optimize_Round2(pts, fs, outfile, reps, maxiter, model_name, params)
+
+# Argument definitions:
 # pts:  grid choice (list of three numbers, ex. [20,30,40]
-
 # fs:  spectrum object name
-
-# outfile:  prefix for output naming -> "Round2_{0}_{1}_optimized.txt".format(outfile,model_name)
-
+# outfile:  prefix for output naming -> "Round1_{0}_{1}_optimized.txt".format(outfile,model_name)
 # reps:  integer to control number of replicates, ex. 10
-
 # maxiter:  max number of iterations per optimization step (not intuitive! see dadi user group)
-
 # model_name:  "no_divergence", "no_mig", "sym_mig", "asym_mig", "anc_sym_mig", "anc_asym_mig",
 #        "sec_contact_sym_mig", "sec_contact_asym_mig", "no_mig_size", "sym_mig_size",
 #        "asym_mig_size", "anc_sym_mig_size", "anc_asym_mig_size", "sec_contact_sym_mig_size",
-#        "sec_contact_asym_mig_size"
-
-# params:  list of best parameters to start optimizations from
-
+#        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
+#		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
+#	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
+#		 "founder_sym", "founder_asym", "founder_nomig"
+# params:  list of best parameter values to perturb to start the optimizations from
 
 
 #===========================================================================
-# enter best param values for each model here, presumably you will get these
-# from the outputs of the previous script
+# Here we need to enter the parameter values for the previous best scoring replicate, so we 
+# can start with those values, perturb them, and run optimizations again. You should get these
+# from the output of the previous script. The default order of the output file parameters 
+# will be the same order they go in here, so they can just be copy pasted over.
 
-#************** "no_divergence"
+#"no_divergence"
 #leave blank, no parameters
 no_divergence_params = []
 
-#************** "no_mig"
+#"no_mig"
 #3 Values
-no_mig_params = [1.5423,3.4273,2.1597]
+no_mig_params = [0.0622,0.0716,0.0683]
 
-#************** "sym_mig"
+#"sym_mig"
 #4 Values
-sym_mig_params = [1.6037,2.4605,0.0244,2.3237]
+sym_mig_params = [0.3912,0.3509,0.1655,0.6334]
 
-#************** "asym_mig"
+#"asym_mig"
 #5 Values
-asym_mig_params = [1.0629,1.7589,0.0688,0.0246,2.0949]
+asym_mig_params = [0.0881,0.0946,0.8871,0.438,0.1703]
 
-#************** "anc_sym_mig"
+#"anc_sym_mig"
 #5 Values
-anc_sym_mig_params = [1.3952,2.8067,0.0317,0.5445,1.2622]
+anc_sym_mig_params = [0.7087,0.656,0.3311,5.3682,0.1292]
 
-#************** "anc_asym_mig"
+#"anc_asym_mig"
 #6 Values
-anc_asym_mig_params = [2.0839,4.8574,0.1977,0.3635,0.1888,2.7413]
+anc_asym_mig_params = [0.384,0.3265,0.2192,0.3929,0.2113,0.2249]
 
-#************** "sec_contact_sym_mig"
+#"sec_contact_sym_mig"
 #5 Values
-sec_contact_sym_mig_params = [1.6458,3.9967,0.0306,2.6487,0.1343]
+sec_contact_sym_mig_params = [0.8282,0.6621,0.1142,0.4408,2.7886]
 
-#************** "sec_contact_asym_mig"
+#"sec_contact_asym_mig"
 #6 Values
-sec_contact_asym_mig_params = [0.6372,0.7695,0.5547,0.0407,0.7241,0.0219]
+sec_contact_asym_mig_params = [0.1871,0.263,1.1289,0.1161,0.4958,0.2885]
 
-#************** "no_mig_size"
+#"no_mig_size"
 #6 Values
-no_mig_size_params = [0.5339,0.4415,3.243,5.5164,0.5453,0.5842]
+no_mig_size_params = [3.6872,0.9558,0.6311,0.6907,0.0935,0.8674]
 
-#************** "sym_mig_size"
+#"sym_mig_size"
 #7 Values
-sym_mig_size_params = [1.4171,0.1371,4.0236,5.6204,0.0474,0.6998,0.4434]
+sym_mig_size_params = [11.0922,0.3099,0.6772,0.5948,0.1586,0.0934,2.8574]
 
-#************** "asym_mig_size"
+#"asym_mig_size"
 #8 Values
-asym_mig_size_params = [0.1056,0.1292,0.5581,0.7077,0.479,0.3571,1.0843,0.3914]
+asym_mig_size_params = [1.7551,0.1893,0.2261,0.4507,0.3175,0.2954,0.2775,0.3068]
 
-#************** "anc_sym_mig_size"
+#"anc_sym_mig_size"
 #7 Values
-anc_sym_mig_size_params = [0.2759,0.1962,1.8522,4.1683,0.3338,0.4078,0.5088]
+anc_sym_mig_size_params = [4.8808,3.2591,0.6068,0.4988,0.5057,5.9915,0.4379]
 
-#************** "anc_asym_mig_size"
+#"anc_asym_mig_size"
 #8 Values
-anc_asym_mig_size_params = [0.5397,0.2686,2.1101,4.199,0.9434,0.4446,3.6926,0.7953]
+anc_asym_mig_size_params = [2.3122,0.4563,0.2102,0.4988,0.5503,0.1259,0.8031,0.1847]
 
-#************** "sec_contact_sym_mig_size"
+#"sec_contact_sym_mig_size"
 #7 Values
-sec_contact_sym_mig_size_params = [0.1272,0.7266,2.2328,4.8608,0.0928,2.8885,0.7993]
+sec_contact_sym_mig_size_params = [6.1645,0.6576,0.2344,0.3341,0.2551,0.5079,0.2505]
 
-#************** "sec_contact_asym_mig_size"
+#"sec_contact_asym_mig_size"
 #8 Values
-sec_contact_asym_mig_size_params = [0.7321,0.1977,0.2134,2.4543,2.2236,0.1334,1.5589,0.3412]
+sec_contact_asym_mig_size_params = [0.6235,0.4559,0.4373,0.3229,0.1855,0.289,1.062,0.2822]
 
+#"sym_mig_twoepoch" 
+# 6 Values
+sym_mig_twoepoch_params = [0.2425,0.2489,0.0964,0.3329,0.2021,0.3038]
 
+#"asym_mig_twoepoch" 
+# 8 Values
+asym_mig_twoepoch_params = [0.1191,0.1429,0.4132,8.8809,2.3879,0.1926,0.2715,2.2659]
 
+#"sec_contact_sym_mig_three_epoch" 
+# 6 Values
+sec_contact_sym_mig_three_epoch_params = [0.4486,0.35,5.8658,5.4086,0.3468,0.3818]
 
-#===========================================================================
+#"sec_contact_asym_mig_three_epoch" 
+# 7 Values
+sec_contact_asym_mig_three_epoch_params = [1.1834,1.1633,0.5618,0.5342,9.497,0.8519,1.021]
+
+#"sec_contact_sym_mig_size_three_epoch" 
+# 8 Values
+sec_contact_sym_mig_size_three_epoch_params = [0.1463,3.2944,1.9881,2.253,0.1718,7.955,9.6366,0.7891]
+
+#"sec_contact_asym_mig_size_three_epoch" 
+# 9 Values
+sec_contact_asym_mig_size_three_epoch_params = [0.1592,0.6018,1.5768,1.3381,0.4383,0.2937,2.3318,0.4379,0.5023]
+
+#"founder_sym" 
+# 6 Values
+founder_sym_params = [0.6698,1.0577,0.1167,0.513,0.3374,0.3116]
+
+#"founder_asym" 
+# 7 Values
+founder_asym_params = [0.3164,2.7591,0.3452,0.5607,0.2271,2.6693,0.9892]
+
+#"founder_nomig" 
+# 5 Values
+founder_nomig_params = [5.5061,0.8123,0.4398,1.1332,0.2469]
+
+#======================================================================================
+#Input some of the basic reusable arguments here specific to your data set
+
+#These are specific to your data set:
 #**************
-#Input some of the basic reusable arguments here
+#grid choice
 pts = [50,60,70]
-fs = fs_1
+#prefix for output file naming
 outfile = "N_v_S"
+
+#These can be left alone, unless you want more searches:
+#spectrum object name (we defined this above)
+fs = fs_1
+#integer to control number of replicates per model
 reps = int(50)
+#max number of iterations per optimization step (though see dadi user group for explanation)
 maxiter = int(30)
 
 
-#===========================================================================
-# Two_Pop_Models(pts, fs, outfile, reps, maxiter, model_name, params):
+#======================================================================================
+# Now call the function with the relevant arguments.
+
+# There are many models to test here. A brief definition is given for each, but the actual
+# models are defined in the Models_2D.py script. The first 15 were implemented in Portik 
+# et al. 2016 (doi: 10.1111/mec.14266), the following 9 are newer for various projects.
 
 # Here it is set up to call each model one by one sequentially, which could finish relatively quickly.
-# If it takes too long, create multiple verisions of this script, block out some models (use a hash or delete),
+# If it takes too long, create multiple verisions of this script, block out some models (use hashes or delete),
 # and execute one version for every core you have available. It will greatly speed up these steps,
 # and sometimes if extrapolations fail the script will crash too and this could prevent it from
 # happening too many times.
-# There are 15 models to test here. 
 
 
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_divergence", no_divergence_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig", no_mig_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig", sym_mig_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig", asym_mig_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig", anc_sym_mig_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig", anc_asym_mig_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig", sec_contact_sym_mig_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig", sec_contact_asym_mig_params)
+# Standard neutral model, populations never diverge
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "no_divergence", no_divergence_params)
 
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "no_mig_size", no_mig_size_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sym_mig_size", sym_mig_size_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "asym_mig_size", asym_mig_size_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size", anc_sym_mig_size_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size", anc_asym_mig_size_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size", sec_contact_sym_mig_size_params)
-Two_Pop_Models(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size", sec_contact_asym_mig_size_params)
+# Split into two populations, no migration.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "no_mig", no_mig_params)
+
+# Split into two populations, with symmetric migration.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sym_mig", sym_mig_params)
+
+# Split into two populations, with different migration rates.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "asym_mig", asym_mig_params)
+
+# Split with symmetric migration followed by isolation.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "anc_sym_mig", anc_sym_mig_params)
+
+# Split with asymmetric migration followed by isolation.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "anc_asym_mig", anc_asym_mig_params)
+
+# Split with no gene flow, followed by period of symmetrical gene flow.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig", sec_contact_sym_mig_params)
+
+# Split with no gene flow, followed by period of asymmetrical gene flow.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig", sec_contact_asym_mig_params)
+
+# Split with no migration, then size change with no migration.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "no_mig_size", no_mig_size_params)
+
+# Split with symmetric migration, then size change with symmetric migration.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sym_mig_size", sym_mig_size_params)
+
+# Split with different migration rates, then size change with different migration rates.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "asym_mig_size", asym_mig_size_params)
+
+# Split with symmetrical gene flow, followed by size change with no gene flow.  
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size", anc_sym_mig_size_params)
+
+# Split with asymmetrical gene flow, followed by size change with no gene flow.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size", anc_asym_mig_size_params)
+
+# Split with no gene flow, followed by size change with symmetrical gene flow.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size", sec_contact_sym_mig_size_params)
+
+# Split with no gene flow, followed by size change with asymmetrical gene flow.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size", sec_contact_asym_mig_size_params)
+
+
+# Split into two populations, with symmetric migration, two epochs.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sym_mig_twoepoch", sym_mig_twoepoch_params)
+
+# Split into two populations, with different migration rates, two epochs.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "asym_mig_twoepoch", asym_mig_twoepoch_params)
+
+# Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_three_epoch", sec_contact_sym_mig_three_epoch_params)
+
+# Split with no gene flow, followed by period of asymmetrical gene flow, then isolation.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_three_epoch", sec_contact_asym_mig_three_epoch_params)
+
+# Split with no gene flow, followed by size change with symmetrical gene flow, then isolation.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size_three_epoch", sec_contact_sym_mig_size_three_epoch_params)
+
+# Split with no gene flow, followed by size change with asymmetrical gene flow, then isolation.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size_three_epoch", sec_contact_asym_mig_size_three_epoch_params)
+
+# Founder event with symmetric migration and population two exponential growth.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_sym", founder_sym_params)
+
+# Founder event with asymmetric migration and population two exponential growth.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_asym", founder_asym_params)
+
+# Founder event with no migration and population two exponential growth.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig", founder_nomig_params)
 
 
 #===========================================================================
-#clock it!
-
+#clock the amount of time to complete the script
 t_finish = datetime.now()
 elapsed = t_finish - t_begin
-
 print '\n', '\n', "-----------------------------------------------------------------------------------------------------"
 print "Finished all analyses!"
 print "Total time: {0} (H:M:S)".format(elapsed)
 print "-----------------------------------------------------------------------------------------------------", '\n', '\n'
 #===========================================================================
+
 

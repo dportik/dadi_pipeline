@@ -18,23 +18,23 @@ Python modules required:
 ############################################
 
 Dan Portik
-daniel.portik@uta.edu
-April 2017
+daniel.portik@uta.edu -> danielportik@email.arizona.edu
+October 2017
 '''
 #===========================================================================
 #get snps file 
 
 #**************
-snps1 = "/FULL PATH TO/dadi_2pops_Cameroon_South_snps.txt"
+snps1 = "/FULL PATH TO /dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd1 = dadi.Misc.make_data_dict(snps1)
 
 #**************
 #pop_ids is a list which should match the populations headers of your SNPs file columns
-pop_ids=["Cameroon", "South"]
+pop_ids=["North", "South"]
 #projection sizes, in ALLELES not individuals
-proj_1 = [22,30]
+proj_1 = [20,46]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
@@ -51,19 +51,19 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #copy and paste to make additional values
 
 #**************
-proj_1 = [22,28]
+proj_1 = [20,40]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [22,24]
+proj_1 = [20,36]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [22,20]
+proj_1 = [20,32]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
@@ -75,13 +75,31 @@ print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [20,24]
+proj_1 = [18,40]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [20,20]
+proj_1 = [18,36]
+fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
+print "sample sizes", fs_1.sample_sizes
+print "Segregating sites",fs_1.S(), '\n', '\n'
+
+#**************
+proj_1 = [18,34]
+fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
+print "sample sizes", fs_1.sample_sizes
+print "Segregating sites",fs_1.S(), '\n', '\n'
+
+#**************
+proj_1 = [18,32]
+fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
+print "sample sizes", fs_1.sample_sizes
+print "Segregating sites",fs_1.S(), '\n', '\n'
+
+#**************
+proj_1 = [18,30]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
@@ -93,13 +111,32 @@ print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [18,24]
+proj_1 = [18,26]
+fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
+print "sample sizes", fs_1.sample_sizes
+print "Segregating sites",fs_1.S(), '\n', '\n'
+
+
+#**************
+proj_1 = [16,36]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [18,20]
+proj_1 = [16,34]
+fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
+print "sample sizes", fs_1.sample_sizes
+print "Segregating sites",fs_1.S(), '\n', '\n'
+
+#**************
+proj_1 = [16,32]
+fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
+print "sample sizes", fs_1.sample_sizes
+print "Segregating sites",fs_1.S(), '\n', '\n'
+
+#**************
+proj_1 = [16,30]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
@@ -111,13 +148,9 @@ print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
 #**************
-proj_1 = [16,24]
+proj_1 = [16,26]
 fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
 print "sample sizes", fs_1.sample_sizes
 print "Segregating sites",fs_1.S(), '\n', '\n'
 
-#**************
-proj_1 = [16,20]
-fs_1 = dadi.Spectrum.from_data_dict(dd1, pop_ids=pop_ids, projections = proj_1, polarized = False)
-print "sample sizes", fs_1.sample_sizes
-print "Segregating sites",fs_1.S(), '\n', '\n'
+
