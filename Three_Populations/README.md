@@ -137,7 +137,7 @@ function (maxiter=15), using 3-fold perturbed starting parameters (from values=1
 optimization round involves 50 replicates, with the *optimize_log_fmin* function (maxiter=10), 
 using 2-fold perturbed starting parameters (from user input values). The third optimization 
 round involves 100 replicates, with the *optimize_log_fmin* function (maxiter=20), using 1-fold 
-perturbed starting parameters (from user input values). This is done for each of the 15
+perturbed starting parameters (from user input values). This is done for each of the 9
 models included in the Models_3D.py script. 
 
 You can create your own set of models and perform similar analyses using the 
@@ -239,9 +239,9 @@ versions of the following Python modules (besides dadi):
 If you decide to use these scripts or modify the code for your purposes, please cite:
 
 *Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
-Hirschfeld, M., Burger, M., and M.K. Fujita. Evaluating mechanisms of diversification 
-in a Guineo-Congolian forest frog using demographic model selection. 
-In Review, Molecular Ecology.*
+Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification 
+in a Guineo-Congolian tropical forest frog using demographic model selection. 
+In press, Molecular Ecology.*
 
 
 
