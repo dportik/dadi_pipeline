@@ -21,7 +21,7 @@ Moved all functions out of main scripts and placed in *Optimize_Functions.py*
 script for clarity. The workflow is nearly identical to V2, with less clutter. New models 
 added to the model set, here is a complete list of models (new models marked with +):
 
-1. Standard neutral model, populations never diverge
+1. Standard neutral model, populations never diverge.
 2. Split into two populations, no migration.
 3. Split into two populations, with symmetric migration.
 4. Split into two populations, with different migration rates.
@@ -45,6 +45,11 @@ added to the model set, here is a complete list of models (new models marked wit
 22. +Founder event with symmetric migration and population two exponential growth.
 23. +Founder event with asymmetric migration and population two exponential growth.
 24. +Founder event with no migration and population two exponential growth.
+25. +Split into two populations, early unidirectional discrete admixture event, no migration.
+26. +Split into two populations, late unidirectional discrete admixture event, no migration.
+27. +Split into two populations, two epochs with unidirectional discrete admixture event in the second, no migration.
+28. +Split into two populations, three epochs with unidirectional discrete admixture event in the second, no migration.
+29. +Founder event with no migration and late unidirectional discrete admixture event.
 
 A new graphics file with the visual representation has been provided. The example file and
 all associated outputs have been updated to include results from the new models.
