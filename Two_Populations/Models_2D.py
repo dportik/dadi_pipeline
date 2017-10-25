@@ -591,8 +591,6 @@ def founder_asym(params, ns, pts):
     T: Time in the past of split (in units of 2*Na generations) 
     m12: Migration from pop 2 to pop 1 (2*Na*m12)
     m21: Migration from pop 1 to pop 2
-    n1,n2: Sample sizes of resulting Spectrum
-    pts: Number of grid points to use in integration.
     """
     nuA, nu1, nu2, m12, m21, T, s = params
 
@@ -623,10 +621,6 @@ def founder_nomig(params, ns, pts):
     nu1: Final size of pop 1.
     nu2: Final size of pop 2.
     T: Time in the past of split (in units of 2*Na generations) 
-    m12: Migration from pop 2 to pop 1 (2*Na*m12)
-    m21: Migration from pop 1 to pop 2
-    n1,n2: Sample sizes of resulting Spectrum
-    pts: Number of grid points to use in integration.
     """
     nuA, nu1, nu2, T, s = params
 
@@ -646,3 +640,138 @@ def founder_nomig(params, ns, pts):
     return fs
 
 
+#######################################################################################################
+#Discrete Admixture Models
+
+def no_mig_admix_early(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs.
+
+    nu1: Size of population 1 after split.
+    nu2: Size of population 2 after split.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1. 
+    """
+    nu1, nu2, T, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    phi = Integration.two_pops(phi, xx, T, nu1, nu2, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+def no_mig_admix_late(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs.
+
+    nu1: Size of population 1 after split.
+    nu2: Size of population 2 after split.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1. 
+    """
+    nu1, nu2, T, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = Integration.two_pops(phi, xx, T, nu1, nu2, m12=0, m21=0)
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+    
+
+def two_epoch_admix(params, ns, pts):
+    """
+    Split with no gene flow, followed by no migration but a discrete admixture 
+    event from pop 1 into pop 2 occurs.
+
+    nu1: Size of population 1 after split.
+    nu2: Size of population 2 after split.
+    T1: The scaled time between the split and admixture event (in units of 2*Na generations).
+    T2: The scaled time between the admixture event and present.
+    f: Fraction of updated population 2 to be derived from population 1. 
+    """
+    nu1, nu2, T1, T2, f = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = Integration.two_pops(phi, xx, T1, nu1, nu2, m12=0, m21=0)
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    phi = Integration.two_pops(phi, xx, T2, nu1, nu2, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def three_epoch_admix(params, ns, pts):
+    """
+    Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
+
+    nu1: Size of population 1 after split.
+    nu2: Size of population 2 after split.
+    T1: The scaled time between the split and the admixture event (in units of 2*Na generations).
+    T2: The scaled time between the admixture event and third epoch.
+    T3: The scaled time between the isolation and present.
+    f: Fraction of updated population 2 to be derived from population 1.
+    """
+    nu1, nu2, T1, T2, T3, f = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = Integration.two_pops(phi, xx, T1, nu1, nu2, m12=0, m21=0)
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    phi = Integration.two_pops(phi, xx, T2, nu1, nu2, m12=0, m21=0)
+
+    phi = Integration.two_pops(phi, xx, T3, nu1, nu2, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+def founder_nomig_admix(params, ns, pts):
+    """
+    Split into two populations, with no migration. Populations are fractions of ancient
+    population, where population 1 is represented by nuA*(s), and population two is represented by nuA*(1-s).
+    Population two undergoes an exponential growth event, while population one is constant. 
+	
+	nuA: Ancient population size
+    s: Fraction of nuA that goes to pop1. (Pop 2 has size nuA*(1-s).)
+    nu1: Final size of pop 1.
+    nu2: Final size of pop 2.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1.
+    """
+    nuA, nu1, nu2, T, s, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx, nu=nuA)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    nu1 = nuA*s
+    nu2_0 = nuA*(1-s)
+    nu2_func = lambda t: nu2_0 * (nu2/nu2_0)**(t/T)
+    #note, the nu2_0 can be eliminated and the function can appear as:
+    #nu2_func = lambda t: (nuA*(1-s)) * (nu2/(nuA*(1-s)))**(t/T)
+    phi = Integration.two_pops(phi, xx, T, nu1, nu2_func, m12=0, m21=0)
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs

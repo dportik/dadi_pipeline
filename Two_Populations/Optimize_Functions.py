@@ -1516,6 +1516,322 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
             fh_out.close()
         print "---------------------------------------------------", '\n'
 
+        
+    ###########################################################################
+    #Discrete admixture models
+
+    
+    elif model_name == "no_mig_admix_early":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with early discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with early discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_early
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0]
+        upper_bound = [30, 30, 10, 1]
+        params = [1,1,1,0.5]
+        print "parameter set = [nu1, nu2, T, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with early discrete admixture"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=3, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*4)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+    
+    elif model_name == "no_mig_admix_late":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with late discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with late discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0]
+        upper_bound = [30, 30, 10, 1]
+        params = [1,1,1,0.5]
+        print "parameter set = [nu1, nu2, T, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with late discrete admixture"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=3, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*4)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+    elif model_name == "two_epoch_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with discrete admixture, two epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, two epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.two_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 1]
+        params = [1,1,1,1,0.5]
+        print "parameter set = [nu1, nu2, T1, T2, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with discrete admixture, two epoch"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T1, T2, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=3, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*5)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+
+    elif model_name == "three_epoch_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with discrete admixture, three epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, three epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.three_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 10, 1]
+        params = [1,1,1,1,1,0.5]
+        print "parameter set = [nu1, nu2, T1, T2, T3, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with discrete admixture, three epoch"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T1, T2, T3, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=3, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+    elif model_name == "founder_nomig_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Founder event and discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 1, 1]
+        params = [1,1,1,1,0.5,0.5]
+        print "parameter set = [nuA, nu1, nu2, T, s, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Founder event and discrete admixture"+'\t')
+            fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=3, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+
+
+
+
+                
 #======================================================================================
 #======================================================================================
 #======================================================================================
@@ -3020,6 +3336,316 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
             fh_out.close()
         print "---------------------------------------------------", '\n'
 
+
+    ###########################################################################
+    #Discrete admixture models
+    
+    
+    elif model_name == "no_mig_admix_early":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with early discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with early discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_early
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0]
+        upper_bound = [30, 30, 10, 1]
+        print "parameter set = [nu1, nu2, T, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with early discrete admixture"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*4)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+    
+    elif model_name == "no_mig_admix_late":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with late discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with late discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0]
+        upper_bound = [30, 30, 10, 1]
+        print "parameter set = [nu1, nu2, T, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with late discrete admixture"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*4)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+    elif model_name == "two_epoch_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with discrete admixture, two epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, two epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.two_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 1]
+        print "parameter set = [nu1, nu2, T1, T2, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with discrete admixture, two epoch"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T1, T2, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*5)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+
+    elif model_name == "three_epoch_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with discrete admixture, three epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, three epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.three_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 10, 1]
+        print "parameter set = [nu1, nu2, T1, T2, T3, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with discrete admixture, three epoch"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T1, T2, T3, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+    elif model_name == "founder_nomig_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Founder event and discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 1, 1]
+        print "parameter set = [nuA, nu1, nu2, T, s, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Founder event and discrete admixture"+'\t')
+            fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+
+
+
+        
 #======================================================================================
 #======================================================================================
 #======================================================================================
@@ -4527,6 +5153,319 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
             fh_out.close()
         print "---------------------------------------------------", '\n'
 
+
+
+    ###########################################################################
+    #Discrete admixture models
+    
+    
+    elif model_name == "no_mig_admix_early":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with early discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with early discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_early
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0]
+        upper_bound = [30, 30, 10, 1]
+        print "parameter set = [nu1, nu2, T, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with early discrete admixture"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*4)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+    
+    elif model_name == "no_mig_admix_late":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with late discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with late discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0]
+        upper_bound = [30, 30, 10, 1]
+        print "parameter set = [nu1, nu2, T, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with late discrete admixture"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*4)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+    elif model_name == "two_epoch_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with discrete admixture, two epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, two epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.two_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 1]
+        print "parameter set = [nu1, nu2, T1, T2, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with discrete admixture, two epoch"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T1, T2, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*5)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+
+    elif model_name == "three_epoch_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Divergence with discrete admixture, three epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, three epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.three_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 10, 1]
+        print "parameter set = [nu1, nu2, T1, T2, T3, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Divergence with discrete admixture, three epoch"+'\t')
+            fh_out.write("parameter set = [nu1, nu2, T1, T2, T3, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+    elif model_name == "founder_nomig_admix":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Founder event and discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0, 0, 0, 0]
+        upper_bound = [30, 30, 10, 10, 1, 1]
+        print "parameter set = [nuA, nu1, nu2, T, s, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Founder event and discrete admixture"+'\t')
+            fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
+
+
+
+
+
+
+        
 #======================================================================================
 #======================================================================================
 #======================================================================================
@@ -5263,6 +6202,168 @@ def Optimize_Single(pts, fs, model_name, params):
 
         #calculate AIC 
         aic = ( -2*( float(ll))) + (2*5)
+        print "AIC = ", aic, '\n', '\n'
+        return sim_model
+
+    ###########################################################################
+    #Discrete admixture models
+    
+    elif model_name == "no_mig_admix_early":
+        #####################################
+        #Divergence with early discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with early discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_early
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #simulate the model with the optimized parameters
+        sim_model = func_exec(params, fs.sample_sizes, pts)
+
+        #calculate likelihood
+        ll = dadi.Inference.ll_multinom(sim_model, fs)
+        ll = np.around(ll, 2)
+        print "likelihood = ", ll
+
+        #calculate theta
+        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+        theta = np.around(theta, 2)
+        print "Theta = ", theta
+
+        #calculate AIC 
+        aic = ( -2*( float(ll))) + (2*4)
+        print "AIC = ", aic, '\n', '\n'
+        return sim_model
+            
+    
+    elif model_name == "no_mig_admix_late":
+        #####################################
+        #Divergence with late discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with late discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.no_mig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #simulate the model with the optimized parameters
+        sim_model = func_exec(params, fs.sample_sizes, pts)
+
+        #calculate likelihood
+        ll = dadi.Inference.ll_multinom(sim_model, fs)
+        ll = np.around(ll, 2)
+        print "likelihood = ", ll
+
+        #calculate theta
+        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+        theta = np.around(theta, 2)
+        print "Theta = ", theta
+
+        #calculate AIC 
+        aic = ( -2*( float(ll))) + (2*4)
+        print "AIC = ", aic, '\n', '\n'
+        return sim_model
+
+
+    elif model_name == "two_epoch_admix":
+        #####################################
+        #Divergence with discrete admixture, two epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, two epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.two_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+        
+        #simulate the model with the optimized parameters
+        sim_model = func_exec(params, fs.sample_sizes, pts)
+
+        #calculate likelihood
+        ll = dadi.Inference.ll_multinom(sim_model, fs)
+        ll = np.around(ll, 2)
+        print "likelihood = ", ll
+
+        #calculate theta
+        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+        theta = np.around(theta, 2)
+        print "Theta = ", theta
+
+        #calculate AIC 
+        aic = ( -2*( float(ll))) + (2*5)
+        print "AIC = ", aic, '\n', '\n'
+        return sim_model
+
+
+    elif model_name == "three_epoch_admix":
+        #####################################
+        #Divergence with discrete admixture, three epoch
+        #####################################
+        print "---------------------------------------------------"
+        print "Divergence with discrete admixture, three epoch",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.three_epoch_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #simulate the model with the optimized parameters
+        sim_model = func_exec(params, fs.sample_sizes, pts)
+
+        #calculate likelihood
+        ll = dadi.Inference.ll_multinom(sim_model, fs)
+        ll = np.around(ll, 2)
+        print "likelihood = ", ll
+
+        #calculate theta
+        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+        theta = np.around(theta, 2)
+        print "Theta = ", theta
+
+        #calculate AIC 
+        aic = ( -2*( float(ll))) + (2*6)
+        print "AIC = ", aic, '\n', '\n'
+        return sim_model
+
+
+    elif model_name == "founder_nomig_admix":
+        #####################################
+        #Founder event and discrete admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #simulate the model with the optimized parameters
+        sim_model = func_exec(params, fs.sample_sizes, pts)
+
+        #calculate likelihood
+        ll = dadi.Inference.ll_multinom(sim_model, fs)
+        ll = np.around(ll, 2)
+        print "likelihood = ", ll
+
+        #calculate theta
+        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+        theta = np.around(theta, 2)
+        print "Theta = ", theta
+
+        #calculate AIC 
+        aic = ( -2*( float(ll))) + (2*6)
         print "AIC = ", aic, '\n', '\n'
         return sim_model
 

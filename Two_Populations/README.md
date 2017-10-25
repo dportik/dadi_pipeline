@@ -51,7 +51,8 @@ added to the model set, here is a complete list of models (new models marked wit
 28. +Split into two populations, three epochs with unidirectional discrete admixture event in the second, no migration.
 29. +Founder event with no migration and late unidirectional discrete admixture event.
 
-A new graphics file with the visual representation has been provided. The example file and
+A new graphics file with the visual representation has been provided. The names below models 
+match their label in the *Models_2D.py* allowing them to be easily matched. The example file and
 all associated outputs have been updated to include results from the new models.
 
 
