@@ -45,11 +45,12 @@ added to the model set, here is a complete list of models (new models marked wit
 22. +Founder event with symmetric migration and population two exponential growth.
 23. +Founder event with asymmetric migration and population two exponential growth.
 24. +Founder event with no migration and population two exponential growth.
-25. +Split into two populations, early unidirectional discrete admixture event, no migration.
+25. +Split into two populations, immediate unidirectional discrete admixture event, no migration.
 26. +Split into two populations, late unidirectional discrete admixture event, no migration.
 27. +Split into two populations, two epochs with unidirectional discrete admixture event in the second, no migration.
 28. +Split into two populations, three epochs with unidirectional discrete admixture event in the second, no migration.
 29. +Founder event with no migration and late unidirectional discrete admixture event.
+30. +Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
 
 A new graphics file with the visual representation has been provided. The names below models 
 match their label in the *Models_2D.py* allowing them to be easily matched. The example file and
@@ -110,6 +111,15 @@ Usage:
 
 `python dadi_2D_01_first_optimizations.py`
 
+There are potentially a lot of outputs to sort through, depending on how many models you are running.
+An easy way to summarize them is to move all the *Round1_something_optimized.txt* files to a new
+directory and concatenate them:
+
+`cat *.txt > Round1_concatenated.txt`
+
+You can open this tab-delimited summary file and sort by model name, then by AIC (smallest to
+largest), to find the best scoring replicate per model. You'll use the corresponding parameter
+values as the starting base parameters in the next script.
 
   
 **3. run dadi_2D_02_second_optimizations.py**

@@ -110,7 +110,8 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig"
+#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
+#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
 # params:  list of best parameter values to perturb to start the optimizations from
 
 
@@ -215,6 +216,31 @@ founder_asym_params = [0.3164,2.7591,0.3452,0.5607,0.2271,2.6693,0.9892]
 #"founder_nomig" 
 # 5 Values
 founder_nomig_params = [5.5061,0.8123,0.4398,1.1332,0.2469]
+
+#"no_mig_admix_early"
+# 4 Values
+no_mig_admix_early_params = [0.3031,0.3833,0.0852,0.2347]
+
+#"no_mig_admix_late"
+# 4 Values
+no_mig_admix_late_params = [0.674,0.3909,0.1937,0.0435]
+
+#"two_epoch_admix"
+# 5 Values
+two_epoch_admix_params = [2.361,0.2143,7.7035,0.1121,0.9907]
+
+#"three_epoch_admix"
+# 6 Values
+three_epoch_admix_params = [2.1657,0.9917,7.2021,0.1543,0.1449,0.9979]
+
+#"founder_nomig_admix"
+# 6 Values
+founder_nomig_admix_params = [6.7803,1.9488,0.2227,0.3976,0.3097,0.095]
+
+#"founder_nomig_admix_two_epoch"
+# 7 Values
+founder_nomig_admix_two_epoch_params = [4.1348,0.3721,0.4118,0.1317,5.9939,0.3198,0.2258]
+
 
 #======================================================================================
 #Input some of the basic reusable arguments here specific to your data set
@@ -321,6 +347,24 @@ Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_asy
 
 # Founder event with no migration and population two exponential growth.
 Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig", founder_nomig_params)
+
+# Split into two populations, early unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "no_mig_admix_early", no_mig_admix_early_params)
+
+# Split into two populations, late unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "no_mig_admix_late", no_mig_admix_late_params)
+
+# Split into two populations, two epochs with unidirectional discrete admixture event in the second.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "two_epoch_admix", two_epoch_admix_params)
+
+# Split into two populations, three epochs with unidirectional discrete admixture event in the second.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "three_epoch_admix", three_epoch_admix_params)
+
+# Founder event with no migration and unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig_admix", founder_nomig_admix_params)
+
+# Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
 
 
 #===========================================================================

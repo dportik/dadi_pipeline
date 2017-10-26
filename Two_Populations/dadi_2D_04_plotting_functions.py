@@ -119,7 +119,8 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig"
+#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
+#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
 # params:  list of best parameter values to optimize with
 
 #===========================================================================
@@ -226,6 +227,30 @@ founder_asym_params = [1.5758,2.6038,0.205,0.2628,0.1122,0.5803,0.2188]
 # 5 Values
 founder_nomig_params = [1.9544,2.7918,0.1119,0.3278,0.151]
 
+#"no_mig_admix_early"
+# 4 Values
+no_mig_admix_early_params = []
+
+#"no_mig_admix_late"
+# 4 Values
+no_mig_admix_late_params = []
+
+#"two_epoch_admix"
+# 5 Values
+two_epoch_admix_params = []
+
+#"three_epoch_admix"
+# 6 Values
+three_epoch_admix_params = []
+
+#"founder_nomig_admix"
+# 6 Values
+founder_nomig_admix_params = []
+
+#"founder_nomig_admix_two_epoch"
+# 7 Values
+founder_nomig_admix_two_epoch_params = []
+
 
 #======================================================================================
 #Input some of the basic reusable arguments here specific to your data set
@@ -320,6 +345,24 @@ founder_asym = Optimize_Functions.Optimize_Single(pts, fs, "founder_asym", found
 # Founder event with no migration and population two exponential growth.
 founder_nomig = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig", founder_nomig_params)
 
+# Split into two populations, early unidirectional discrete admixture event.
+no_mig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "no_mig_admix_early", no_mig_admix_early_params)
+
+# Split into two populations, late unidirectional discrete admixture event.
+no_mig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "no_mig_admix_late", no_mig_admix_late_params)
+
+# Split into two populations, two epochs with unidirectional discrete admixture event in the second.
+two_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "two_epoch_admix", two_epoch_admix_params)
+
+# Split into two populations, three epochs with unidirectional discrete admixture event in the second.
+three_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "three_epoch_admix", three_epoch_admix_params)
+
+# Founder event with no migration and unidirectional discrete admixture event.
+founder_nomig_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix", founder_nomig_admix_params)
+
+# Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
+founder_nomig_admix_two_epoch = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
+
 
 #======================================================================================
 # Define an editable plotting function for data and model comparison
@@ -351,7 +394,8 @@ def plot(sim_model, data, outfile, model_name):
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig"
+#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
+#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
 
 # A plot should pop up with the model for each, close the box and the next will load. They
 # are all saved automatically to the working directory.
@@ -380,5 +424,11 @@ plot(sec_contact_asym_mig_size_three_epoch, fs, outfile, "sec_contact_asym_mig_s
 plot(founder_sym, fs, outfile, "founder_sym")
 plot(founder_asym, fs, outfile, "founder_asym")
 plot(founder_nomig, fs, outfile, "founder_nomig")
+plot(no_mig_admix_early, fs, outfile, "no_mig_admix_early")
+plot(no_mig_admix_late, fs, outfile, "no_mig_admix_late")
+plot(two_epoch_admix, fs, outfile, "two_epoch_admix")
+plot(three_epoch_admix, fs, outfile, "three_epoch_admix")
+plot(founder_nomig_admix, fs, outfile, "founder_nomig_admix")
+plot(founder_nomig_admix_two_epoch, fs, outfile, "founder_nomig_admix_two_epoch")
 
 #======================================================================================

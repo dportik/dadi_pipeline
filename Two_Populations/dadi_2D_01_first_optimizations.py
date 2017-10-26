@@ -105,7 +105,8 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig"
+#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
+#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
 
 #======================================================================================
 #Input some of the basic reusable arguments here specific to your data set
@@ -212,6 +213,24 @@ Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_asy
 
 # Founder event with no migration and population two exponential growth.
 Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig")
+
+# Split into two populations, early unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_mig_admix_early")
+
+# Split into two populations, late unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_mig_admix_late")
+
+# Split into two populations, two epochs with unidirectional discrete admixture event in the second.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "two_epoch_admix")
+
+# Split into two populations, three epochs with unidirectional discrete admixture event in the second.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "three_epoch_admix")
+
+# Founder event with no migration and unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig_admix")
+
+# Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch")
 
 
 #===========================================================================
