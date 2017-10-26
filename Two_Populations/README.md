@@ -113,7 +113,7 @@ Usage:
 
 There are potentially a lot of outputs to sort through, depending on how many models you are running.
 An easy way to summarize them is to move all the *Round1_something_optimized.txt* files to a new
-directory and concatenate them:
+directory, move in to the directory, and concatenate them:
 
 `cat *.txt > Round1_concatenated.txt`
 
@@ -174,7 +174,7 @@ This script will simulate the model using a fixed set of input parameters. That 
 optimizations will occur here, and the assumption is you've searched thoroughly for the 
 parameter set with the highest likelihood value. The goal of this script is to produce 
 plots of the 2D-JSFS for the data and model, plus the residuals. A pdf file for each of 
-the 15 models will be written for each model to the current working directory. This script 
+the models will be written for each model to the current working directory. This script 
 requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
 directory.
 

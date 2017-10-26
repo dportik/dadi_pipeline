@@ -269,7 +269,7 @@ fs = fs_1
 #===========================================================================
 # Now call the function with the relevant arguments.
 
-# There are 15 models to optimize.
+# There are several models to optimize.
 # Each model is executed with one replicate using fixed parameter values.
 # The simulated model is stored as an object to be called on in the plotting function.
 
