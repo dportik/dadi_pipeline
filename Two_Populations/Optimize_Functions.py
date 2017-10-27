@@ -1846,7 +1846,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
         upper_bound = [20, 20, 20, 10, 10, 0.5, 0.5]
-        params = [1,1,1,1,0.25,0.25]
+        params = [1,1,1,1,1,0.25,0.25]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
         for i in range(1,x):
