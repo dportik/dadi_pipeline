@@ -45,10 +45,10 @@ added to the model set, here is a complete list of models (new models marked wit
 
 'Island' models:
 For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), 
-pop1=nuA(1-s), where NuA = ancestral population and 's' is the fraction of NuA in a population. 
-The upper bound of 's' is set at 0.5, meaning no more than 50% of NuA can create pop2 (the island
-population). Vicariance events involve no population size change, whereas founder event models
-always enforce exponential growth in pop2 (the island population).
+pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. The upper bound of 's' is set 
+at 0.5, meaning no more than 50% of NuA can create pop2 (the island population). Vicariance events 
+involve no population size change, whereas founder event models always enforce exponential growth 
+in pop2 (the island population).
 
 22. +Island: Vicariance with no migration.
 23. +Island: Vicariance with with ancient continuous asymmetric migration.
