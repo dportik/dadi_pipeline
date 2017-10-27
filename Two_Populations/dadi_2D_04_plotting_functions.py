@@ -119,8 +119,9 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
-#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
+#		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
+#        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
+#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
 # params:  list of best parameter values to optimize with
 
 #===========================================================================
@@ -227,21 +228,42 @@ founder_asym_params = [1.5758,2.6038,0.205,0.2628,0.1122,0.5803,0.2188]
 # 5 Values
 founder_nomig_params = [1.9544,2.7918,0.1119,0.3278,0.151]
 
-#"no_mig_admix_early"
-# 4 Values
-no_mig_admix_early_params = []
 
-#"no_mig_admix_late"
-# 4 Values
-no_mig_admix_late_params = []
-
-#"two_epoch_admix"
+#"vic_no_mig"
 # 5 Values
-two_epoch_admix_params = []
+vic_no_mig_params = []
 
-#"three_epoch_admix"
+#"vic_anc_asym_mig"
+# 8 Values
+vic_anc_asym_mig_params = []
+
+#"vic_sec_contact_asym_mig"
+# 8 Values
+vic_sec_contact_asym_mig_params = []
+
+#"founder_nomig"
+# 5 Values
+founder_nomig_params = []
+
+#"founder_sym"
 # 6 Values
-three_epoch_admix_params = []
+founder_sym_params = []
+
+#"founder_asym"
+# 7 Values
+founder_asym_params = []
+
+#"vic_no_mig_admix_early"
+# 6 Values
+vic_no_mig_admix_early_params = []
+
+#"vic_no_mig_admix_late"
+# 6 Values
+vic_no_mig_admix_late_params = []
+
+#"vic_two_epoch_admix"
+# 7 Values
+vic_two_epoch_admix_params = []
 
 #"founder_nomig_admix"
 # 6 Values
@@ -279,88 +301,100 @@ no_divergence = Optimize_Functions.Optimize_Single(pts, fs, "no_divergence", no_
 # Split into two populations, no migration.
 no_mig = Optimize_Functions.Optimize_Single(pts, fs, "no_mig", no_mig_params)
 
-# Split into two populations, with symmetric migration.
+# Split into two populations, with continuous symmetric migration.
 sym_mig = Optimize_Functions.Optimize_Single(pts, fs, "sym_mig", sym_mig_params)
 
-# Split into two populations, with different migration rates.
+# Split into two populations, with continuous asymmetric migration.
 asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "asym_mig", asym_mig_params)
 
-# Split with symmetric migration followed by isolation.
+# Split with continuous symmetric migration, followed by isolation.
 anc_sym_mig = Optimize_Functions.Optimize_Single(pts, fs, "anc_sym_mig", anc_sym_mig_params)
 
-# Split with asymmetric migration followed by isolation.
+# Split with continuous asymmetric migration, followed by isolation.
 anc_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "anc_asym_mig", anc_asym_mig_params)
 
-# Split with no gene flow, followed by period of symmetrical gene flow.
+# Split with no gene flow, followed by period of continuous symmetrical gene flow.
 sec_contact_sym_mig = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig", sec_contact_sym_mig_params)
 
-# Split with no gene flow, followed by period of asymmetrical gene flow.
+# Split with no gene flow, followed by period of continuous asymmetrical gene flow.
 sec_contact_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig", sec_contact_asym_mig_params)
 
-# Split with no migration, then size change with no migration.
+# Split with no migration, then instantaneous size change with no migration.
 no_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "no_mig_size", no_mig_size_params)
 
-# Split with symmetric migration, then size change with symmetric migration.
+# Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
 sym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "sym_mig_size", sym_mig_size_params)
 
-# Split with different migration rates, then size change with different migration rates.
+# Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
 asym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "asym_mig_size", asym_mig_size_params)
 
-# Split with symmetrical gene flow, followed by size change with no gene flow.  
+# Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
 anc_sym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "anc_sym_mig_size", anc_sym_mig_size_params)
 
-# Split with asymmetrical gene flow, followed by size change with no gene flow.
+# Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
 anc_asym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "anc_asym_mig_size", anc_asym_mig_size_params)
 
-# Split with no gene flow, followed by size change with symmetrical gene flow.
+# Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
 sec_contact_sym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig_size", sec_contact_sym_mig_size_params)
 
-# Split with no gene flow, followed by size change with asymmetrical gene flow.
+# Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
 sec_contact_asym_mig_size = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig_size", sec_contact_asym_mig_size_params)
 
-# Split into two populations, with symmetric migration, two epochs.
+
+# Newer Models
+# Split into two populations, with continuous symmetric migration, rate varying across two epochs.
 sym_mig_twoepoch = Optimize_Functions.Optimize_Single(pts, fs, "sym_mig_twoepoch", sym_mig_twoepoch_params)
 
-# Split into two populations, with different migration rates, two epochs.
+# Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
 asym_mig_twoepoch = Optimize_Functions.Optimize_Single(pts, fs, "asym_mig_twoepoch", asym_mig_twoepoch_params)
 
-# Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
+# Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
 sec_contact_sym_mig_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig_three_epoch", sec_contact_sym_mig_three_epoch_params)
 
-# Split with no gene flow, followed by period of asymmetrical gene flow, then isolation.
+# Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
 sec_contact_asym_mig_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig_three_epoch", sec_contact_asym_mig_three_epoch_params)
 
-# Split with no gene flow, followed by size change with symmetrical gene flow, then isolation.
+# Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
 sec_contact_sym_mig_size_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_sym_mig_size_three_epoch", sec_contact_sym_mig_size_three_epoch_params)
 
-# Split with no gene flow, followed by size change with asymmetrical gene flow, then isolation.
+# Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
 sec_contact_asym_mig_size_three_epoch = Optimize_Functions.Optimize_Single(pts, fs, "sec_contact_asym_mig_size_three_epoch", sec_contact_asym_mig_size_three_epoch_params)
 
-# Founder event with symmetric migration and population two exponential growth.
-founder_sym = Optimize_Functions.Optimize_Single(pts, fs, "founder_sym", founder_sym_params)
 
-# Founder event with asymmetric migration and population two exponential growth.
-founder_asym = Optimize_Functions.Optimize_Single(pts, fs, "founder_asym", founder_asym_params)
 
-# Founder event with no migration and population two exponential growth.
-founder_nomig = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig", founder_nomig_params)
+###### 'Island' specific models.
 
-# Split into two populations, early unidirectional discrete admixture event.
-no_mig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "no_mig_admix_early", no_mig_admix_early_params)
+# Island: Vicariance with no migration.
+vic_no_mig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_no_mig", vic_no_mig_params)
 
-# Split into two populations, late unidirectional discrete admixture event.
-no_mig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "no_mig_admix_late", no_mig_admix_late_params)
+# Island: Vicariance with with ancient continuous asymmetric migration.
+vic_anc_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_anc_asym_mig", vic_anc_asym_mig_params)
 
-# Split into two populations, two epochs with unidirectional discrete admixture event in the second.
-two_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "two_epoch_admix", two_epoch_admix_params)
+# Island: Vicariance with no migration, secondary contact with continuous asymmetric migration
+vic_sec_contact_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_sec_contact_asym_mig", vic_sec_contact_asym_mig_params)
 
-# Split into two populations, three epochs with unidirectional discrete admixture event in the second.
-three_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "three_epoch_admix", three_epoch_admix_params)
+# Island: Founder event with no migration.
+founder_nomig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig", founder_nomig_params)
 
-# Founder event with no migration and unidirectional discrete admixture event.
+# Island: Founder event with continuous symmetric migration.
+founder_sym = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_sym", founder_sym_params)
+
+# Island: Founder event with continuous asymmetric migration.
+founder_asym = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_asym", founder_asym_params)
+
+# Island: Vicariance, early unidirectional discrete admixture event (before any drift).
+vic_no_mig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_no_mig_admix_early", vic_no_mig_admix_early_params)
+
+# Island: Vicariance, late unidirectional discrete admixture event (after any drift).
+vic_no_mig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_no_mig_admix_late", vic_no_mig_admix_late_params)
+
+# Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+vic_two_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_two_epoch_admix", vic_two_epoch_admix_params)
+
+# Island: Founder event, late unidirectional discrete admixture event (after any drift).
 founder_nomig_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix", founder_nomig_admix_params)
 
-# Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
+# Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 founder_nomig_admix_two_epoch = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
 
 
@@ -394,8 +428,9 @@ def plot(sim_model, data, outfile, model_name):
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
-#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
+#		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
+#        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
+#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
 
 # A plot should pop up with the model for each, close the box and the next will load. They
 # are all saved automatically to the working directory.
@@ -421,13 +456,15 @@ plot(sec_contact_sym_mig_three_epoch, fs, outfile, "sec_contact_sym_mig_three_ep
 plot(sec_contact_asym_mig_three_epoch, fs, outfile, "sec_contact_asym_mig_three_epoch")
 plot(sec_contact_sym_mig_size_three_epoch, fs, outfile, "sec_contact_sym_mig_size_three_epoch")
 plot(sec_contact_asym_mig_size_three_epoch, fs, outfile, "sec_contact_asym_mig_size_three_epoch")
+plot(vic_no_mig, fs, outfile, "vic_no_mig")
+plot(vic_anc_asym_mig, fs, outfile, "vic_anc_asym_mig")
+plot(vic_sec_contact_asym_mig, fs, outfile, "vic_sec_contact_asym_mig")
+plot(founder_nomig, fs, outfile, "founder_nomig")
 plot(founder_sym, fs, outfile, "founder_sym")
 plot(founder_asym, fs, outfile, "founder_asym")
-plot(founder_nomig, fs, outfile, "founder_nomig")
-plot(no_mig_admix_early, fs, outfile, "no_mig_admix_early")
-plot(no_mig_admix_late, fs, outfile, "no_mig_admix_late")
-plot(two_epoch_admix, fs, outfile, "two_epoch_admix")
-plot(three_epoch_admix, fs, outfile, "three_epoch_admix")
+plot(vic_no_mig_admix_early, fs, outfile, "vic_no_mig_admix_early")
+plot(vic_no_mig_admix_late, fs, outfile, "vic_no_mig_admix_late")
+plot(vic_two_epoch_admix, fs, outfile, "vic_two_epoch_admix")
 plot(founder_nomig_admix, fs, outfile, "founder_nomig_admix")
 plot(founder_nomig_admix_two_epoch, fs, outfile, "founder_nomig_admix_two_epoch")
 

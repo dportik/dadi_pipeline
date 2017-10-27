@@ -23,38 +23,48 @@ added to the model set, here is a complete list of models (new models marked wit
 
 1. Standard neutral model, populations never diverge.
 2. Split into two populations, no migration.
-3. Split into two populations, with symmetric migration.
-4. Split into two populations, with different migration rates.
-5. Split with symmetric migration followed by isolation.
-6. Split with asymmetric migration followed by isolation.
-7. Split with no gene flow, followed by period of symmetrical gene flow.
-8. Split with no gene flow, followed by period of asymmetrical gene flow.
-9. Split with no migration, then size change with no migration.
-10. Split with symmetric migration, then size change with symmetric migration.
-11. Split with different migration rates, then size change with different migration rates.
-12. Split with symmetrical gene flow, followed by size change with no gene flow.  
-13. Split with asymmetrical gene flow, followed by size change with no gene flow.
-14. Split with no gene flow, followed by size change with symmetrical gene flow.
-15. Split with no gene flow, followed by size change with asymmetrical gene flow.
-16. +Split into two populations, with symmetric migration, two epochs.
-17. +Split into two populations, with different migration rates, two epochs.
-18. +Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
-19. +Split with no gene flow, followed by period of asymmetrical gene flow, then isolation.
-20. +Split with no gene flow, followed by size change with symmetrical gene flow, then isolation.
-21. +Split with no gene flow, followed by size change with asymmetrical gene flow, then isolation.
-22. +Founder event with symmetric migration and population two exponential growth.
-23. +Founder event with asymmetric migration and population two exponential growth.
-24. +Founder event with no migration and population two exponential growth.
-25. +Split into two populations, immediate unidirectional discrete admixture event, no migration.
-26. +Split into two populations, late unidirectional discrete admixture event, no migration.
-27. +Split into two populations, two epochs with unidirectional discrete admixture event in the second, no migration.
-28. +Split into two populations, three epochs with unidirectional discrete admixture event in the second, no migration.
-29. +Founder event with no migration and late unidirectional discrete admixture event.
-30. +Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
+3. Split into two populations, with continuous symmetric migration.
+4. Split into two populations, with continuous asymmetric migration.
+5. Split with continuous symmetric migration, followed by isolation.
+6. Split with continuous asymmetric migration, followed by isolation.
+7. Split with no gene flow, followed by period of continuous symmetrical gene flow.
+8. Split with no gene flow, followed by period of continuous asymmetrical gene flow.
+9. Split with no migration, then instantaneous size change with no migration.
+10. Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
+11. Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
+12. Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
+13. Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
+14. Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
+15. Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
+16. +Split into two populations, with continuous symmetric migration, rate varying across two epochs.
+17. +Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
+18. +Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
+19. +Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
+20. +Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
+21. +Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
+
+'Island' models:
+For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), 
+pop1=nuA(1-s), where NuA = ancestral population and 's' is the fraction of NuA in a population. 
+The upper bound of 's' is set at 0.5, meaning no more than 50% of NuA can create pop2 (the island
+population). Vicariance events involve no population size change, whereas founder event models
+always enforce exponential growth in pop2 (the island population).
+22. +Island: Vicariance with no migration.
+23. +Island: Vicariance with with ancient continuous asymmetric migration.
+24. +Island: Vicariance with no migration, secondary contact with continuous asymmetric migration
+25. +Island: Founder event with no migration.
+26. +Island: Founder event with continuous symmetric migration.
+27. +Island: Founder event with continuous asymmetric migration.
+28. +Island: Vicariance, early unidirectional discrete admixture event (before any drift).
+29. +Island: Vicariance, late unidirectional discrete admixture event (after any drift).
+30. +Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+31. +Island: Founder event, late unidirectional discrete admixture event (after any drift).
+32. +Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+
 
 A new graphics file with the visual representation has been provided. The names below models 
 match their label in the *Models_2D.py* allowing them to be easily matched. The example file and
-all associated outputs have been updated to include results from the new models.
+all outputs have been updated to include results from several of the new models (but not all).
 
 
 **Suggested Workflow**

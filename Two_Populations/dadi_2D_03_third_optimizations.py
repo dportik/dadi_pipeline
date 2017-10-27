@@ -104,8 +104,9 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #        "sec_contact_asym_mig_size", "sym_mig_twoepoch", "asym_mig_twoepoch", 
 #		 "sec_contact_sym_mig_three_epoch", "sec_contact_asym_mig_three_epoch", 
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
-#		 "founder_sym", "founder_asym", "founder_nomig", "no_mig_admix_early", "no_mig_admix_late", 
-#		 "two_epoch_admix", "three_epoch_admix", "founder_nomig_admix"
+#		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
+#        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
+#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
 # params:  list of best parameter values to perturb to start the optimizations from
 
 
@@ -201,41 +202,49 @@ sec_contact_sym_mig_size_three_epoch_params = [0.1305,5.8714,1.0551,1.0063,0.235
 # 9 Values
 sec_contact_asym_mig_size_three_epoch_params = [0.0375,1.5796,0.5774,0.5646,0.7689,0.5669,3.0461,0.8893,0.3395]
 
-#"founder_sym" 
-# 6 Values
-founder_sym_params = [1.0852,1.4742,0.1228,0.2063,0.3603,0.2252]
+#"vic_no_mig"
+# 5 Values
+vic_no_mig_params = []
 
-#"founder_asym" 
+#"vic_anc_asym_mig"
+# 8 Values
+vic_anc_asym_mig_params = []
+
+#"vic_sec_contact_asym_mig"
+# 8 Values
+vic_sec_contact_asym_mig_params = []
+
+#"founder_nomig"
+# 5 Values
+founder_nomig_params = []
+
+#"founder_sym"
+# 6 Values
+founder_sym_params = []
+
+#"founder_asym"
 # 7 Values
-founder_asym_params = [1.0159,2.325,0.2882,0.6529,0.073,1.0018,0.2642]
+founder_asym_params = []
 
-#"founder_nomig" 
-# 5 Values
-founder_nomig_params = [2.9444,2.0167,0.1717,0.5041,0.152]
-
-#"no_mig_admix_early"
-# 4 Values
-no_mig_admix_early_params = [0.1472,0.0917,0.0321,0.7641]
-
-#"no_mig_admix_late"
-# 4 Values
-no_mig_admix_late_params = [0.017,0.0109,0.0041,0.01]
-
-#"two_epoch_admix"
-# 5 Values
-two_epoch_admix_params = [0.5775,0.0861,0.2668,0.0312,0.7237]
-
-#"three_epoch_admix"
+#"vic_no_mig_admix_early"
 # 6 Values
-three_epoch_admix_params = [2.0618,0.2952,9.8726,0.0886,0.0383,0.988]
+vic_no_mig_admix_early_params = []
+
+#"vic_no_mig_admix_late"
+# 6 Values
+vic_no_mig_admix_late_params = []
+
+#"vic_two_epoch_admix"
+# 7 Values
+vic_two_epoch_admix_params = []
 
 #"founder_nomig_admix"
 # 6 Values
-founder_nomig_admix_params = [8.7441,0.5945,0.1133,0.2081,0.1077,0.0223]
+founder_nomig_admix_params = []
 
 #"founder_nomig_admix_two_epoch"
 # 7 Values
-founder_nomig_admix_two_epoch_params = [20.1802,0.5214,0.6068,0.2159,4.4957,0.0856,0.2214]
+founder_nomig_admix_two_epoch_params = []
 
 
 #======================================================================================
@@ -277,91 +286,100 @@ Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "no_divergen
 # Split into two populations, no migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "no_mig", no_mig_params)
 
-# Split into two populations, with symmetric migration.
+# Split into two populations, with continuous symmetric migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sym_mig", sym_mig_params)
 
-# Split into two populations, with different migration rates.
+# Split into two populations, with continuous asymmetric migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "asym_mig", asym_mig_params)
 
-# Split with symmetric migration followed by isolation.
+# Split with continuous symmetric migration, followed by isolation.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "anc_sym_mig", anc_sym_mig_params)
 
-# Split with asymmetric migration followed by isolation.
+# Split with continuous asymmetric migration, followed by isolation.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "anc_asym_mig", anc_asym_mig_params)
 
-# Split with no gene flow, followed by period of symmetrical gene flow.
+# Split with no gene flow, followed by period of continuous symmetrical gene flow.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig", sec_contact_sym_mig_params)
 
-# Split with no gene flow, followed by period of asymmetrical gene flow.
+# Split with no gene flow, followed by period of continuous asymmetrical gene flow.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig", sec_contact_asym_mig_params)
 
-# Split with no migration, then size change with no migration.
+# Split with no migration, then instantaneous size change with no migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "no_mig_size", no_mig_size_params)
 
-# Split with symmetric migration, then size change with symmetric migration.
+# Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sym_mig_size", sym_mig_size_params)
 
-# Split with different migration rates, then size change with different migration rates.
+# Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "asym_mig_size", asym_mig_size_params)
 
-# Split with symmetrical gene flow, followed by size change with no gene flow.  
+# Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "anc_sym_mig_size", anc_sym_mig_size_params)
 
-# Split with asymmetrical gene flow, followed by size change with no gene flow.
+# Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "anc_asym_mig_size", anc_asym_mig_size_params)
 
-# Split with no gene flow, followed by size change with symmetrical gene flow.
+# Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size", sec_contact_sym_mig_size_params)
 
-# Split with no gene flow, followed by size change with asymmetrical gene flow.
+# Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size", sec_contact_asym_mig_size_params)
 
 
-# Split into two populations, with symmetric migration, two epochs.
+# Newer Models
+# Split into two populations, with continuous symmetric migration, rate varying across two epochs.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sym_mig_twoepoch", sym_mig_twoepoch_params)
 
-# Split into two populations, with different migration rates, two epochs.
+# Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "asym_mig_twoepoch", asym_mig_twoepoch_params)
 
-# Split with no gene flow, followed by period of symmetrical gene flow, then isolation.
+# Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_three_epoch", sec_contact_sym_mig_three_epoch_params)
 
-# Split with no gene flow, followed by period of asymmetrical gene flow, then isolation.
+# Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_three_epoch", sec_contact_asym_mig_three_epoch_params)
 
-# Split with no gene flow, followed by size change with symmetrical gene flow, then isolation.
+# Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_sym_mig_size_three_epoch", sec_contact_sym_mig_size_three_epoch_params)
 
-# Split with no gene flow, followed by size change with asymmetrical gene flow, then isolation.
+# Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "sec_contact_asym_mig_size_three_epoch", sec_contact_asym_mig_size_three_epoch_params)
 
-# Founder event with symmetric migration and population two exponential growth.
-Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_sym", founder_sym_params)
 
-# Founder event with asymmetric migration and population two exponential growth.
-Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_asym", founder_asym_params)
+###### 'Island' specific models.
 
-# Founder event with no migration and population two exponential growth.
+# Island: Vicariance with no migration.
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "vic_no_mig", vic_no_mig_params)
+
+# Island: Vicariance with with ancient continuous asymmetric migration.
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "vic_anc_asym_mig", vic_anc_asym_mig_params)
+
+# Island: Vicariance with no migration, secondary contact with continuous asymmetric migration
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "vic_sec_contact_asym_mig", vic_sec_contact_asym_mig_params)
+
+# Island: Founder event with no migration.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_nomig", founder_nomig_params)
 
-# Split into two populations, early unidirectional discrete admixture event.
-Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "no_mig_admix_early", no_mig_admix_early_params)
+# Island: Founder event with continuous symmetric migration.
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_sym", founder_sym_params)
 
-# Split into two populations, late unidirectional discrete admixture event.
-Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "no_mig_admix_late", no_mig_admix_late_params)
+# Island: Founder event with continuous asymmetric migration.
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_asym", founder_asym_params)
 
-# Split into two populations, two epochs with unidirectional discrete admixture event in the second.
-Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "two_epoch_admix", two_epoch_admix_params)
+# Island: Vicariance, early unidirectional discrete admixture event (before any drift).
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "vic_no_mig_admix_early", vic_no_mig_admix_early_params)
 
-# Split into two populations, three epochs with unidirectional discrete admixture event in the second.
-Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "three_epoch_admix", three_epoch_admix_params)
+# Island: Vicariance, late unidirectional discrete admixture event (after any drift).
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "vic_no_mig_admix_late", vic_no_mig_admix_late_params)
 
-# Founder event with no migration and unidirectional discrete admixture event.
+# Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "vic_two_epoch_admix", vic_two_epoch_admix_params)
+
+# Island: Founder event, late unidirectional discrete admixture event (after any drift).
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_nomig_admix", founder_nomig_admix_params)
 
-# Founder event with no migration, two epochs with unidirectional discrete admixture event in the second.
+# Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 Optimize_Functions.Optimize_Round3(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
-
 
 #===========================================================================
 #clock the amount of time to complete the script
