@@ -1351,7 +1351,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99]
         params = [1,1,1,1,0.25]
         print "parameter set = [nuA, nu1, nu2, T, s]"
 
@@ -1412,7 +1412,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.99]
         params = [1,1,1,1,1,1,1,0.25]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T1, T2, s]"
 
@@ -1473,7 +1473,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.99]
         params = [1,1,1,1,1,1,1,0.25]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T1, T2, s]"
 
@@ -1534,7 +1534,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 20, 10, 0.5]
+        upper_bound = [20, 20, 20, 20, 10, 0.99]
         params = [1,1,1,1,1,0.25]
         print "parameter set = [nuA, nu1, nu2, m, T, s]"
 
@@ -1595,7 +1595,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [30, 30, 30, 20, 20, 10, 0.5]
+        upper_bound = [30, 30, 30, 20, 20, 10, 0.99]
         params = [1,1,1,1,1,1,0.25]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T, s]"
 
@@ -1656,7 +1656,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [30, 30, 30, 10, 0.5]
+        upper_bound = [30, 30, 30, 10, 0.99]
         params = [1,1,1,1,0.25]
         print "parameter set = [nuA, nu1, nu2, T, s]"
 
@@ -1723,7 +1723,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99, 0.99]
         params = [1,1,1,1,0.25,0.25]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
@@ -1784,7 +1784,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99, 0.99]
         params = [1,1,1,1,0.25,0.25]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
@@ -1845,7 +1845,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 0.99, 0.99]
         params = [1,1,1,1,1,0.25,0.25]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
@@ -1907,7 +1907,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 10, 10, 0.99, 0.99]
         params = [1,1,1,1,0.25,0.25]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
@@ -1969,7 +1969,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 10, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 10, 10, 10, 0.99, 0.99]
         params = [1,1,1,1,1,0.25,0.25]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
@@ -3367,7 +3367,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s]"
 
         for i in range(1,x):
@@ -3428,7 +3428,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T1, T2, s]"
 
         for i in range(1,x):
@@ -3489,7 +3489,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T1, T2, s]"
 
         for i in range(1,x):
@@ -3550,7 +3550,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 20, 10, 0.5]
+        upper_bound = [20, 20, 20, 20, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m, T, s]"
 
         for i in range(1,x):
@@ -3611,7 +3611,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [30, 30, 30, 20, 20, 10, 0.5]
+        upper_bound = [30, 30, 30, 20, 20, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T, s]"
 
         for i in range(1,x):
@@ -3672,7 +3672,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [30, 30, 30, 10, 0.5]
+        upper_bound = [30, 30, 30, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s]"
 
         for i in range(1,x):
@@ -3739,7 +3739,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
         for i in range(1,x):
@@ -3800,7 +3800,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
         for i in range(1,x):
@@ -3861,7 +3861,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
         for i in range(1,x):
@@ -3923,7 +3923,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 10, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
         for i in range(1,x):
@@ -3985,7 +3985,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 10, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 10, 10, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
         for i in range(1,x):
@@ -5383,7 +5383,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s]"
 
         for i in range(1,x):
@@ -5444,7 +5444,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T1, T2, s]"
 
         for i in range(1,x):
@@ -5505,7 +5505,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 10, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T1, T2, s]"
 
         for i in range(1,x):
@@ -5566,7 +5566,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [20, 20, 20, 20, 10, 0.5]
+        upper_bound = [20, 20, 20, 20, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m, T, s]"
 
         for i in range(1,x):
@@ -5627,7 +5627,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [30, 30, 30, 20, 20, 10, 0.5]
+        upper_bound = [30, 30, 30, 20, 20, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, m12, m21, T, s]"
 
         for i in range(1,x):
@@ -5688,7 +5688,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001]
-        upper_bound = [30, 30, 30, 10, 0.5]
+        upper_bound = [30, 30, 30, 10, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s]"
 
         for i in range(1,x):
@@ -5755,7 +5755,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
         for i in range(1,x):
@@ -5816,7 +5816,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
         for i in range(1,x):
@@ -5877,7 +5877,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 20, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 20, 10, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
         for i in range(1,x):
@@ -5939,7 +5939,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 10, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T, s, f]"
 
         for i in range(1,x):
@@ -6001,7 +6001,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         #create parameter list for optimization, set bounds for search
         lower_bound = [0.01, 0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
-        upper_bound = [20, 20, 10, 10, 10, 0.5, 0.5]
+        upper_bound = [20, 20, 10, 10, 10, 0.99, 0.99]
         print "parameter set = [nuA, nu1, nu2, T1, T2, s, f]"
 
         for i in range(1,x):
