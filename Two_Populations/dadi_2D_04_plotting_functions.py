@@ -121,7 +121,8 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
 #		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
 #        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
-#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
+#        "vic_two_epoch_admix", "founder_nomig_admix_early", "founder_nomig_admix_late",
+#        "founder_nomig_admix_two_epoch"
 # params:  list of best parameter values to optimize with
 
 #===========================================================================
@@ -265,9 +266,13 @@ vic_no_mig_admix_late_params = []
 # 7 Values
 vic_two_epoch_admix_params = []
 
-#"founder_nomig_admix"
+#"founder_nomig_admix_early"
 # 6 Values
-founder_nomig_admix_params = []
+founder_nomig_admix_early_params = []
+
+#"founder_nomig_admix_late"
+# 6 Values
+founder_nomig_admix_late_params = []
 
 #"founder_nomig_admix_two_epoch"
 # 7 Values
@@ -391,8 +396,11 @@ vic_no_mig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, rep
 # Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 vic_two_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_two_epoch_admix", vic_two_epoch_admix_params)
 
-# Island: Founder event, late unidirectional discrete admixture event (after any drift).
-founder_nomig_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix", founder_nomig_admix_params)
+# Founder event with no migration, early unidirectional discrete admixture event.
+founder_nomig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_early", founder_nomig_admix_early_params)
+
+# Founder event with no migration, late unidirectional discrete admixture event.
+founder_nomig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_late", founder_nomig_admix_late_params)
 
 # Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 founder_nomig_admix_two_epoch = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
@@ -430,7 +438,8 @@ def plot(sim_model, data, outfile, model_name):
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
 #		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
 #        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
-#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
+#        "vic_two_epoch_admix", "founder_nomig_admix_early", "founder_nomig_admix_late",
+#        "founder_nomig_admix_two_epoch"
 
 # A plot should pop up with the model for each, close the box and the next will load. They
 # are all saved automatically to the working directory.
@@ -465,7 +474,8 @@ plot(founder_asym, fs, outfile, "founder_asym")
 plot(vic_no_mig_admix_early, fs, outfile, "vic_no_mig_admix_early")
 plot(vic_no_mig_admix_late, fs, outfile, "vic_no_mig_admix_late")
 plot(vic_two_epoch_admix, fs, outfile, "vic_two_epoch_admix")
-plot(founder_nomig_admix, fs, outfile, "founder_nomig_admix")
+plot(founder_nomig_admix_early, fs, outfile, "founder_nomig_admix_early")
+plot(founder_nomig_admix_late, fs, outfile, "founder_nomig_admix_late")
 plot(founder_nomig_admix_two_epoch, fs, outfile, "founder_nomig_admix_two_epoch")
 
 #======================================================================================

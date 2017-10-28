@@ -58,8 +58,9 @@ in pop2 (the island population).
 28. +Island: Vicariance, early unidirectional discrete admixture event (before any drift).
 29. +Island: Vicariance, late unidirectional discrete admixture event (after any drift).
 30. +Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-31. +Island: Founder event, late unidirectional discrete admixture event (after any drift).
-32. +Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+31. +Island: Founder event, early unidirectional discrete admixture event (before any drift).
+32. +Island: Founder event, late unidirectional discrete admixture event (after any drift).
+33. +Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 
 
 A new graphics file with the visual representation has been provided. The names below models 

@@ -112,7 +112,8 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
 #		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
 #        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
-#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
+#        "vic_two_epoch_admix", "founder_nomig_admix_early", "founder_nomig_admix_late",
+#        "founder_nomig_admix_two_epoch"
 # params:  list of best parameter values to perturb to start the optimizations from
 
 
@@ -242,9 +243,13 @@ vic_no_mig_admix_late_params = []
 # 7 Values
 vic_two_epoch_admix_params = []
 
-#"founder_nomig_admix"
+#"founder_nomig_admix_early"
 # 6 Values
-founder_nomig_admix_params = []
+founder_nomig_admix_early_params = []
+
+#"founder_nomig_admix_late"
+# 6 Values
+founder_nomig_admix_late_params = []
 
 #"founder_nomig_admix_two_epoch"
 # 7 Values
@@ -379,8 +384,11 @@ Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "vic_no_mig_
 # Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "vic_two_epoch_admix", vic_two_epoch_admix_params)
 
-# Island: Founder event, late unidirectional discrete admixture event (after any drift).
-Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig_admix", founder_nomig_admix_params)
+# Founder event with no migration, early unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_early", founder_nomig_admix_early_params)
+
+# Founder event with no migration, late unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_late", founder_nomig_admix_late_params)
 
 # Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 Optimize_Functions.Optimize_Round2(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)

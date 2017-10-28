@@ -107,7 +107,8 @@ print "Segregating sites",fs_1.S(), '\n', '\n'
 #	     "sec_contact_sym_mig_size_three_epoch", "sec_contact_asym_mig_size_three_epoch", 
 #		 "vic_no_mig", "vic_anc_asym_mig", "vic_sec_contact_asym_mig", "founder_nomig", 
 #        "founder_sym", "founder_asym", "vic_no_mig_admix_early", "vic_no_mig_admix_late", 
-#        "vic_two_epoch_admix", "founder_nomig_admix", "founder_nomig_admix_two_epoch"
+#        "vic_two_epoch_admix", "founder_nomig_admix_early", "founder_nomig_admix_late",
+#        "founder_nomig_admix_two_epoch"
 
 #======================================================================================
 #Input some of the basic reusable arguments here specific to your data set
@@ -236,8 +237,11 @@ Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "vic_no_mig_
 # Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "vic_two_epoch_admix")
 
-# Island: Founder event, late unidirectional discrete admixture event (after any drift).
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig_admix")
+# Founder event with no migration, early unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_early")
+
+# Founder event with no migration, late unidirectional discrete admixture event.
+Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_late")
 
 # Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch")
