@@ -1891,16 +1891,16 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
         print "---------------------------------------------------", '\n'
 
 
-    elif model_name == "founder_nomig_admix":
+    elif model_name == "founder_nomig_admix_early":
         fh_out = open(outname, 'a')
         #####################################
-        #Founder event and discrete admixture
+        #Founder event and discrete early admixture
         #####################################
         print "---------------------------------------------------"
-        print "Founder event and discrete admixture",'\n','\n'
+        print "Founder event and discrete early admixture",'\n','\n'
 
         #first call a predefined model
-        model_call = Models_2D.founder_nomig_admix
+        model_call = Models_2D.founder_nomig_admix_early
 
         #create an extrapolating function 
         func_exec = dadi.Numerics.make_extrap_log_func(model_call)
@@ -1913,7 +1913,7 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
 
         for i in range(1,x):
             fh_out = open(outname, 'a')
-            fh_out.write("Founder event and discrete admixture"+'\t')
+            fh_out.write("Founder event and discrete early admixture"+'\t')
             fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
             fh_out.write("{}\t".format(i))
             print '\n', "Replicate {}:".format(i)
@@ -1952,6 +1952,66 @@ def Optimize_Round1(pts, fs, outfile, reps, y, model_name):
             fh_out.close()
         print "---------------------------------------------------", '\n'
 
+    elif model_name == "founder_nomig_admix_late":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Founder event and discrete late admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete early admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
+        upper_bound = [20, 20, 10, 10, 0.99, 0.99]
+        params = [1,1,1,1,0.25,0.25]
+        print "parameter set = [nuA, nu1, nu2, T, s, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Founder event and discrete late admixture"+'\t')
+            fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=3, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
 
     elif model_name == "founder_nomig_admix_two_epoch":
         fh_out = open(outname, 'a')
@@ -3907,16 +3967,16 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
         print "---------------------------------------------------", '\n'
 
 
-    elif model_name == "founder_nomig_admix":
+    elif model_name == "founder_nomig_admix_early":
         fh_out = open(outname, 'a')
         #####################################
-        #Founder event and discrete admixture
+        #Founder event and discrete early admixture
         #####################################
         print "---------------------------------------------------"
-        print "Founder event and discrete admixture",'\n','\n'
+        print "Founder event and discrete early admixture",'\n','\n'
 
         #first call a predefined model
-        model_call = Models_2D.founder_nomig_admix
+        model_call = Models_2D.founder_nomig_admix_early
 
         #create an extrapolating function 
         func_exec = dadi.Numerics.make_extrap_log_func(model_call)
@@ -3928,7 +3988,7 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
 
         for i in range(1,x):
             fh_out = open(outname, 'a')
-            fh_out.write("Founder event and discrete admixture"+'\t')
+            fh_out.write("Founder event and discrete early admixture"+'\t')
             fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
             fh_out.write("{}\t".format(i))
             print '\n', "Replicate {}:".format(i)
@@ -3968,6 +4028,66 @@ def Optimize_Round2(pts, fs, outfile, reps, y, model_name, params):
             fh_out.close()
         print "---------------------------------------------------", '\n'
 
+    elif model_name == "founder_nomig_admix_late":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Founder event and discrete late admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete late admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
+        upper_bound = [20, 20, 10, 10, 0.99, 0.99]
+        print "parameter set = [nuA, nu1, nu2, T, s, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Founder event and discrete late admixture"+'\t')
+            fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+            print "base parameters = ", params
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=2, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
 
     elif model_name == "founder_nomig_admix_two_epoch":
         fh_out = open(outname, 'a')
@@ -5923,16 +6043,16 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
         print "---------------------------------------------------", '\n'
 
 
-    elif model_name == "founder_nomig_admix":
+    elif model_name == "founder_nomig_admix_early":
         fh_out = open(outname, 'a')
         #####################################
-        #Founder event and discrete admixture
+        #Founder event and discrete early admixture
         #####################################
         print "---------------------------------------------------"
-        print "Founder event and discrete admixture",'\n','\n'
+        print "Founder event and discrete early admixture",'\n','\n'
 
         #first call a predefined model
-        model_call = Models_2D.founder_nomig_admix
+        model_call = Models_2D.founder_nomig_admix_early
 
         #create an extrapolating function 
         func_exec = dadi.Numerics.make_extrap_log_func(model_call)
@@ -5944,7 +6064,7 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
 
         for i in range(1,x):
             fh_out = open(outname, 'a')
-            fh_out.write("Founder event and discrete admixture"+'\t')
+            fh_out.write("Founder event and discrete early admixture"+'\t')
             fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
             fh_out.write("{}\t".format(i))
             print '\n', "Replicate {}:".format(i)
@@ -5984,6 +6104,66 @@ def Optimize_Round3(pts, fs, outfile, reps, y, model_name, params):
             fh_out.close()
         print "---------------------------------------------------", '\n'
 
+    elif model_name == "founder_nomig_admix_late":
+        fh_out = open(outname, 'a')
+        #####################################
+        #Founder event and discrete late admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete late admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+
+        #create parameter list for optimization, set bounds for search
+        lower_bound = [0.01, 0.01, 0.01, 0.01, 0.001, 0.001]
+        upper_bound = [20, 20, 10, 10, 0.99, 0.99]
+        print "parameter set = [nuA, nu1, nu2, T, s, f]"
+
+        for i in range(1,x):
+            fh_out = open(outname, 'a')
+            fh_out.write("Founder event and discrete late admixture"+'\t')
+            fh_out.write("parameter set = [nuA, nu1, nu2, T, s, f]"+'\t')
+            fh_out.write("{}\t".format(i))
+            print '\n', "Replicate {}:".format(i)
+            print "base parameters = ", params
+
+            #perturb initial guesses
+            params_perturbed = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bound, lower_bound=lower_bound)
+
+            #run optimization 
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=y)
+            print '\n',"optimized parameters = ", params_opt
+            
+            #simulate the model with the optimized parameters
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+
+            #calculate likelihood
+            ll = dadi.Inference.ll_multinom(sim_model, fs)
+            ll = np.around(ll, 2)
+            print "likelihood = ", ll
+            fh_out.write("{}\t".format(ll))
+
+            #calculate theta
+            theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+            theta = np.around(theta, 2)
+            print "Theta = ", theta
+            fh_out.write("{}\t".format(theta))
+
+            #calculate AIC 
+            aic = ( -2*( float(ll))) + (2*6)
+            print "AIC = ", aic, '\n', '\n'
+            fh_out.write("{}\t".format(aic))
+
+            for p in params_opt:
+                p = np.around(p, 4)
+                fh_out.write("{}\t".format(p))
+            fh_out.write('\n')
+            fh_out.close()
+        print "---------------------------------------------------", '\n'
 
     elif model_name == "founder_nomig_admix_two_epoch":
         fh_out = open(outname, 'a')
@@ -7011,15 +7191,15 @@ def Optimize_Single(pts, fs, model_name, params):
         return sim_model
 
 
-    elif model_name == "founder_nomig_admix":
+    elif model_name == "founder_nomig_admix_early":
         #####################################
-        #Founder event and discrete admixture
+        #Founder event and discrete early admixture
         #####################################
         print "---------------------------------------------------"
-        print "Founder event and discrete admixture",'\n','\n'
+        print "Founder event and discrete early admixture",'\n','\n'
 
         #first call a predefined model
-        model_call = Models_2D.founder_nomig_admix
+        model_call = Models_2D.founder_nomig_admix_early
 
         #create an extrapolating function 
         func_exec = dadi.Numerics.make_extrap_log_func(model_call)
@@ -7043,6 +7223,37 @@ def Optimize_Single(pts, fs, model_name, params):
         print "AIC = ", aic, '\n', '\n'
         return sim_model
     
+    elif model_name == "founder_nomig_admix_late":
+        #####################################
+        #Founder event and discrete late admixture
+        #####################################
+        print "---------------------------------------------------"
+        print "Founder event and discrete late admixture",'\n','\n'
+
+        #first call a predefined model
+        model_call = Models_2D.founder_nomig_admix_late
+
+        #create an extrapolating function 
+        func_exec = dadi.Numerics.make_extrap_log_func(model_call)
+        print "base parameters = ", params
+
+        #simulate the model with the optimized parameters
+        sim_model = func_exec(params, fs.sample_sizes, pts)
+
+        #calculate likelihood
+        ll = dadi.Inference.ll_multinom(sim_model, fs)
+        ll = np.around(ll, 2)
+        print "likelihood = ", ll
+
+        #calculate theta
+        theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+        theta = np.around(theta, 2)
+        print "Theta = ", theta
+
+        #calculate AIC 
+        aic = ( -2*( float(ll))) + (2*6)
+        print "AIC = ", aic, '\n', '\n'
+        return sim_model
 
     elif model_name == "founder_nomig_admix_two_epoch":
         #####################################
