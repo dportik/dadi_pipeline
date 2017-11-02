@@ -6975,6 +6975,7 @@ def Optimize_Single(pts, fs, model_name, params):
         #calculate AIC 
         aic = ( -2*( float(ll))) + (2*6)
         print "AIC = ", aic, '\n', '\n'
+        return sim_model
 
 
     elif model_name == "vic_two_epoch_admix":
