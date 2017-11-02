@@ -6723,7 +6723,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6756,7 +6756,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
         
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6789,7 +6789,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6822,7 +6822,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6855,7 +6855,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6888,7 +6888,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6927,7 +6927,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6960,7 +6960,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
             
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -6992,7 +6992,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -7025,7 +7025,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)
@@ -7058,7 +7058,7 @@ def Optimize_Single(pts, fs, model_name, params):
         print "base parameters = ", params
 
         #simulate the model with the optimized parameters
-        sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+        sim_model = func_exec(params, fs.sample_sizes, pts)
 
         #calculate likelihood
         ll = dadi.Inference.ll_multinom(sim_model, fs)

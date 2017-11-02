@@ -370,40 +370,40 @@ sec_contact_asym_mig_size_three_epoch = Optimize_Functions.Optimize_Single(pts, 
 ###### 'Island' specific models.
 
 # Island: Vicariance with no migration.
-vic_no_mig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_no_mig", vic_no_mig_params)
+vic_no_mig = Optimize_Functions.Optimize_Single(pts, fs, "vic_no_mig", vic_no_mig_params)
 
 # Island: Vicariance with with ancient continuous asymmetric migration.
-vic_anc_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_anc_asym_mig", vic_anc_asym_mig_params)
+vic_anc_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "vic_anc_asym_mig", vic_anc_asym_mig_params)
 
 # Island: Vicariance with no migration, secondary contact with continuous asymmetric migration
-vic_sec_contact_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_sec_contact_asym_mig", vic_sec_contact_asym_mig_params)
+vic_sec_contact_asym_mig = Optimize_Functions.Optimize_Single(pts, fs, "vic_sec_contact_asym_mig", vic_sec_contact_asym_mig_params)
 
 # Island: Founder event with no migration.
-founder_nomig = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig", founder_nomig_params)
+founder_nomig = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig", founder_nomig_params)
 
 # Island: Founder event with continuous symmetric migration.
-founder_sym = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_sym", founder_sym_params)
+founder_sym = Optimize_Functions.Optimize_Single(pts, fs, "founder_sym", founder_sym_params)
 
 # Island: Founder event with continuous asymmetric migration.
-founder_asym = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_asym", founder_asym_params)
+founder_asym = Optimize_Functions.Optimize_Single(pts, fs, "founder_asym", founder_asym_params)
 
 # Island: Vicariance, early unidirectional discrete admixture event (before any drift).
-vic_no_mig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_no_mig_admix_early", vic_no_mig_admix_early_params)
+vic_no_mig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, "vic_no_mig_admix_early", vic_no_mig_admix_early_params)
 
 # Island: Vicariance, late unidirectional discrete admixture event (after any drift).
-vic_no_mig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_no_mig_admix_late", vic_no_mig_admix_late_params)
+vic_no_mig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, "vic_no_mig_admix_late", vic_no_mig_admix_late_params)
 
 # Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-vic_two_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "vic_two_epoch_admix", vic_two_epoch_admix_params)
+vic_two_epoch_admix = Optimize_Functions.Optimize_Single(pts, fs, "vic_two_epoch_admix", vic_two_epoch_admix_params)
 
 # Founder event with no migration, early unidirectional discrete admixture event.
-founder_nomig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_early", founder_nomig_admix_early_params)
+founder_nomig_admix_early = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig_admix_early", founder_nomig_admix_early_params)
 
 # Founder event with no migration, late unidirectional discrete admixture event.
-founder_nomig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_late", founder_nomig_admix_late_params)
+founder_nomig_admix_late = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig_admix_late", founder_nomig_admix_late_params)
 
 # Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-founder_nomig_admix_two_epoch = Optimize_Functions.Optimize_Single(pts, fs, outfile, reps, maxiter, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
+founder_nomig_admix_two_epoch = Optimize_Functions.Optimize_Single(pts, fs, "founder_nomig_admix_two_epoch", founder_nomig_admix_two_epoch_params)
 
 
 #======================================================================================
