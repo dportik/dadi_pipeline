@@ -179,7 +179,8 @@ The scripts involved with this pipeline were originally published as part of the
 
 If you use or modify this script for your own purposes, please cite our publication.
 
-***Contact***
+**Contact**
+
 Daniel Portik, PhD
 
 Postdoctoral Researcher
