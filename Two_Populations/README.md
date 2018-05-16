@@ -1,357 +1,138 @@
-# Two Populations Dadi Pipeline v3
-
-Explore demographic models capturing variation in migration rates, periods of isolation, 
-and population size change associated with the divergence between two populations.
-
-To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency
-spectrum object. There are many options for converting files to the correct format, and if 
-you've used STACKS to process your ddRADseq data I have written a conversion script which
-can be found in the Stacks_pipeline repository. Check the dadi website for instructions on 
-the basic format for this file. This pipeline is written to create folded spectra (lacking
-outgroup information to polarize SNPs), but can easily be modified to created unfolded
-spectrum objects.
-
-None of the scripts are fully automated, as they are inherently specific to the input file 
-being used. Sections of the scripts which require hand editing are flagged with a #**************.
-Look through each script before attempting to run it to understand what needs to be modified.
-At the top of each script, there are also explanations and instructions.
-
-**Version 3 updates** (Oct 2017) 
-Moved all functions out of main scripts and placed in *Optimize_Functions.py*
-script for clarity. The workflow is nearly identical to V2, with less clutter. New models 
-added to the model set, here is a complete list of models (new models marked with +):
-
-1. Standard neutral model, populations never diverge.
-2. Split into two populations, no migration.
-3. Split into two populations, with continuous symmetric migration.
-4. Split into two populations, with continuous asymmetric migration.
-5. Split with continuous symmetric migration, followed by isolation.
-6. Split with continuous asymmetric migration, followed by isolation.
-7. Split with no gene flow, followed by period of continuous symmetrical gene flow.
-8. Split with no gene flow, followed by period of continuous asymmetrical gene flow.
-9. Split with no migration, then instantaneous size change with no migration.
-10. Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
-11. Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
-12. Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
-13. Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
-14. Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
-15. Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
-16. +Split into two populations, with continuous symmetric migration, rate varying across two epochs.
-17. +Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
-18. +Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
-19. +Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
-20. +Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
-21. +Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
-
-'Island' models:
-For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), 
-pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. Vicariance events 
-involve no population size change, whereas founder event models always enforce exponential growth 
-in pop2 (the island population).
-
-22. +Island: Vicariance with no migration.
-23. +Island: Vicariance with with ancient continuous asymmetric migration.
-24. +Island: Vicariance with no migration, secondary contact with continuous asymmetric migration
-25. +Island: Founder event with no migration.
-26. +Island: Founder event with continuous symmetric migration.
-27. +Island: Founder event with continuous asymmetric migration.
-28. +Island: Vicariance, early unidirectional discrete admixture event (before any drift).
-29. +Island: Vicariance, late unidirectional discrete admixture event (after any drift).
-30. +Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-31. +Island: Founder event, early unidirectional discrete admixture event (before any drift).
-32. +Island: Founder event, late unidirectional discrete admixture event (after any drift).
-33. +Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-
-
-A new graphics file with the visual representation has been provided. The names below models 
-match their label in the *Models_2D.py* allowing them to be easily matched. The example file and
-all outputs have been updated to include results from several of the new models (but not all).
-
-
-**Suggested Workflow**
-
-
-The basic workflow involves running the scripts sequentially and in order:
-
-**1. run dadi_2D_00_projections.py**
-
-Determine the best down projection numbers for your data set, to maximize the number of 
-segregating sites. The projection numbers represent the number of alleles, not individuals. 
-The full path to the SNPs input file must be provided, along with specific population labels 
-within this file, and the projection numbers. The syntax to create the 2D-JSFS will be the 
-same in all subsequent scripts.
+**Two Populations dadi Pipeline**
+---------------------------------
+
+Explore demographic models capturing variation in migration rates, periods of isolation, and population size change associated with the divergence between two populations.
 
-Usage:
+This is a modified version of the *dadi_Run_Optimizations.py* script in which we run optimizations for 2D comparisons for a large set of models that have been made available as part of published works. These models are stored in the *Models_2D.py* script, and will be called directly here. 
 
-`python dadi_2D_00_projections.py`
+**General Overview:**
 
+There are many 2D models available that can be applied to your data set. The commands for using all of the available models are in the *dadi_Run_2D_Set.py* script, and these can be modified to only analyze a subset of the models. The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the *Summarize_Outputs.py* script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
+
+To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency spectrum object. There are many options for converting files to the correct format, and if you've used STACKS to process your ddRADseq data I have written a conversion script which can be found in the Stacks_pipeline repository. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects.
 
-**2. run dadi_2D_01_first_optimizations.py**
-
-This script will perform optimizations from multiple starting points using a 3-fold perturbed 
-set of random starting values for parameters. As before, you'll need to provide the full path 
-to the SNPs input file, the specific population labels, and the projection numbers. You'll
-also need to provide numbers for the grid size to use. The default is to run 50 replicates
-for each of the 15 models, but this can also be edited at the bottom of the script. This 
-script requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
-directory. This is where all the population model functions are stored. 
+None of the scripts are fully automated, as they are inherently specific to the input file being used. Sections of the scripts which require hand editing are flagged with a #**************. Look through each script before attempting to run it to understand what needs to be modified. At the top of each script, there are also explanations and instructions.
+
+**Available 2D Models**
 
+Here is a running list of the models currently available. The name of the model function in the *Models_2D.py* script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file *Models_2D.pdf*. If you use these models and scripts for your work, please provide proper citations (provided below).
 
-The output for each model is a tab-delimited  text file which can be opened and sorted to 
-find the best scoring replicate. The parameter values from this run should be used as the 
-starting values in the next script, *dadi_2D_02_second_optimizations.py*. The order of 
-output parameters matches the input order, so they can be copied and pasted from the 
-appropriate output file into the next script within the corresponding parameter list.
+***Diversification Model Set:***
 
-The outputs from here will be labeled according to model and a user selected prefix name, 
-and are written to the working directory as:
+1. "*no_mig*": Split into two populations, no migration.
+2. "*sym_mig*": Split into two populations, with continuous symmetric migration.
+3. "*asym_mig*": Split into two populations, with continuous asymmetric migration.
+4. "*anc_sym_mig*": Split with continuous symmetric migration, followed by isolation.
+5. "*anc_asym_mig*": Split with continuous asymmetric migration, followed by isolation.
+6. "*sec_contact_sym_mig*": Split with no gene flow, followed by period of continuous symmetrical gene flow.
+7. "*sec_contact_asym_mig*": Split with no gene flow, followed by period of continuous asymmetrical gene flow.
+8. "*no_mig_size*": Split with no migration, then instantaneous size change with no migration.
+9. "*sym_mig_size*": Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
+10. "*asym_mig_size*": Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
+11. "*anc_sym_mig_size*": Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
+12. "*anc_asym_mig_size*": Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
+13. "*sec_contact_sym_mig_size*": Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
+14. "*sec_contact_asym_mig_size*": Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
+15. "*sym_mig_twoepoch*": Split into two populations, with continuous symmetric migration, rate varying across two epochs.
+16. "*asym_mig_twoepoch*": Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
+17. "*sec_contact_sym_mig_three_epoch*": Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
+18. "*sec_contact_asym_mig_three_epoch*": Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
+19. "*sec_contact_sym_mig_size_three_epoch*": Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
+20. "*sec_contact_asym_mig_size_three_epoch*": Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
 
-`Round1_[prefix]_[model_name]_optimized.txt`
+***Island Model Set:***
 
-Example output file from one model:
-```
-Model	param_set	Replicate	log-likelihood	theta	AIC	optimized_params
-Divergence with no migration	parameter set = [nu1, nu2, T]	1	-443.41	317.15	892.82	0.6795	0.7315	0.141	
-Divergence with no migration	parameter set = [nu1, nu2, T]	2	-179.8	141.7	365.6	4.3798	1.6121	0.7995	
-Divergence with no migration	parameter set = [nu1, nu2, T]	3	-241.28	116.99	488.56	3.1119	17.7282	1.1496	
-Divergence with no migration	parameter set = [nu1, nu2, T]	4	-1763.04	54.2	3532.08	9.0388	0.2684	5.3911	
-Divergence with no migration	parameter set = [nu1, nu2, T]	5	-177.49	150.28	360.98	2.7819	2.6884	0.8431	
-```
+For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. Vicariance events involve no population size change, whereas founder event models always enforce exponential growth in pop2 (the island population). Discrete admixture events are included as a comparison to intervals of continuous migration, and are represented by parameter 'f', in which a fraction f of the mainland population is instantaneously present in the post-admixture island population. Because of the way these models are constructed, you should not analyze these in combination with the Diversification Model Set for the purpose of performing model selection.
 
-Usage:
+21. "*vic_no_mig*": Vicariance with no migration.
+22. "*vic_anc_asym_mig*": Vicariance with with ancient continuous asymmetric migration.
+23. "*vic_sec_contact_asym_mig*": Vicariance with no migration, secondary contact with continuous asymmetric migration
+24. "*founder_nomig*": Founder event with no migration.
+25. "*founder_sym*": Founder event with continuous symmetric migration.
+26. "*founder_asym*": Founder event with continuous asymmetric migration.
+27. "*vic_no_mig_admix_early*": Vicariance, early unidirectional discrete admixture event (before any drift).
+28. "*vic_no_mig_admix_late*": Vicariance, late unidirectional discrete admixture event (after any drift).
+29. "*vic_two_epoch_admix*": Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+30. "*founder_nomig_admix_early*": Founder event, early unidirectional discrete admixture event (before any drift).
+31. "*founder_nomig_admix_late*": Founder event, late unidirectional discrete admixture event (after any drift).
+32. "*founder_nomig_admix_two_epoch*": Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 
-`python dadi_2D_01_first_optimizations.py`
 
-There are potentially a lot of outputs to sort through, depending on how many models you are running.
-An easy way to summarize them is to move all the *Round1_something_optimized.txt* files to a new
-directory, move in to the directory, and concatenate them:
+**Outputs:**
 
-`cat *.txt > Round1_concatenated.txt`
+ For each model run, there will be a log file showing the optimization steps per replicate and a summary file that has all the important information. 
+ 
+Here is an example of the output from a summary file, which will be in tab-delimited format:
 
-You can open this tab-delimited summary file and sort by model name, then by AIC (smallest to
-largest), to find the best scoring replicate per model. You'll use the corresponding parameter
-values as the starting base parameters in the next script.
-
-  
-**3. run dadi_2D_02_second_optimizations.py**
+     Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params(nu1, nu2, m, T) 
+     sym_mig	Round_1_Replicate_1	-1684.99	3377.98	14628.4	383.04	0.2356,0.5311,0.8302,0.182
+     sym_mig	Round_1_Replicate_2	-2255.47	4518.94	68948.93	478.71	0.3972,0.2322,2.6093,0.611
+     sym_mig	Round_1_Replicate_3	-2837.96	5683.92	231032.51	718.25	0.1078,0.3932,4.2544,2.9936
+     sym_mig	Round_1_Replicate_4	-4262.29	8532.58	8907386.55	288.05	0.3689,0.8892,3.0951,2.8496
+     sym_mig	Round_1_Replicate_5	-4474.86	8957.72	13029301.84	188.94	2.9248,1.9986,0.2484,0.3688
 
-This script will perform optimizations from multiple starting points using a 2-fold perturbed 
-set of USER SELECTED starting values for parameters. These values should come from the best
-replicate per model of the previous script. As before, you'll need to provide the full path 
-to the SNPs input file, the specific population labels, and the projection numbers. You'll
-also need to provide numbers for the grid size to use. The default is to run 50 replicates
-for each of the 15 models based on the user selected starting parameters. This  script also 
-requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working directory.
-
-The output for each model is an identical style tab-delimited text file. Similar to the 
-previous step, the parameter values from this run should be used as the starting values 
-for the next and final optimization script, *dadi_2D_03_third_optimizations.py*.
-
-The outputs from here will be labeled according to model and a user selected prefix name, 
-and are written to the working directory as:
-
-`Round2_[prefix]_[model_name]_optimized.txt`
-
-Usage:
-
-`python dadi_2D_02_second_optimizations.py`
-
-
-**4. run dadi_2D_03_third_optimizations.py**
-
-This script will perform optimizations from multiple starting points using a 1-fold perturbed 
-set of USER SELECTED starting values for parameters. The default is to run 100 replicates
-for each of the 15 models. As before, you'll need to provide the full path to the SNPs input 
-file, the specific population labels, the projection numbers, and grid size. This  script 
-also requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
-directory. The output for each model is the same style tab-delimited text file which can be 
-opened and sorted to find the best scoring replicate and do AIC comparisons, delta AIC, or 
-weights for the model set. The optimized parameter values for each model should be used for 
-the subsequent plotting script. 
-
-The outputs from here will be labeled according to model and a user selected prefix name, 
-and are written to the working directory as:
-
-`Round3_[prefix]_[model_name]_optimized.txt`
-
-Usage:
-
-`python dadi_2D_03_third_optimizations.py`
+**Summarizing Outputs Across Models:**
 
+ The information contained in each model summary file can be quickly sorted and extracted using the *Summarize_Outputs.py* script. Here, the information for the best-scoring replicate for each model will be compiled and written to a tab-delimited output file called *Results_Summary_Short.txt*. Here is an example of the contents:
+ 
 
-**5. run dadi_2D_04_plotting_functions.py**
+    Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params
+    asym_mig_size	Round_4_Replicate_25	-840.1	1696.2	589.73	254.86	2.9196,6.337,1.5024,0.103,0.0673,0.0419,5.0356,0.0374	
+    anc_asym_mig_size	Round_4_Replicate_22	-842.02	1700.04	589.99	570.99	1.0406,4.3882,1.6501,0.0587,0.2556,0.0109,1.5419,0.0249	
+    sym_mig_size	Round_4_Replicate_4	-845.24	1704.48	589.66	294.33	2.2229,9.7653,2.6256,0.178,0.082,4.1593,0.0897	
+	sec_contact_sym_mig_size	Round_4_Replicate_39	-874.78	1763.56	714.24	546.93	1.62,4.4826,0.9601,0.0897,0.2029,1.4814,0.0389	
 
-This script will simulate the model using a fixed set of input parameters. That is, no 
-optimizations will occur here, and the assumption is you've searched thoroughly for the 
-parameter set with the highest likelihood value. The goal of this script is to produce 
-plots of the 2D-JSFS for the data and model, plus the residuals. A pdf file for each of 
-the models will be written for each model to the current working directory. This script 
-requires the *Models_2D.py* and *Optimize_Functions.py* scripts to be in same working 
-directory.
-
-Usage:
-
-`python dadi_2D_04_plotting_functions.py`
-
-
-**Summary**
-
-The goal of this workflow was to automate functions of dadi to produce useful output files
-resulting from many replicate runs of the model set, and to perform increasingly focused 
-optimizations. The first optimization round involves 50 replicates, with the *optimize_log_fmin*
-function (maxiter=20), using 3-fold perturbed default starting parameters. The second
-optimization round involves 50 replicates, with the *optimize_log_fmin* function (maxiter=30), 
-using 2-fold perturbed starting parameters (from user input values). The third optimization 
-round involves 100 replicates, with the *optimize_log_fmin* function (maxiter=50), using 1-fold 
-perturbed starting parameters (from user input values). This is done for each of the 15
-models included in the Models_2D.py script. These values worked well in my analyses, but 
-you may wish to change them if optimizations are not performing well or you want to be even
-more thorough.
+This file can be sorted for the purpose of performing model comparisons. However, it is a good idea to inspect not only the top replicate, but several of the highest scoring replicates to check for consistency. For this reason, a second output file is created that is called *Results_Summary_Extended.txt*. Rather than simply containing the top-scoring replicate, it will contain the top five replicates for each model. Here is an example of the contents:
 
-You can create your own set of models and perform similar analyses using the 
-basic structure of these scripts, or use the relatively simple model set here. Adding models
-will require adding additional functions to the *Models_2D.py* and *Optimize_Functions.py* 
-scripts. Although this is more advanced, the model set can easily be reduced by either 
-blocking out or deleting relevant sections of the first, second, and third optimization 
-scripts. As each model is called at the bottom of the optimization scripts, eliminating 
-them is fairly simple. For example, the partial block of code controlling the models examined at 
-the bottom of the first optimization script:
+    Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params
+    anc_asym_mig	Round_4_Replicate_19	-1131.52	2275.04	1500.39	267.16	2.8073,1.4011,0.0808,0.607,8.8704,0.7333	
+    anc_asym_mig	Round_4_Replicate_29	-1132.42	2276.84	1458.8	173.39	4.2429,2.3167,0.0661,0.2715,11.0258,0.9718	
+    anc_asym_mig	Round_4_Replicate_4	-1133.08	2278.16	1467.05	362.0	2.0616,1.1283,0.1343,0.5381,4.2699,0.4544	
+    anc_asym_mig	Round_4_Replicate_6	-1133.57	2279.14	1469.86	337.43	2.2279,1.0477,0.0629,0.8164,17.85,0.5144	
+    anc_asym_mig	Round_4_Replicate_17	-1134.03	2280.06	1483.91	189.57	3.9022,2.2126,0.077,0.2782,9.057,0.934	
+    anc_asym_mig_size	Round_4_Replicate_22	-842.02	1700.04	589.99	570.99	1.0406,4.3882,1.6501,0.0587,0.2556,0.0109,1.5419,0.0249	
+    anc_asym_mig_size	Round_4_Replicate_12	-853.1	1722.2	620.43	443.74	1.2273,6.594,4.1622,0.0728,0.2343,0.012,2.1966,0.032	
+    anc_asym_mig_size	Round_4_Replicate_45	-865.39	1746.78	658.24	667.7	0.923,3.0538,1.3797,0.0971,0.3135,0.0125,1.1266,0.0404	
+    anc_asym_mig_size	Round_4_Replicate_3	-867.69	1751.38	689.86	519.07	1.3274,4.7944,1.556,0.1002,0.1578,0.0134,1.5759,0.0386	
+    anc_asym_mig_size	Round_4_Replicate_19	-869.06	1754.12	632.47	508.51	0.8137,6.8294,2.0211,0.1258,0.4475,0.0172,1.9328,0.0614	
 
-```
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_divergence")
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_mig")
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "sym_mig")
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "asym_mig")
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
-``` 
+This information can be used for model comparisons using AIC, etc., but see below for an important note about comparisons.
 
-can be modified to only include the first model this way:
-```
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_divergence")
-#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_mig")
-#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "sym_mig")
-#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "asym_mig")
-#Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "anc_sym_mig")
-``` 
+**Caveats:**
 
-or by deleting the other calls to the models:
-```
-Optimize_Functions.Optimize_Round1(pts, fs, outfile, reps, maxiter, "no_divergence")
-``` 
+ The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
-and executing the script. That is, you don't need to edit anything within the *Optimize_Round1*
-function found in the *Optimize_Functions* script or eliminate anything from the 
-*Models_2D.py* script to reduce the model set, just change the bottom section as above. 
-Similar changes will need to be made to the following optimization and plotting scripts, 
-but this will be straightforward and nearly identical.
+ The chi-squared test statistic is calculated assuming the sfs is folded. If this is not true for your data set, this number will not be accurate. This could be edited in the 'collect_results' function in the *Optimize_Functions.py* script for an unfolded spectrum.
 
-Also, if you feel more strongly about a particular optimization routine, you can change the 
-function from *optimize_log_fmin* to any of the other options available, inside the 
-*Optimize_Round1*, *Optimize_Round2*, and *Optimize_Round3* functions in the 
-*Optimize_Functions* script. There are many available and some may be more appropriate or 
-perhaps faster for your data sets. 
+**Contributing to the 2D Model Set:**
+ 
+ If you would like to contribute your custom 2D models to the model set, please email me at daniel.portik@gmail.com. If your models are or will be published, explicit citation information can be provided (see below). 
+ 
+**Citation Information:**
 
+***Using the pipeline.***
+The scripts involved with this pipeline were originally published as part of the following work:
 
-**Cautions**
+*Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
-Optimizations sometimes fail and crash the script. The commands to call each model are at 
-the bottom of the script, and the default set up is to call each model sequentially. You
-can try running this as is, or create multiple verisions of this script, block out some 
-of the models (use hashes, block annotation, or delete), and execute one script version 
-for every core you have available. This will speed things up, and reduce potential 
-crashes from optimization fails.
 
-Be aware of other potential issues when running models, including data being masked, extrapolation
-failures, etc. To troubleshoot these problems, see the manual or head to the user group: 
-https://groups.google.com/forum/#!forum/dadi-user. They may not always cause the scripts 
-to crash, but if the extrapolation fails the likelihoods can be entirely misleading. Make
-sure you inspect the output when the replicates are running to make sure this isn't the case.
+***Using specific 2D models.***
+The model sets were developed through several publications, and we are making our models available for replication and future usage.
 
-I encountered some specific issues when plotting, which terminated in errors and the plots
-were not generated. Some of this required editing or duplicating the dadi code to fix. These
-specific issues and workarounds are detailed at the top of the plotting script. The most
-common error is very easy to fix, and this is explained in the next section.
+Models 1-14 were written for:
 
+*Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
-**Plotting Errors**
+Models 15-20 and 21-32 were written for:
 
-Sometimes you might see this error when plotting:
+*Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access, Journal of Biogeography.*
 
-`ValueError: Data has no positive values, and therefore can not be log-scaled.`
 
-This can be fixed. This stems from an error in the *plot_2d_comp_multinom* function located
-in the dadi *Plotting.py* script. You will need to change the vmin value in this function
-from *None* to something between 0 and 1 (generally a super low decimal value) where it
-is called in the plotting script I've written. I have changed vmin to 0.005-0.01 with good results.
-
-To implement this change open the *dadi_2D_04_plotting_functions.py* and scroll to the 
-bottom section where the code reads:
-```
-def plot_all(sim_model, data, outfile, model_name):
-    print '{0}_{1}.pdf'.format(outfile,model_name), '\n'
-    outname = '{0}_{1}.pdf'.format(outfile,model_name)
-    fig = pylab.figure(1)
-    fig.clear()
-    dadi.Plotting.plot_2d_comp_multinom(sim_model, data, resid_range = 3)
-    fig.savefig(outname)
-```
-
-You'll want to change:
-
-`dadi.Plotting.plot_2d_comp_multinom(model, data, resid_range = 3)`
-
-to:
-
-`dadi.Plotting.plot_2d_comp_multinom(model, data, resid_range = 3, vmin = 0.005)`
-
-
-This should eliminate the ValueError and allow the plotting to continue. You can play around
-with the vmin values to see the resulting effects on the plots. 
-
-
-**Example Data**
-
-I've provided an example SNPS input file along with the results of each optimization round
-and the final spectrum plots. The scripts above will work with this input file if you
-provide the correct path to its location, as the population IDs, projections, grid size,
-and optimized param lists are all specific to this data set.
-
-
-**Requirements**
-
-These scripts are written for Python 2.7, and to use them requires the most up to date 
-versions of the following Python modules (besides dadi):
-
--Numpy
-
--Scipy
-
--Matplotlib
-
-
-
-
-**Citation**
-
-If you decide to use these scripts or modify the code for your purposes, please cite:
-
-*Portik, D.M., Leaché, A.D., Rivera, D., Blackburn, D.C., Rödel, M.-O., Barej, M.F., 
-Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification 
-in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 
-Early View, doi: 10.1111/mec.14266*
-
-
-
-**Daniel Portik**
-
-Contact: daniel.portik@uta.edu -> danielportik@email.arizona.edu
+***Contact***
+Daniel Portik, PhD
 
 Postdoctoral Researcher
-
 University of Arizona
 
-October 2017
+daniel.portik@gmail.com
 
-
-
- 
