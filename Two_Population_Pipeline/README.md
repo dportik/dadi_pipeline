@@ -58,6 +58,43 @@ For all the following models, pop2 is assumed to be the 'island' population, and
 32. "*founder_nomig_admix_two_epoch*": Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 
 
+**Optimization Settings:**
+
+To control the optimization routine is relatively easy, and the arguments are located in the script before all the
+commands to call the models:
+
+    #Set the number of rounds here
+    rounds = 4
+
+    #define the lists for optional arguments
+    #you can change these to alter the settings of the optimization routine
+    reps = [10,20,30,40]
+    maxiters = [3,5,10,15]
+    folds = [3,2,2,1]
+
+The settings I've written here will provide four rounds of increasingly focused optimizations. 
+These arguments will cause round one to have 10 replicates, use 3-fold perturbed
+starting parameters, and a maxiter of 3 for the optimization algorithm steps. The parameters 
+from the best replicate from round one will be used to generate 2-fold perturbed starting parameters
+in round two, which will have 20 replicates and a maxiter of 5 for the optimization algorithm steps. 
+The parameters from the best replicate from round two will be used to generate 2-fold perturbed starting parameters
+in round three, which will have 30 replicates and a maxiter of 10 for the optimization algorithm steps.
+Finally, the parameters from the best replicate from round three will be used to generate 1-fold perturbed starting parameters
+in round four, which will have 40 replicates and a maxiter of 15 for the optimization algorithm steps.
+
+If you change the number of rounds, you have to change the length of the reps, maxiters, and folds lists to match.
+
+It is also a good idea to optimize from multiple starting points, that is to run the above configuration multiple times.
+This can be accomplished by writing loops or by running the main script multiple times. Here is an example of a custom loop:
+
+    for i in range(1,6):
+        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, reps = reps, maxiters = maxiters, folds = folds)
+
+The above loop will run the optimization routine to completion five separate times. 
+Note that when you use the range argument in python it will go up to, but not include, the final number.
+That's why I have written a range of 1-6 to perform this 5 times.
+
+
 **Outputs:**
 
  For each model run, there will be a log file showing the optimization steps per replicate and a summary file that has all the important information. 
