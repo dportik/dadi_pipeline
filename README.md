@@ -175,7 +175,7 @@ Here is an example of the output from a summary file, which will be in tab-delim
 ***Using the pipeline.***
 The scripts involved with this pipeline were originally published as part of the following work:
 
-*Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
+*Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
 If you use or modify this script for your own purposes, please cite our publication.
 
