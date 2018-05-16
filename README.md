@@ -16,7 +16,7 @@ example files.
 
 This is meant to be a general use script to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. The user will have to edit information about their allele frequency spectrum and provide a custom model. The instructions are annotated below, with a #************** marking sections that will have to be edited. Several examples of how to use various arguments to control optimizations are shown. 
 
-If you'd like to use this script for larger sets of models already available, please look in the nested repositories to see how to import models from external model scripts.
+If you'd like to use this script for larger sets of models already available, please look in the nested repositories (Two_Population_Pipeline, Three_Population_Pipeline) to see how to import models from external model scripts.
 
 The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
 
@@ -37,37 +37,26 @@ We will use always use the following function from the Optimize_Functions.py scr
 *Mandatory Arguments*
 
 fs:  spectrum object name
-
 pts: grid size for extrapolation, list of three values
-
 outfile:  prefix for output naming
-
 model_name: a label to slap on the output files; ex. "no_mig"
-
 func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
-
 rounds: number of optimization rounds to perform
-
 param_number: number of parameters in the model selected (can count in params line for the model)
 
 *Optional Arguments*
 
 reps: a list of integers controlling the number of replicates in each of the optimization rounds
-
 maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
-
 folds: a list of integers controlling the fold argument when perturbing input parameter values
-
 in_params: a list of parameter values 
-
 in_upper: a list of upper bound values
-
 in_lower: a list of lower bound values
-
 param_labels: list of labels for parameters that will be written to the output file to keep track of their order
 
 
 ***Example 1***
+
 Let's use the function to run an optimization routine for our data and this model.
 We need to specify the first six arguments in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
@@ -82,6 +71,7 @@ rounds of optimizations, using a default number of replicates for each round.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4)
 
 ***Example 2***
+
 It is a good idea to include the labels of the parameters so they can get written to the
 output file, otherwise you'll have to go back to the model each time you wanted to see their
 order.
@@ -96,6 +86,7 @@ order.
 
 
 ***Example 3***
+
 Here is the same example but also including your own custom parameter bounds. Notice
 the optional arguments can be placed in any order following the mandatory arguments.
 
@@ -110,6 +101,7 @@ the optional arguments can be placed in any order following the mandatory argume
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, param_labels = p_labels, in_upper = upper, in_lower = lower)
 
 ***Example 4***
+
 You can also be very explicit about the optimization routine, controlling what happens
 across each round. Let's keep the three rounds, but change the number of replicates,
 the maxiter argument, and fold argument each time. We'll need to create a list of values
@@ -135,6 +127,7 @@ for the optimization algorithm steps, and etc. for round three.
 
 
 ***Example 5***
+
 It's also good run the optimization routine multiple times. Let's write a short
 loop to do the above optimization routine five times. We will name the prefix based
 on which point we are at, and include it within the loops. Note that when you use
