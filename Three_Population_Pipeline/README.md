@@ -3,7 +3,7 @@
 
 Explore demographic models capturing variation in migration rates, periods of isolation, and population size change associated with the divergence between three populations.
 
-This is a modified version of the *dadi_Run_Optimizations.py* script in which we run optimizations for 2D comparisons for a large set of models that have been made available as part of published works. These models are stored in the *Models_3D.py* script, and will be called directly here. 
+This is a modified version of the *dadi_Run_Optimizations.py* script in which we run optimizations for 3D comparisons for a large set of models that have been made available as part of published works. These models are stored in the *Models_3D.py* script, and will be called directly here. 
 
 **General Overview:**
 
@@ -63,7 +63,7 @@ It is also a good idea to optimize from multiple starting points, that is to run
 This can be accomplished by writing loops or by running the main script multiple times. Here is an example of a custom loop:
 
     for i in range(1,6):
-        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, reps = reps, maxiters = maxiters, folds = folds)
+        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig", Models_3D.split_nomig, rounds, 6, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, T1, T2")
 
 The above loop will run the optimization routine to completion five separate times. 
 Note that when you use the range argument in python it will go up to, but not include, the final number.
@@ -156,7 +156,7 @@ Here is an example of the output from a summary file, which will be in tab-delim
  The usage of this script is straightforward, and only requires placing the path to the directory containing the outputs on the command line. Here is an example of the usage, where
  the path to a folder called *My_Output_files* is specified:
  
-     python Summarize_Outputs.py /Users/dan/dadi_pipeline/TwoPopulationComparisons/My_Output_files
+     python Summarize_Outputs.py /Users/dan/dadi_pipeline/ThreePopulationComparisons/My_Output_files
  
  Here, the information for the best-scoring replicate for each model will be compiled and written to a tab-delimited output file called *Results_Summary_Short.txt*. Here is an example of the contents:
  
