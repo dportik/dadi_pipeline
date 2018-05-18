@@ -157,9 +157,9 @@ Finally, you can simply delete these lines:
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 
-The model set can be added to by inserting your model in the 2D script, then adding an appropriate
+The model set can be added to by inserting your model in the *Models_2D.py* script, then adding an appropriate
 call for the Optimize_Functions.Optimize_Routine function, similar to the other models. However,
-the easiest way to analyze a custom model is to use the flexible *dadi_Run_Optimizations.py* script,
+the simplest and easiest way to analyze a custom model is to use the flexible *dadi_Run_Optimizations.py* script,
 changing the optional arguments to match the settings used here. 
 
 
