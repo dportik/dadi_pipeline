@@ -104,6 +104,7 @@ the outputs across models can be easily summarized as described below.
 
 The model set can easily be reduced by either blocking out or deleting relevant sections. 
 Let's say you no longer wish to include the first two models in the example below:
+
     # Split into two populations, no migration.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
 
@@ -117,6 +118,7 @@ Let's say you no longer wish to include the first two models in the example belo
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 You can hash out the Optimize_Functions.Optimize_Routine function for those models as here:
+
     # Split into two populations, no migration.
     #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
 
@@ -130,6 +132,7 @@ You can hash out the Optimize_Functions.Optimize_Routine function for those mode
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 Or you can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes:
+
     '''
     # Split into two populations, no migration.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
@@ -142,9 +145,11 @@ Or you can block out this section of the Optimize_Functions.Optimize_Routine fun
 
     # Split with continuous symmetric migration, followed by isolation.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+
 Anything contained within the set of ''' will be ignored. 
 
 Finally, you can simply delete these lines:
+
     # Split into two populations, with continuous asymmetric migration.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
 
