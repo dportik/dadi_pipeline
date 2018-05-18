@@ -220,7 +220,12 @@ The scripts involved with this pipeline were originally published as part of the
 
 If you use or modify this script for your own purposes, please cite this publication.
 
-**Contact**
+
+**License:**
+
+GNU Lesser General Public License v3.0
+
+**Contact:**
 
 Daniel Portik, PhD
 
