@@ -36,23 +36,23 @@ We will use always use the following function from the Optimize_Functions.py scr
  
 ***Mandatory Arguments:***
 
-+ fs:  spectrum object name
-+ pts: grid size for extrapolation, list of three values
-+ outfile:  prefix for output naming
-+ model_name: a label to slap on the output files; ex. "no_mig"
-+ func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
-+ rounds: number of optimization rounds to perform
-+ param_number: number of parameters in the model selected (can count in params line for the model)
++ **fs**:  spectrum object name
++ **pts**: grid size for extrapolation, list of three values
++ **outfile**:  prefix for output naming
++ **model_name**: a label to slap on the output files; ex. "no_mig"
++ **func**: access the model function from within 'dadi_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
++ **rounds**: number of optimization rounds to perform
++ **param_number**: number of parameters in the model selected (can count in params line for the model)
 
 ***Optional Arguments:***
 
-+ reps: a list of integers controlling the number of replicates in each of the optimization rounds
-+ maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
-+ folds: a list of integers controlling the fold argument when perturbing input parameter values
-+ in_params: a list of parameter values 
-+ in_upper: a list of upper bound values
-+ in_lower: a list of lower bound values
-+ param_labels: list of labels for parameters that will be written to the output file to keep track of their order
++ **reps**: a list of integers controlling the number of replicates in each of the optimization rounds
++ **maxiters**: a list of integers controlling the maxiter argument in each of the optimization rounds
++ **folds**: a list of integers controlling the fold argument when perturbing input parameter values
++ **in_params**: a list of parameter values 
++ **in_upper**: a list of upper bound values
++ **in_lower**: a list of lower bound values
++ **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
 
 
 ***Example 1***
