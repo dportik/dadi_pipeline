@@ -233,7 +233,7 @@ Models 15-20 and 21-32 were written for:
 + *Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access, Journal of Biogeography.*
 
 
-***Contact***
+**Contact**
 
 Daniel Portik, PhD
 
