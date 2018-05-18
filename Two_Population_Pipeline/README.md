@@ -79,7 +79,7 @@ of the arguments across rounds are summarized in the table below.
 
 
 | Argument | Round 1 | Round 2  | Round 3 | Round 4 |
-| ------ |------:| -----:| -----:|
+| ------ |------:| -----:| -----:| -----:|
 | ***reps***    | 10 | 20 | 30 | 40 | 
 | ***maxiter*** | 3 |  5  | 10 | 15 |
 | ***fold*** |  3 |  2   | 2 | 1 |
