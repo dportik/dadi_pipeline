@@ -201,7 +201,7 @@ The scripts involved with this pipeline were originally published as part of the
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
 
-***Using specific 2D models.***
+***Using specific 3D models.***
 The model sets were developed through several publications, and we are making our models available for replication and future usage.
 
 Models 1-9 were written for:
