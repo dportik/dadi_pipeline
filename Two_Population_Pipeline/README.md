@@ -95,9 +95,10 @@ This can be accomplished by writing loops or by running the main script multiple
 
 The above loop will run the optimization routine to completion five separate times. 
 Note that when you use the range argument in python it will go up to, but not include, the final number.
-That's why I have written a range of 1-6 to perform this 5 times. 
+That's why I have written a range of 1-6 to perform this 5 times. Also note the indentation required when
+writing loops in python.
 
-You can also execute the script again, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
+As an alternative to custom loops, you can also just execute the script multiple times, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
 the outputs across models can be easily summarized as described below. 
 
 **Modifying the Model Set to Analyze:**
