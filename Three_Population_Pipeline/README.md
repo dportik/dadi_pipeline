@@ -11,7 +11,7 @@ There are many 3D models available that can be applied to your data set. The com
 
 To use this workflow, you'll need a SNPs input text file to create the 3D joint site frequency spectrum object. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects.
 
-The user will have to edit information about their allele frequency spectrum and provide a custom model. The instructions are annotated below, with a #************** marking sections that will have to be edited. 
+The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_3D_Set.py* that will have to be edited. 
 
 The *dadi_Run_3D_Set.py*, *Optimize_Functions.py*, and *Models_3D.py* scripts must all be in the same working directory for *dadi_Run_3D_Set.py* to run properly.
 
