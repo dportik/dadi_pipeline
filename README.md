@@ -14,9 +14,9 @@ example files.
 
 **Overview:**
 
-This is meant to be a general use script to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. The user will have to edit information about their allele frequency spectrum and provide a custom model. The instructions are annotated below, with a #************** marking sections that will have to be edited. Several examples of how to use various arguments to control optimizations are shown. 
+This is meant to be a general use script to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_Optimizations.py* that will have to be edited. Any custom model can be used, and below are several examples of how to use various arguments to control the model optimizations. 
 
-If you'd like to use this script for larger sets of models already available, please look in the nested repositories (Two_Population_Pipeline, Three_Population_Pipeline) to see how to import models from external model scripts.
+If you'd like to use this script for larger sets of models already available, please look in the nested repositories (Two_Population_Pipeline, Three_Population_Pipeline) to see how to import models from external model scripts for two population or three population comparisons.
 
 The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
 
