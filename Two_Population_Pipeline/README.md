@@ -179,7 +179,14 @@ Here is an example of the output from a summary file, which will be in tab-delim
 
 **Summarizing Outputs Across Models:**
 
- The information contained in each model summary file can be quickly sorted and extracted using the *Summarize_Outputs.py* script. Here, the information for the best-scoring replicate for each model will be compiled and written to a tab-delimited output file called *Results_Summary_Short.txt*. Here is an example of the contents:
+ The information contained in each model summary file can be quickly sorted and extracted using the *Summarize_Outputs.py* script. 
+ 
+ The usage of this script is straightforward, and only requires placing the path to the directory containing the outputs on the command line. Here is an example of the usage, where
+ the path to a folder called *My_Output_files* is specified:
+ 
+     python Summarize_Outputs.py /Users/dan/dadi_pipeline/TwoPopulationComparisons/My_Output_files
+ 
+ Here, the information for the best-scoring replicate for each model will be compiled and written to a tab-delimited output file called *Results_Summary_Short.txt*. Here is an example of the contents:
  
 
     Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params
