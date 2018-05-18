@@ -172,6 +172,8 @@ prefix = "V1"
 #make sure to define your extrapolation grid size
 pts = [50,60,70]
 
+#Remember the order for mandatory arguments as below
+#Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number)
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4)
 
 

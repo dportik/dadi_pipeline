@@ -9,9 +9,11 @@ This is a modified version of the *dadi_Run_Optimizations.py* script in which we
 
 There are many 2D models available that can be applied to your data set. The commands for using all of the available models are in the *dadi_Run_2D_Set.py* script, and these can be modified to only analyze a subset of the models. The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the *Summarize_Outputs.py* script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
 
-To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency spectrum object. There are many options for converting files to the correct format, and if you've used STACKS to process your ddRADseq data I have written a conversion script which can be found in the Stacks_pipeline repository. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects.
+To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency spectrum object. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects.
 
-None of the scripts are fully automated, as they are inherently specific to the input file being used. Sections of the scripts which require hand editing are flagged with a #**************. Look through each script before attempting to run it to understand what needs to be modified. At the top of each script, there are also explanations and instructions.
+The user will have to edit information about their allele frequency spectrum and provide a custom model. The instructions are annotated below, with a #************** marking sections that will have to be edited. 
+
+The *dadi_Run_2D_Set.py*, *Optimize_Functions.py*, and *Models_2D.py* scripts must all be in the same working directory for *dadi_Run_2D_Set.py* to run properly.
 
 **Available 2D Models**
 
@@ -72,17 +74,18 @@ commands to call the models:
     maxiters = [3,5,10,15]
     folds = [3,2,2,1]
 
-The settings I've written here will provide four rounds of increasingly focused optimizations. 
-These arguments will cause round one to have 10 replicates, use 3-fold perturbed
-starting parameters, and a maxiter of 3 for the optimization algorithm steps. The parameters 
-from the best replicate from round one will be used to generate 2-fold perturbed starting parameters
-in round two, which will have 20 replicates and a maxiter of 5 for the optimization algorithm steps. 
-The parameters from the best replicate from round two will be used to generate 2-fold perturbed starting parameters
-in round three, which will have 30 replicates and a maxiter of 10 for the optimization algorithm steps.
-Finally, the parameters from the best replicate from round three will be used to generate 1-fold perturbed starting parameters
-in round four, which will have 40 replicates and a maxiter of 15 for the optimization algorithm steps.
+The settings I've written here will provide four rounds of increasingly focused optimizations, and the values
+of the arguments across rounds are summarized in the table below. 
 
-If you change the number of rounds, you have to change the length of the reps, maxiters, and folds lists to match.
+
+| Argument | Round 1 | Round 2  | Round 3 | Round 4 |
+| ------ |------:| -----:| -----:|
+| ***reps***    | 10 | 20 | 30 | 40 | 
+| ***maxiter*** | 3 |  5  | 10 | 15 |
+| ***fold*** |  3 |  2   | 2 | 1 |
+
+
+If you change the number of rounds, you have to change the list length of the reps, maxiters, and folds arguments to match.
 
 It is also a good idea to optimize from multiple starting points, that is to run the above configuration multiple times.
 This can be accomplished by writing loops or by running the main script multiple times. Here is an example of a custom loop:
@@ -92,7 +95,10 @@ This can be accomplished by writing loops or by running the main script multiple
 
 The above loop will run the optimization routine to completion five separate times. 
 Note that when you use the range argument in python it will go up to, but not include, the final number.
-That's why I have written a range of 1-6 to perform this 5 times.
+That's why I have written a range of 1-6 to perform this 5 times. 
+
+You can also execute the script again, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
+the outputs across models can be easily summarized as described below. 
 
 
 **Outputs:**
@@ -143,14 +149,14 @@ This information can be used for model comparisons using AIC, etc., but see belo
 
 **Contributing to the 2D Model Set:**
  
- If you would like to contribute your custom 2D models to the model set, please email me at daniel.portik@gmail.com. If your models are or will be published, explicit citation information can be provided (see below). 
+ If you would like to contribute your custom 2D models to the model set, please email me at daniel.portik@gmail.com. If your models have been or will be published, I will provide explicit citation information for the contributed models (see below). 
  
 **Citation Information:**
 
 ***Using the pipeline.***
 The scripts involved with this pipeline were originally published as part of the following work:
 
-*Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
++ *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
 
 ***Using specific 2D models.***
@@ -158,11 +164,11 @@ The model sets were developed through several publications, and we are making ou
 
 Models 1-14 were written for:
 
-*Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
++ *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
 Models 15-20 and 21-32 were written for:
 
-*Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access, Journal of Biogeography.*
++ *Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access, Journal of Biogeography.*
 
 
 ***Contact***
