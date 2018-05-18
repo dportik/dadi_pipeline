@@ -177,7 +177,7 @@ Here is an example of the output from a summary file, which will be in tab-delim
 The optimization routine arguments offer a lot of flexibility, but the default settings can also be used. If three
 rounds are selected (as in Example 1), here are the defaults for the optional arguments:
 
-***Three rounds (as in Example 1):***
+**Three rounds (as in Examples 1-3):**
 
 | Argument | Round 1 | Round 2  | Round 3|
 | ------ |------:| -----:| -----:|
@@ -186,7 +186,7 @@ rounds are selected (as in Example 1), here are the defaults for the optional ar
 | ***fold*** |  3 |  2   | 1 |
 
 
-***Two rounds:***
+**Two rounds:**
 
 | Argument | Round 1 | Round 2  |
 | ------ |------:| -----:|
@@ -194,7 +194,7 @@ rounds are selected (as in Example 1), here are the defaults for the optional ar
 | ***maxiter*** | 5  | 5 |
 | ***fold*** |  2   | 1 |
 
-***X Rounds (>3):***
+**X Rounds (>3):**
 
 | Argument | Round 1 | Round 2  | Round 3| Round *X* |
 | ------ |------:| -----:| -----:| -----:|
