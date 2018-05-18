@@ -100,6 +100,63 @@ That's why I have written a range of 1-6 to perform this 5 times.
 You can also execute the script again, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
 the outputs across models can be easily summarized as described below. 
 
+**Modifying the Model Set to Analyze:**
+
+The model set can easily be reduced by either blocking out or deleting relevant sections. 
+Let's say you no longer wish to include the first two models in the example below:
+    # Split into two populations, no migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+
+    # Split into two populations, with continuous symmetric migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+
+    # Split into two populations, with continuous asymmetric migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+
+    # Split with continuous symmetric migration, followed by isolation.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+
+You can hash out the Optimize_Functions.Optimize_Routine function for those models as here:
+    # Split into two populations, no migration.
+    #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+
+    # Split into two populations, with continuous symmetric migration.
+    #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+
+    # Split into two populations, with continuous asymmetric migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+
+    # Split with continuous symmetric migration, followed by isolation.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+
+Or you can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes:
+    '''
+    # Split into two populations, no migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+
+    # Split into two populations, with continuous symmetric migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+    '''
+    # Split into two populations, with continuous asymmetric migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+
+    # Split with continuous symmetric migration, followed by isolation.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+Anything contained within the set of ''' will be ignored. 
+
+Finally, you can simply delete these lines:
+    # Split into two populations, with continuous asymmetric migration.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+
+    # Split with continuous symmetric migration, followed by isolation.
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+
+
+The model set can be added to by inserting your model in the 2D script, then adding an appropriate
+call for the Optimize_Functions.Optimize_Routine function, similar to the other models. However,
+the easiest way to analyze a custom model is to use the flexible *dadi_Run_Optimizations.py* script,
+changing the optional arguments to match the settings used here. 
+
 
 **Outputs:**
 
