@@ -196,11 +196,11 @@ rounds are selected (as in Example 1), here are the defaults for the optional ar
 
 **X Rounds (>3):**
 
-| Argument | Round 1 | Round 2  | Round 3| Round *X* |
-| ------ |------:| -----:| -----:| -----:|
-| ***reps***    | 10 | 10 | 10 | 20 |
-| ***maxiter*** | 5 |  5  | 5 | 5 |
-| ***fold*** |  3 |  3  | 2 | 1 |
+| Argument | Round 1 | Round 2  | Round 3| Round *X-1* | Round *X* |
+| ------ |------:| -----:| -----:| -----:| -----:|
+| ***reps***    | 10 | 10 | 10 | 10 | 20 |
+| ***maxiter*** | 5 |  5  | 5 | 5 | 5 |
+| ***fold*** |  3 |  3  | 3 | 2 | 1 |
 
 In general, you should probably run three or more rounds and ensure the log-likelihoods are converging across replicates.
 
