@@ -61,7 +61,10 @@ Let's use the function to run an optimization routine for our data and this mode
 We need to specify the first six arguments in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
 the basic version here. The argument explanations are above. This would perform three
-rounds of optimizations, using a default number of replicates for each round.
+rounds of optimizations, using a default number of replicates for each round. At the end
+of each round, the parameters of the best-scoring replicate are used to generate the starting
+parameters for the replicates of the next round, and so on. This will help focus the parameter
+search space as the rounds continue.
 
     #create a prefix to label the output files
     prefix = "V1"
@@ -130,7 +133,7 @@ for the optimization algorithm steps, and etc. for round three.
 
 It's also good run the optimization routine multiple times. Let's write a short
 loop to do the above optimization routine five times. We will name the prefix based
-on which point we are at, and include it within the loops. Note that when you use
+on which point we are at, and include it within the looping. Note that when you use
 the range argument in python it will go up to, but not include, the final number.
 That's why I have written a range of 1-6 to perform this 5 times.
 
@@ -147,6 +150,13 @@ That's why I have written a range of 1-6 to perform this 5 times.
         Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
 
 
+**Test Data Set:**
+
+In the folder labeled *Example_Data* you will find a SNPs input file that will run with the *dadi_Run_Optimizations.py* script.
+You will only need to edit the path to the file in the script, and then you will be able to run all five examples above. The 
+outputs for these examples are also contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
+Please test the script using these data to ensure everything is working properly before examining your own empirical data. 
+
 
 **Outputs:**
 
@@ -162,6 +172,37 @@ Here is an example of the output from a summary file, which will be in tab-delim
      sym_mig	Round_1_Replicate_5	-4474.86	8957.72	13029301.84	188.94	2.9248,1.9986,0.2484,0.3688
 
 
+**Default Settings:**
+
+The optimization routine arguments offer a lot of flexibility, but the default settings can also be used. If three
+rounds are selected (as in Example 1), here are the defaults for the optional arguments:
+
+***Three rounds (as in Example 1):***
+
+| Argument | Round 1 | Round 2  | Round 3|
+| ------ |------:| -----:| -----:|
+| ***reps***    | 10 | 10 | 20 |
+| ***maxiter*** | 5 |  5  | 5 |
+| ***fold*** |  3 |  2   | 1 |
+
+
+***Two rounds:***
+
+| Argument | Round 1 | Round 2  |
+| ------ |------:| -----:|
+| ***reps***    | 10 | 20 |
+| ***maxiter*** | 5  | 5 |
+| ***fold*** |  2   | 1 |
+
+***X Rounds (>3):***
+
+| Argument | Round 1 | Round 2  | Round 3| Round *X* |
+| ------ |------:| -----:| -----:| -----:|
+| ***reps***    | 10 | 10 | 10 | 20 |
+| ***maxiter*** | 5 |  5  | 5 | 5 |
+| ***fold*** |  3 |  3  | 2 | 1 |
+
+In general, you should probably run three or more rounds and ensure the log-likelihoods are converging across replicates.
 
 **Caveats:**
 
@@ -177,7 +218,7 @@ The scripts involved with this pipeline were originally published as part of the
 
 *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
-If you use or modify this script for your own purposes, please cite our publication.
+If you use or modify this script for your own purposes, please cite this publication.
 
 **Contact**
 

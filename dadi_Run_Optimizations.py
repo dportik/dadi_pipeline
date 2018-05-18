@@ -164,7 +164,8 @@ Example 1. Now let's use the function to run an optimization routine for our dat
 We need to specify the first six arguments in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
 the basic version here. The argument explanations are above. This would perform three
-rounds of optimizations, using a default number of replicates for each round.
+rounds of optimizations, using a default number of replicates for each round (see documentation
+for explanation of default values).
 '''
 #create a prefix to label the output files
 prefix = "V1"
