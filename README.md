@@ -36,7 +36,7 @@ We will use always use the following function from the Optimize_Functions.py scr
  
 *Mandatory Arguments*
 
-fs:  spectrum object name
+  fs:  spectrum object name
 
 pts: grid size for extrapolation, list of three values
 
