@@ -188,7 +188,7 @@ Diversification Model Set
 
 This first set of models come from the following publication:
 
-    Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O.,
+    Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
     Barej, M.F., Hirschfeld, M., Burger, M., and M.K.Fujita. 2017.
     Evaluating mechanisms of diversification in a Guineo-Congolian forest
     frog using demographic model selection. Molecular Ecology 26: 5245-5263.
@@ -292,7 +292,7 @@ Island Model Set
 This set of models come from the following publication:
 
     Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,
-    Gvodk, V., Jongsma, G.F.M., Leach, A.D., and D.M. Portik. Sky, sea,
+    Gvodk, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
     and forest islands: diversification in the African leaf-folding frog
     Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access,
     Journal of Biogeography.

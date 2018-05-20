@@ -180,7 +180,7 @@ Diversification Model Set
 
 This first set of models come from the following publication:
 
-    Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O.,
+    Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
     Barej, M.F., Hirschfeld, M., Burger, M., and M.K.Fujita. 2017.
     Evaluating mechanisms of diversification in a Guineo-Congolian forest
     frog using demographic model selection. Molecular Ecology 26: 5245-5263.
