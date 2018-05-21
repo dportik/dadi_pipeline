@@ -1,0 +1,13 @@
+Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params
+vic_no_mig	Round_4_Replicate_30	-607.57	1225.14	829.94	652.91	0.1941,0.1177,0.5583,0.1034,0.486	
+vic_no_mig_admix_early	Round_2_Replicate_8	-607.51	1227.02	826.82	641.82	0.2099,0.1682,5.6692,0.1124,0.49,0.0275	
+vic_two_epoch_admix	Round_4_Replicate_15	-613.93	1241.86	820.13	613.51	0.2635,0.5472,1.7112,0.075,0.072,0.4587,0.065	
+vic_no_mig_admix_late	Round_4_Replicate_7	-619.0	1250.0	830.95	603.74	0.2918,0.6353,0.1803,0.1789,0.4725,0.0101	
+vic_sec_contact_asym_mig	Round_4_Replicate_2	-622.74	1261.48	744.56	386.86	0.7781,8.7218,17.0129,0.5853,0.2548,0.5768,0.04,0.4807	
+founder_sym	Round_4_Replicate_39	-626.01	1264.02	763.77	523.55	0.6883,2.5865,0.2279,0.2415,0.5744,0.4926	
+founder_asym	Round_4_Replicate_30	-638.74	1291.48	758.31	876.96	0.2873,3.1731,0.1713,0.9701,0.4,0.8486,0.4793	
+vic_anc_asym_mig	Round_4_Replicate_27	-670.37	1356.74	1056.4	436.79	0.6549,0.0789,1.5191,0.0881,2.1247,0.1991,0.2421,0.4408	
+founder_nomig	Round_3_Replicate_18	-694.07	1398.14	1183.8	918.04	0.4176,0.1736,0.1162,0.1994,0.4991	
+founder_nomig_admix_early	Round_4_Replicate_17	-693.94	1399.88	1184.61	50.29	7.7167,0.2059,2.0226,3.6078,0.4996,0.9798	
+founder_nomig_admix_two_epoch	Round_4_Replicate_26	-701.38	1416.76	1243.4	140.53	2.7553,0.7098,0.8307,0.7431,1.3846,0.4989,0.0987	
+founder_nomig_admix_late	Round_4_Replicate_12	-714.86	1441.72	1009.86	207.1	1.7744,15.0459,0.5851,0.842,0.4793,0.0112	
