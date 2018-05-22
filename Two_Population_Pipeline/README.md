@@ -13,7 +13,7 @@ To use this workflow, you'll need a SNPs input text file to create the 2D joint 
 
 The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_2D_Set.py* that will have to be edited. 
 
-The *dadi_Run_2D_Set.py*, *Optimize_Functions.py* (from the main repository), and *Models_2D.py* scripts must all be in the same working directory for *dadi_Run_2D_Set.py* to run properly.
+The *dadi_Run_2D_Set.py*, *Optimize_Functions.py* (from the [main](https://github.com/dportik/dadi_pipeline) repository), and *Models_2D.py* scripts must all be in the same working directory for *dadi_Run_2D_Set.py* to run properly.
 
 **Available 2D Models**
 
