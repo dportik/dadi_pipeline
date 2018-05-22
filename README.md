@@ -8,7 +8,7 @@ Perform demographic model optimizations and comparisons with this accessible and
 This tool is designed to work with the Python package dadi (https://bitbucket.org/gutenkunstlab/dadi) 
 and assumes you already have the package installed. You'll need to be familiar with how dadi works, 
 and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related 
-questions is the user group: https://groups.google.com/forum/#!forum/dadi-user. Before attempting
+questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting
 to use these scripts, read over the user manual for dadi and try running the program with the 
 example files.
 
