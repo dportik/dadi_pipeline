@@ -175,8 +175,9 @@ Here is an example of the output from a summary file, which will be in tab-delim
 
 **Default Settings:**
 
-The optimization routine arguments offer a lot of flexibility, but the default settings can also be used. If three
-rounds are selected (as in Example 1), here are the defaults for the optional arguments:
+The optimization routine arguments offer a lot of flexibility, but the default settings can also be used. If only
+the number of rounds is changed, here are the defaults for the optional arguments (reps, maxiters, folds)
+based on the number of rounds selected:
 
 **Three rounds (as in Examples 1-3):**
 
@@ -203,7 +204,7 @@ rounds are selected (as in Example 1), here are the defaults for the optional ar
 | ***maxiter*** | 5 |  5  | 5 | 5 | 5 |
 | ***fold*** |  3 |  3  | 3 | 2 | 1 |
 
-In general, you should probably run three or more rounds and ensure the log-likelihoods are converging across replicates.
+In general, you should probably run multiple rounds and ensure the log-likelihoods are converging.
 
 **Caveats:**
 

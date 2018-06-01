@@ -60,8 +60,8 @@ Notes/Caveats:
 Citations:
  If you use these scripts or the main diversification models for your work, please
  cite the following publication:
-    Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O.,
-    Barej, M.F., Hirschfeld, M., Burger, M., and M.K.Fujita. 2017.
+    Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
+    Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017.
     Evaluating mechanisms of diversification in a Guineo-Congolian forest
     frog using demographic model selection. Molecular Ecology 26: 5245-5263.
     doi: 10.1111/mec.14266
@@ -123,7 +123,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
     fs:  spectrum object name
     pts: grid size for extrapolation, list of three values
     outfile:  prefix for output naming
-    model_name: a label to slap on the output files; ex. "no_mig"
+    model_name: a label to help label the output files; ex. "no_mig"
     func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
@@ -181,7 +181,7 @@ Diversification Model Set
 This first set of models come from the following publication:
 
     Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
-    Barej, M.F., Hirschfeld, M., Burger, M., and M.K.Fujita. 2017.
+    Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017.
     Evaluating mechanisms of diversification in a Guineo-Congolian forest
     frog using demographic model selection. Molecular Ecology 26: 5245-5263.
     doi: 10.1111/mec.14266
@@ -201,7 +201,7 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_symmig_adjacent", Mo
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")
 
 # Adjacent Secondary contact, shorter isolation - Split between pop 1 and (2,3), gene flow does not occur. Split between pop 2 and 3 occurs with gene flow. After appearance of 2 and 3, gene flow also occurs between 1 and 2.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_2", Models_3D.refugia_adj_2, rounds, 9, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_2", Models_3D.refugia_adj_2, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2")
 
 # Adjacent Secondary contact, shortest isolation - Split between pop 1 and (2,3) with no migration. Split between pop 2 and 3 occurs with gene flow, and gene flow occurs between 1 and 2 as well.
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_3", Models_3D.refugia_adj_3, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, T1a, T1b, T2")

@@ -60,8 +60,8 @@ Notes/Caveats:
 Citations:
  If you use these scripts or the main diversification models for your work, please
  cite the following publication:
-    Portik, D.M., Leach, A.D., Rivera, D., Blackburn, D.C., Rdel, M.-O.,
-    Barej, M.F., Hirschfeld, M., Burger, M., and M.K.Fujita. 2017.
+    Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
+    Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017.
     Evaluating mechanisms of diversification in a Guineo-Congolian forest
     frog using demographic model selection. Molecular Ecology 26: 5245-5263.
     doi: 10.1111/mec.14266
@@ -69,7 +69,7 @@ Citations:
  If you use the additional diversification models or the island models set please cite 
  the following publication:
     Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,
-    Gvodk, V., Jongsma, G.F.M., Leach, A.D., and D.M. Portik. Sky, sea,
+    Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
     and forest islands: diversification in the African leaf-folding frog
     Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access,
     Journal of Biogeography.
@@ -131,7 +131,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
     fs:  spectrum object name
     pts: grid size for extrapolation, list of three values
     outfile:  prefix for output naming
-    model_name: a label to slap on the output files; ex. "no_mig"
+    model_name: a label to help label the output files; ex. "no_mig"
     func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
