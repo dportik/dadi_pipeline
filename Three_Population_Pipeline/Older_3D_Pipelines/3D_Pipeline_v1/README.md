@@ -1,4 +1,6 @@
-# Three_Populations
+# Three_Populations V1
+
+**This represents my initial attempts to streamline model testing in dadi. Please use the more recent pipeline, rather than this one here. For the sake of continuity, I am keeping these scripts stored here.**
 
 Explore 9 demographic models capturing variation in migration rates, periods of isolation, 
 and population size change associated with the divergence between two populations.

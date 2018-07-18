@@ -1,5 +1,7 @@
 # Two Populations Dadi Pipeline v3
 
+**This represents my initial attempts to streamline model testing in dadi. Please use the more recent pipeline, rather than this one here. For the sake of continuity, I am keeping these scripts stored here.**
+
 Explore demographic models capturing variation in migration rates, periods of isolation, 
 and population size change associated with the divergence between two populations.
 
