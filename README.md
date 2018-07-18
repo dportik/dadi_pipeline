@@ -19,6 +19,8 @@ This is meant to be a general use script to run dadi to fit any model on an alle
 If you'd like to use this script for larger sets of models already available, please look in the nested repositories ([Two_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Two_Population_Pipeline), [Three_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Three_Population_Pipeline)) to see how to import models from external model scripts for two population or three population comparisons.
 There are a considerable number of 2D models that can be selected from (32), with a fewer number of 3D models (9).
 
+If you'd like to assess the goodness of fit for your demographic model, please look in the [Goodness_of_Fit](https://github.com/dportik/dadi_pipeline/tree/master/Goodness_of_Fit) repository.
+
 The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
 
 **Optimizations:**
