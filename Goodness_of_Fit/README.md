@@ -128,6 +128,9 @@ The optimization routine set here will have the following settings:
 | ***maxiter*** | 5 |  10  | 20 |
 | ***fold*** |  3 |  2   | 1 |
 
+If only the number of rounds is provided, but no additional optional arguments, the optimization
+routine will use the default values for each round described [here](https://github.com/dportik/dadi_pipeline).
+
 Because it may take some time to optimize each simulated SFS, the elapsed time is provided along
 the way which can help provide an estimate of the total time necessary. You may choose to adjust
 the optimization routine accordingly, or change the number of simulations.
