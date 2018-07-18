@@ -180,12 +180,15 @@ The script will need to be edited to indicate the path to the *Simulation_Result
 output file for the empirical data. The script will also need to be tailored to create histograms that match the empirical distributions 
 for your data set. This can be done by editing the 'seq' function to create an appropriate range of 
 bin sizes and overall number of bins for the histograms. The 'seq' function takes three arguments: a 
-inimum range value, maximum range value, and increment value. So, seq(0,20,1) will created bins ranging 
-from zero to twenty by increments of one.
+minimum range value, maximum range value, and increment value. So, seq(0,20,1) will created bins ranging 
+from zero to twenty by increments of one. You'll need to adjust the range to include the values
+from the simulations (and the empirical data, if it falls outside this range!). In general,
+if the empirical value falls outside the simulated value distribution in the direction of worse values, the goodness of fit
+test is not considered passed. 
 
 **Caveats:**
 
- The data are simulated using the fs.sample() method, which is equivalent to a 
+ The data are simulated using the fs.sample() method in dadi, which is equivalent to a 
  parametric boostrap ONLY if SNPs are unlinked across loci. For ddRADseq data where a 
  single SNP is selected per locus, this is generally true, and this workflow is valid.
  
@@ -194,6 +197,31 @@ from zero to twenty by increments of one.
  within the 'collect_results' and 'Optimize_Empirical' functions in the 
  *Optimize_Functions_GOF.py* script. The correct lines for unfolded spectra are already
  written and simply need to be unhashed, and the lines for the folded spectra should be deleted.
+ 
+ For example, change this:
+ 
+    #calculate Chi^2 statistic on folded SFS
+    scaled_sim_model = sim_model*theta
+    folded_sim_model = scaled_sim_model.fold()
+    chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
+    chi2 = numpy.around(chi2, 2)
+    print "\t\t\tChi-Squared = ", chi2
+
+    #This section can be uncommented out, with the above section deleted, to get the chi2 from an unfolded sfs
+    #scaled_sim_model = sim_model*theta
+    #chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
+    #chi2 = numpy.around(chi2, 2)
+    #print "\t\t\tChi-Squared = ", chi2
+
+ to this:
+ 
+    #calculate Chi^2 statistic on folded SFS
+    scaled_sim_model = sim_model*theta
+    chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
+    chi2 = numpy.around(chi2, 2)
+    print "\t\t\tChi-Squared = ", chi2
+
+ 
 
 **Test Data Set:**
 
