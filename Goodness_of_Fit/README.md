@@ -262,7 +262,7 @@ Please test the script using these data to ensure everything is working properly
 
 For the goodness of fit testing scripts:
 
-+ *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and Loader, S.P. Vanishing refuge? Testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for seven amphibians. In Press, Molecular Ecology.*
++ *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and Loader, S.P. Vanishing refuge? Testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for seven amphibians. In Review, Molecular Ecology.*
 
 
 
