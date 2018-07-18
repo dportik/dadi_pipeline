@@ -46,7 +46,7 @@ The model will first be fit to the empirical data using the following function:
 + **func**: access the model function from within 'Simulate_and_Optimize.py' or from a separate model script
 + **in_params**: the previously optimized parameter values to use
 
-***Example***
+***Example:***
 
 In the script you will need to define the extrapolation grid size and the parameter values. The 
 number of parameter values must match the number in the model. 
@@ -96,7 +96,7 @@ The simulations and optimizations are performed with the following function:
 + **folds**: a list of integers controlling the fold argument when perturbing input parameter values
 
 
-***Example***
+***Example:***
 
 The important arguments will need to be defined in the script. Below shows how to perform
 100 simulations and define an optimization routine. 
