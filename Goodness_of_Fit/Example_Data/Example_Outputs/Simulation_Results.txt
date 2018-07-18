@@ -1,0 +1,6 @@
+Simulation	Best_Replicate	log-likelihood	theta	sfs_sum	chi-squared	optimized_params
+1	Round_3_Replicate_3	-467.93	513.94	1497.0	474.19	0.2516,0.2106,0.4328,0.8059
+2	Round_3_Replicate_1	-907.83	250.22	1494.0	1757.27	1.6895,0.3219,0.0868,0.7076
+3	Round_3_Replicate_2	-458.62	315.17	1508.0	455.3	0.4111,0.3406,0.2915,3.5104
+4	Round_3_Replicate_3	-488.11	133.42	1568.0	688.36	1.175,1.0293,0.0753,5.6391
+5	Round_3_Replicate_3	-456.46	621.48	1522.0	397.07	0.1981,0.164,0.631,1.8222
