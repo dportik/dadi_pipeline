@@ -57,7 +57,6 @@ number of parameter values must match the number in the model.
     #Provide best optimized parameter set for empirical data.
     #These will come from previous analyses you have already completed
 	emp_params = [0.1487,0.1352,0.2477,0.1877]
-    pts = [50,60,70]
      
     #Fit the model using these parameters and return the folded model SFS (scaled by theta).
 	#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model function,
