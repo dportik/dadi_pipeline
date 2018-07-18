@@ -42,7 +42,7 @@ The model will first be fit to the empirical data using the following function:
 + **fs**:  spectrum object name
 + **pts**: grid size for extrapolation, list of three values
 + **outfile**:  prefix for output naming
-+ **model_name**: a label help name the output files; ex. "no_mig"
++ **model_name**: a label help name the output files; ex. "sym_mig"
 + **func**: access the model function from within 'Simulate_and_Optimize.py' or from a separate model script
 + **in_params**: the previously optimized parameter values to use
 
@@ -128,21 +128,22 @@ The optimization routine set here will have the following settings:
 | ***maxiter*** | 5 |  10  | 20 |
 | ***fold*** |  3 |  2   | 1 |
 
-Because it may take some time to optimize each simulated sfs, the elapsed time is provided along
+Because it may take some time to optimize each simulated SFS, the elapsed time is provided along
 the way which can help provide an estimate of the total time necessary. You may choose to adjust
 the optimization routine accordingly, or change the number of simulations.
 
 **Outputs:**
 
-The ***Optimize_Empirical*** will produce an output file for the empirical fit, which will be in tab-delimited format:
+The ***Optimize_Empirical*** function will produce an output file for the empirical fit, which will be in tab-delimited format:
 
      Model	Replicate	log-likelihood	theta	sfs_sum	chi-squared
      sym_mig	1	-591.21	619.83	1552.44	758.21
 
 This is based on the parameter values supplied, as no optimization routine is performed. 
 
-For each simulation performed, a log file and optimization summary output file will be produced. The
-optimization summary output file will be in tab-delimited format:
+The ***Perform_Sims*** function will produce many output files.
+For each simulation performed, a log file and optimization summary output file will be produced 
+with a prefix matching the simulation number. The optimization summary output file will be in tab-delimited format:
 
      Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params( )
      sym_mig	Round_1_Replicate_1	-476.15	960.3	571.75	429.99	0.33,0.2753,0.2759,0.8528
