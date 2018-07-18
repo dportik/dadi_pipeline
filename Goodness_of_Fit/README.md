@@ -84,7 +84,7 @@ The simulations and optimizations are performed with the following function:
 + **sim_number**: the number of simulations to perform
 + **model_fs**:  the scaled model spectrum object name
 + **pts**: grid size for extrapolation, list of three values
-+ **model_name**: a label to help label on the output files; ex. "no_mig"
++ **model_name**: a label to help label on the output files; ex. "sym_mig"
 + **func**: access the model function from within this script
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model to fit
@@ -117,8 +117,8 @@ The important arguments will need to be defined in the script. Below shows how t
     folds = [3,2,1]
     
     #Execute the optimization routine for each of the simulated SFS.
-    #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
-    #everything else can stay as it is (as the actual values can be changed above).
+    #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model 
+    #function name, but everything else can stay as it is.
     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, reps=reps, maxiters=maxiters, folds=folds)
 
 The optimization routine set here will have the following settings:
