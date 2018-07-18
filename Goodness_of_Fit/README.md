@@ -60,8 +60,8 @@ number of parameter values must match the number in the model.
     pts = [50,60,70]
      
     #Fit the model using these parameters and return the folded model SFS (scaled by theta).
-	#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
-	#everything else can stay as it is. See above for argument explanations.
+	#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model function,
+	#but everything else can stay as it is. See above for argument explanations.
 	scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params)
 
 	
