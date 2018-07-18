@@ -194,11 +194,11 @@ test is not considered passed.
  
  The data are simulated and chi-squared results are calculated based on the assumption that your 
  SFS is FOLDED. If your SFS is not folded, you will need to edit the sections indicated 
- within the 'collect_results' and 'Optimize_Empirical' functions in the 
+ within the ***collect_results*** and ***Optimize_Empirical*** functions in the 
  *Optimize_Functions_GOF.py* script. The correct lines for unfolded spectra are already
  written and simply need to be unhashed, and the lines for the folded spectra should be deleted.
  
- For example, change this:
+ For example in ***collect_results*** (beginning on Line 118) change this:
  
     #calculate Chi^2 statistic on folded SFS
     scaled_sim_model = sim_model*theta
@@ -221,6 +221,27 @@ test is not considered passed.
     chi2 = numpy.around(chi2, 2)
     print "\t\t\tChi-Squared = ", chi2
 
+ And in ***Optimize_Empirical*** (beginning on Line 316) change this:
+ 
+    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+    scaled_sim_model = sim_model*theta
+    folded_scaled_model = scaled_sim_model.fold()
+
+    #Here is where you can change if the scaled model is folded or unfolded
+    #Uncomment out the line below and delete the subsequent one
+    #return scaled_sim_model
+
+    return folded_scaled_model
+    
+to this:
+
+    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+    scaled_sim_model = sim_model*theta
+    folded_scaled_model = scaled_sim_model.fold()
+
+    return scaled_sim_model
+
+That should solve known issues for folded vs. unfolded spectra.
  
 
 **Test Data Set:**
