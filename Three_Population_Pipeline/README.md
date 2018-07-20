@@ -21,24 +21,24 @@ Here is a running list of the models currently available. The name of the model 
 
 ***Diversification Model Set:***
 
-1. "*split_nomig*": Split into three populations, no migration.
-2. "*split_symmig_all*": Split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
-3. "*split_symmig_adjacent*": Split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-4. "*refugia_adj_1*": Adjacent secondary contact, longest isolation. See full description in script.
-5. "*refugia_adj_2*": Adjacent secondary contact, shorter isolation. See full description in script.
-6. "*refugia_adj_3*": Adjacent secondary contact, shortest isolation. See full description in script.
-7. "*ancmig_adj_3*": Adjacent ancient migration, longest isolation. See full description in script.
-8. "*ancmig_adj_2*": Adjacent ancient migration, shorter isolation. See full description in script.
-9. "*ancmig_adj_1*": Adjacent ancient migration, shortest isolation. See full description in script.
-10. "*sim_split_no_mig*": Simultaneous split, no migration.
-11. "*sim_split_no_mig_size*": Simultaneous split, no migration, size change.
-12. "*sim_split_sym_mig_all*": Simultaneous split, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
-13. "*sim_split_sym_mig_adjacent*": Simultaneous split, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-14. "*sim_split_refugia_sym_mig_all*": Simultaneous split, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
-15. "*sim_split_refugia_sym_mig_adjacent*": Simultaneous split, between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-16. "*split_nomig_size*":  Split into three populations, no migration, size change.
-17. "*ancmig_2_size*": Adjacent ancient migration, shorter isolation, size change.
-18. "*sim_split_refugia_sym_mig_adjacent_size*": Simultaneous split, between 'adjacent' populations, size change.
+1. *split_nomig*: Split into three populations, no migration.
+2. *split_symmig_all*: Split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
+3. *split_symmig_adjacent*: Split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+4. *refugia_adj_1*: Adjacent secondary contact, longest isolation. See full description in script.
+5. *refugia_adj_2*: Adjacent secondary contact, shorter isolation. See full description in script.
+6. *refugia_adj_3*: Adjacent secondary contact, shortest isolation. See full description in script.
+7. *ancmig_adj_3*: Adjacent ancient migration, longest isolation. See full description in script.
+8. *ancmig_adj_2*: Adjacent ancient migration, shorter isolation. See full description in script.
+9. *ancmig_adj_1*: Adjacent ancient migration, shortest isolation. See full description in script.
+10. *sim_split_no_mig*: Simultaneous split, no migration.
+11. *sim_split_no_mig_size*: Simultaneous split, no migration, size change.
+12. *sim_split_sym_mig_all*: Simultaneous split, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
+13. *sim_split_sym_mig_adjacent*: Simultaneous split, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+14. *sim_split_refugia_sym_mig_all*: Simultaneous split, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
+15. *sim_split_refugia_sym_mig_adjacent*: Simultaneous split, between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+16. *split_nomig_size*:  Split into three populations, no migration, size change.
+17. *ancmig_2_size*: Adjacent ancient migration, shorter isolation, size change.
+18. *sim_split_refugia_sym_mig_adjacent_size*: Simultaneous split, between 'adjacent' populations, size change.
 
 
 **Optimization Settings:**

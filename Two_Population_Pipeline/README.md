@@ -21,43 +21,43 @@ Here is a running list of the models currently available. The name of the model 
 
 ***Diversification Model Set:***
 
-1. "*no_mig*": Split into two populations, no migration.
-2. "*sym_mig*": Split into two populations, with continuous symmetric migration.
-3. "*asym_mig*": Split into two populations, with continuous asymmetric migration.
-4. "*anc_sym_mig*": Split with continuous symmetric migration, followed by isolation.
-5. "*anc_asym_mig*": Split with continuous asymmetric migration, followed by isolation.
-6. "*sec_contact_sym_mig*": Split with no gene flow, followed by period of continuous symmetrical gene flow.
-7. "*sec_contact_asym_mig*": Split with no gene flow, followed by period of continuous asymmetrical gene flow.
-8. "*no_mig_size*": Split with no migration, then instantaneous size change with no migration.
-9. "*sym_mig_size*": Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
-10. "*asym_mig_size*": Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
-11. "*anc_sym_mig_size*": Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
-12. "*anc_asym_mig_size*": Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
-13. "*sec_contact_sym_mig_size*": Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
-14. "*sec_contact_asym_mig_size*": Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
-15. "*sym_mig_twoepoch*": Split into two populations, with continuous symmetric migration, rate varying across two epochs.
-16. "*asym_mig_twoepoch*": Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
-17. "*sec_contact_sym_mig_three_epoch*": Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
-18. "*sec_contact_asym_mig_three_epoch*": Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
-19. "*sec_contact_sym_mig_size_three_epoch*": Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
-20. "*sec_contact_asym_mig_size_three_epoch*": Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
+1. *no_mig*: Split into two populations, no migration.
+2. *sym_mig*: Split into two populations, with continuous symmetric migration.
+3. *asym_mig*: Split into two populations, with continuous asymmetric migration.
+4. *anc_sym_mig*: Split with continuous symmetric migration, followed by isolation.
+5. *anc_asym_mig*: Split with continuous asymmetric migration, followed by isolation.
+6. *sec_contact_sym_mig*: Split with no gene flow, followed by period of continuous symmetrical gene flow.
+7. *sec_contact_asym_mig*: Split with no gene flow, followed by period of continuous asymmetrical gene flow.
+8. *no_mig_size*: Split with no migration, then instantaneous size change with no migration.
+9. *sym_mig_size*: Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
+10. *asym_mig_size*: Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
+11. *anc_sym_mig_size*: Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
+12. *anc_asym_mig_size*: Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
+13. *sec_contact_sym_mig_size*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
+14. *sec_contact_asym_mig_size*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
+15. *sym_mig_twoepoch*: Split into two populations, with continuous symmetric migration, rate varying across two epochs.
+16. *asym_mig_twoepoch*: Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
+17. *sec_contact_sym_mig_three_epoch*: Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
+18. *sec_contact_asym_mig_three_epoch*: Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
+19. *sec_contact_sym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
+20. *sec_contact_asym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
 
 ***Island Model Set:***
 
 For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. Vicariance events involve no population size change, whereas founder event models always enforce exponential growth in pop2 (the island population). Discrete admixture events are included as a comparison to intervals of continuous migration, and are represented by parameter 'f', in which a fraction f of the mainland population is instantaneously present in the post-admixture island population. Because of the way these models are constructed, you should not analyze these in combination with the Diversification Model Set for the purpose of performing model selection.
 
-21. "*vic_no_mig*": Vicariance with no migration.
-22. "*vic_anc_asym_mig*": Vicariance with with ancient continuous asymmetric migration.
-23. "*vic_sec_contact_asym_mig*": Vicariance with no migration, secondary contact with continuous asymmetric migration
-24. "*founder_nomig*": Founder event with no migration.
-25. "*founder_sym*": Founder event with continuous symmetric migration.
-26. "*founder_asym*": Founder event with continuous asymmetric migration.
-27. "*vic_no_mig_admix_early*": Vicariance, early unidirectional discrete admixture event (before any drift).
-28. "*vic_no_mig_admix_late*": Vicariance, late unidirectional discrete admixture event (after any drift).
-29. "*vic_two_epoch_admix*": Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-30. "*founder_nomig_admix_early*": Founder event, early unidirectional discrete admixture event (before any drift).
-31. "*founder_nomig_admix_late*": Founder event, late unidirectional discrete admixture event (after any drift).
-32. "*founder_nomig_admix_two_epoch*": Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+21. *vic_no_mig*: Vicariance with no migration.
+22. *vic_anc_asym_mig*: Vicariance with with ancient continuous asymmetric migration.
+23. *vic_sec_contact_asym_mig*: Vicariance with no migration, secondary contact with continuous asymmetric migration
+24. *founder_nomig*: Founder event with no migration.
+25. *founder_sym*: Founder event with continuous symmetric migration.
+26. *founder_asym*: Founder event with continuous asymmetric migration.
+27. *vic_no_mig_admix_early*: Vicariance, early unidirectional discrete admixture event (before any drift).
+28. *vic_no_mig_admix_late*: Vicariance, late unidirectional discrete admixture event (after any drift).
+29. *vic_two_epoch_admix*: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+30. *founder_nomig_admix_early*: Founder event, early unidirectional discrete admixture event (before any drift).
+31. *founder_nomig_admix_late*: Founder event, late unidirectional discrete admixture event (after any drift).
+32. *founder_nomig_admix_two_epoch*: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 
 
 **Optimization Settings:**
