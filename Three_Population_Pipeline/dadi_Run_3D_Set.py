@@ -58,14 +58,19 @@ Notes/Caveats:
  'collect_results' function in the Optimize_Functions.py script for an unfolded spectrum.
 
 Citations:
- If you use these scripts or the main diversification models for your work, please
- cite the following publication:
+ If you use these scripts or the sets of diversification models for your work, please
+ cite the following publications:
     Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
     Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017.
     Evaluating mechanisms of diversification in a Guineo-Congolian forest
     frog using demographic model selection. Molecular Ecology 26: 5245-5263.
     doi: 10.1111/mec.14266
-         
+    
+    Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., 
+	Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the 
+	forest refuge hypothesis in coastal East Africa using genome-wide sequence data 
+	for five co-distributed amphibians. In Review, Molecular Ecology.
+
  If you are interesting in contributing your 3D models to this workflow, please email me!
 
 -------------------------
@@ -79,7 +84,7 @@ Python modules required:
 Daniel Portik
 daniel.portik@gmail.com
 https://github.com/dportik
-Updated May 2018
+Updated July 2018
 '''
 
 #===========================================================================
@@ -87,7 +92,7 @@ Updated May 2018
 #===========================================================================
 
 #**************
-snps = "/Users/dan/dadi_pipeline/Three_Population_Pipeline/Example_Input_File/dadi_3pops_CVLS_CVLN_Cross_snps.txt"
+snps = "/Users/dan/Dropbox/dadi_inputs/Three_Population_Pipeline/Testing/dadi_3pops_CVLS_CVLN_Cross_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)
@@ -165,13 +170,16 @@ pts = [50,60,70]
 
 #**************
 #Set the number of rounds here
-rounds = 4
-
+#rounds = 4
+rounds = 1
 #define the lists for optional arguments
 #you can change these to alter the settings of the optimization routine
-reps = [10,20,30,40]
-maxiters = [3,5,10,15]
-folds = [3,2,2,1]
+#reps = [10,20,30,40]
+#maxiters = [3,5,10,15]
+#folds = [3,2,2,1]
+reps = [1]
+maxiters = [1]
+folds = [1]
 
 
 
@@ -214,5 +222,50 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_2", Models_3D.a
 
 # Adjacent Ancient migration, shortest isolation - Split between pop 1 and (2,3) with gene flow. Split between pop 2 and 3 with gene flow, then all gene flow ceases.
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_1", Models_3D.ancmig_adj_1, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, T1, T2, T3")
+
+
+'''
+This second set of models were developed for the following publication:
+
+	Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., 
+	Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the 
+	forest refuge hypothesis in coastal East Africa using genome-wide sequence data 
+	for five co-distributed amphibians. In Review, Molecular Ecology.
+
+'''
+
+############# Models with simultaneous population splitting 
+
+# Simultaneous split into three populations, no migration.
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_no_mig", Models_3D.sim_split_no_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, T1")
+
+# Simultaneous split into three populations, no migration, size change.
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_no_mig_size", Models_3D.sim_split_no_mig_size, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu3a, nu1b, nu2b, nu3b, T1, T2")
+
+# Simultaneous split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_all", Models_3D.sim_split_sym_mig_all, rounds, 7, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, m3, T1")
+
+# Simultaneous split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_adjacent", Models_3D.sim_split_sym_mig_adjacent, rounds, 6, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, T1")
+
+# Simultaneous split into three populations, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_all", Models_3D.sim_split_refugia_sym_mig_all, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, m3, T1, T2")
+
+# Simultaneous split into three populations, secondary contact between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent", Models_3D.sim_split_refugia_sym_mig_adjacent, rounds, 7, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, T1, T2")
+
+
+############# Models with extra size change variation
+
+# Split into three populations, no migration, size change.
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig_size", Models_3D.split_nomig_size, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nuA, nu2a, nu3a, nu1b, nu2b, nu3b, T1, T2, T3")
+
+# Adjacent Ancient migration, shorter isolation, size change - Split between pop 1 and (2,3) with gene flow. Split between pop 2 and 3 with no migration between any populations, then size change and drift.
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_2_size", Models_3D.ancmig_2_size, rounds, 11, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nuA, nu2a, nu3a, nu1b, nu2b, nu3b, mA, T1, T2, T3")
+
+# Simultaneous split into three populations, secondary contact between 'adjacent' populations (1<->2, 2<->3, but not 1<->3), then size change step with continued adjacent migration.
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent_size", Models_3D.sim_split_refugia_sym_mig_adjacent_size, rounds, 11, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu3a, nu1b, nu2b, nu3b, m1, m2, T1, T2, T3")
+
+
 
 

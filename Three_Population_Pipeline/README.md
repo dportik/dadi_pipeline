@@ -30,6 +30,15 @@ Here is a running list of the models currently available. The name of the model 
 7. "*ancmig_adj_3*": Adjacent ancient migration, longest isolation. See full description in script.
 8. "*ancmig_adj_2*": Adjacent ancient migration, shorter isolation. See full description in script.
 9. "*ancmig_adj_1*": Adjacent ancient migration, shortest isolation. See full description in script.
+10. "*sim_split_no_mig*": Simultaneous split, no migration.
+11. "*sim_split_no_mig_size*": Simultaneous split, no migration, size change.
+12. "*sim_split_sym_mig_all*": Simultaneous split, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
+13. "*sim_split_sym_mig_adjacent*": Simultaneous split, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+14. "*sim_split_refugia_sym_mig_all*": Simultaneous split, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
+15. "*sim_split_refugia_sym_mig_adjacent*": Simultaneous split, between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
+16. "*split_nomig_size*":  Split into three populations, no migration, size change.
+17. "*ancmig_2_size*": Adjacent ancient migration, shorter isolation, size change.
+18. "*sim_split_refugia_sym_mig_adjacent_size*": Simultaneous split, between 'adjacent' populations, size change.
 
 
 **Optimization Settings:**
@@ -208,6 +217,9 @@ Models 1-9 were written for:
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology, 26: 5245-5263. doi: 10.1111/mec.14266*
 
+Models 10-18 were written for:
+
++ *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. In Review, Molecular Ecology.*
 
 
 **Contact**
