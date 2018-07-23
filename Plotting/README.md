@@ -86,7 +86,7 @@ The 2D plotting is performed with the following function:
 ***Example:***
 
 The important arguments will need to be defined in the script. Below shows how to perform
-100 simulations and define an optimization routine. 
+the basic plotting and also change the vmin in the second plot. 
 
     #Now we simply call the function with the correct arguments (notice many are the same from the
     #empirical fit).
@@ -101,6 +101,9 @@ The important arguments will need to be defined in the script. Below shows how t
     vmin_val = float(0.01)
     Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig_vmin", vmin_val = vmin_val)
     
+Notice that this creates a pop-up window with the plot in it. To move along to the second plot,
+simply close this window. The plot will be saved to a PDF file in the working directory automatically.
+
 The functions are nearly identical for 1D and 3D plotting:
 
 ***Plot_3D(fs, model_fit, outfile, model_name, vmin_val=None)***
@@ -114,6 +117,7 @@ You would use these in the same fashion:
     Plotting_Functions.Plot_1D(fs, model_fit, prefix, "something")
 
     Plotting_Functions.Plot_3D(fs, model_fit, prefix, "something")
+    Plotting_Functions.Plot_3D(fs, model_fit, prefix, "something", vmin_val = vmin_val)
 
 
 **Outputs:**
@@ -125,12 +129,13 @@ The ***Optimize_Empirical*** function will produce an output file for the empiri
 
 This is based on the parameter values supplied, as no optimization routine is performed. 
 
-The ***Plot_2D*** function will produce a PDF output file.
+The ***Plot_2D*** function and other plotting functions will produce a PDF output file each
+time the plotting routine is called.
 
 
 **Helpful Notes:**
 
- Sometimes you may see the following error when plotting 2D or 3D:
+ Sometimes you may see the following error when plotting 2D or 3D, after the script crashes:
  
      "ValueError: Data has no positive values, and therefore can not be log-scaled."
  
@@ -143,9 +148,8 @@ The ***Plot_2D*** function will produce a PDF output file.
 
 In the folder labeled *Example_Data* you will find a SNPs input file that will run with the *Make_Plots.py* script.
 You will only need to edit the path to the file in the script, and then the script should run normally. The 
-output file of the model fit and both 2D plots are contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
-Running the *Make_Plots.py* script as is will actually produce 100 simulations, rather than five. 
-You may choose to test the script using these data to ensure everything is working properly before examining your own empirical data. 
+output file of the model fit and both 2D plots from the above example are contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
+You should test the script using these data to ensure everything is working properly before examining your own empirical data. 
 
 
 **Citation Information:**
