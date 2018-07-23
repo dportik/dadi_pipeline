@@ -250,9 +250,10 @@ That should solve known issues for folded vs. unfolded spectra.
 **Test Data Set:**
 
 In the folder labeled *Example_Data* you will find a SNPs input file that will run with the *Simulate_and_Optimize.py* script.
-You will only need to edit the path to the file in the script, and then you will be able to run all five examples above. The 
-outputs for these examples are also contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
-Please test the script using these data to ensure everything is working properly before examining your own empirical data. 
+You will only need to edit the path to the file in the script, and then the script should run normally. The 
+outputs for five simulations (from truncated optimizations) are contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
+Running the *Simulate_and_Optimize.py* script as is will actually produce 100 simulations, rather than five. 
+You may choose to test the script using these data to ensure everything is working properly before examining your own empirical data. 
 
 
 **Citation Information:**
