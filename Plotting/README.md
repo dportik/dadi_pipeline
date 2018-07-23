@@ -1,4 +1,4 @@
-**Create SFS plots**
+**Create SFS Comparison Plots**
 ---------------------------------
 
 **Purpose:**
