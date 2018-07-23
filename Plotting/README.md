@@ -129,7 +129,7 @@ The ***Optimize_Empirical*** function will produce an output file for the empiri
 
 This is based on the parameter values supplied, as no optimization routine is performed. 
 
-The ***Plot_2D*** function and other plotting functions will produce a PDF output file each
+Each of the plotting functions (1D, 2D, or 3D) will produce a PDF output file each
 time the plotting routine is called.
 
 
