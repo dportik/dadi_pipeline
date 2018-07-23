@@ -21,6 +21,8 @@ There are a considerable number of 2D models that can be selected from (32), wit
 
 If you'd like to assess the goodness of fit for your demographic model, please look in the [Goodness_of_Fit](https://github.com/dportik/dadi_pipeline/tree/master/Goodness_of_Fit) repository.
 
+If you'd like to create a figure comparing the emprical SFS and model SFS for a demographic model (with residuals), please look in the [Plotting](https://github.com/dportik/dadi_pipeline/tree/master/Plotting) repository.
+
 The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
 
 **Optimizations:**
