@@ -94,7 +94,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 # Fit the empirical data based on prior optimization results, obtain model SFS
 #================================================================================
 ''' 
- We will use a function from the Optimize_Functions_GOF.py script:
+ We will use a function from the Plotting_Functions.py script:
  	Fit_Empirical(fs, pts, outfile, model_name, func, in_params)
 
 Mandatory Arguments =
@@ -139,7 +139,7 @@ pts = [50,60,70]
 #These will come from previous analyses you have already completed.
 emp_params = [0.1487,0.1352,0.2477,0.1877]
 
-#Fit the model using these parameters and return the folded model SFS (scaled by theta).
+#Fit the model using these parameters and return the model SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is. See above for argument explanations.
 model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params)
