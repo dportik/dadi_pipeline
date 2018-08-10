@@ -174,12 +174,9 @@ pts = [50,60,70]
 rounds = 1
 #define the lists for optional arguments
 #you can change these to alter the settings of the optimization routine
-#reps = [10,20,30,40]
-#maxiters = [3,5,10,15]
-#folds = [3,2,2,1]
-reps = [1]
-maxiters = [1]
-folds = [1]
+reps = [10,20,30,40]
+maxiters = [3,5,10,15]
+folds = [3,2,2,1]
 
 
 
