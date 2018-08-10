@@ -117,7 +117,7 @@ sfs_sum = numpy.around(fs.S(), 2)
 print "Sum of SFS = ", sfs_sum, '\n', '\n'
 
 #================================================================================
-# Calling external 2D models from the Models_2D.py script
+# Calling external 3D models from the Models_3D.py script
 #================================================================================
 '''
  We will use a function from the Optimize_Functions.py script for our optimization routines:
@@ -129,7 +129,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
     pts: grid size for extrapolation, list of three values
     outfile:  prefix for output naming
     model_name: a label to help label the output files; ex. "no_mig"
-    func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
+    func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_3D, calling Models_3D.split_nomig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
 
@@ -152,10 +152,9 @@ Round3 - 30 replicates, maxiter = 10, fold = 2
 Round4 - 40 replicates, maxiter = 15, fold = 1
 
 If this script was run as is, each model would be called and optimized sequentially;
-this could take a very long time. For your actual analyses, I strongly recommend
-creating multiple scripts with only a few models each and running them
-independently. It is also not a good idea to mix models from the Diversification Set
-and the Island Set, as each was meant to be mutually exclusive.
+this could take a very long time for 3D models. For your actual analyses, I strongly 
+recommend creating multiple scripts with only a few models each and running them
+independently. 
 
 '''
 
