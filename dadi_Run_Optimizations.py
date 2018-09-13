@@ -21,7 +21,6 @@ contains all the functions necessary.
 If you'd like to use this script for larger sets of models already available, please
 look on the other repositories to see how to import models from external model scripts.
 
-
 General workflow:
  The optimization routine runs a user-defined number of rounds, each with a user-defined
  or predefined number of replicates. The starting parameters are initially random, but after
@@ -32,7 +31,6 @@ General workflow:
  The user can also supply their own set of initial parameters, or set custom bounds on the
  parameters (upper_bound and lower_bound) to meet specific model needs. This flexibility
  should allow these scripts to be generally useful for model-fitting with any data set.
-
  
 Outputs:
  For each model run, there will be a log file showing the optimization steps per replicate
@@ -46,17 +44,12 @@ Outputs:
  sym_mig	Round_1_Replicate_4	-4262.29	8532.58	8907386.55	288.05	0.3689,0.8892,3.0951,2.8496
  sym_mig	Round_1_Replicate_5	-4474.86	8957.72	13029301.84	188.94	2.9248,1.9986,0.2484,0.3688
 
-
 Notes/Caveats:
  The likelihood and AIC returned represent the true likelihood only if the SNPs are
  unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this
  is true, but if SNPs are linked across loci then the likelihood is actually a composite
  likelihood and using something like AIC is no longer appropriate for model comparisons.
  See the discussion group for more information on this subject. 
-
- The chi-squared test statistic is calculated assuming the sfs is folded. If this is not
- true for your data set, this number will not be accurate. This could be edited in the
- 'collect_results' function in the Optimize_Functions.py script for an unfolded spectrum.
 
 Citations:
  If you use these scripts for your work, please cite the following publication:
@@ -115,7 +108,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 '''
  We will use a function from the Optimize_Functions.py script:
  
- Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")
+ Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")
  
    Mandatory Arguments =
     fs:  spectrum object name
@@ -125,6 +118,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
     func: access the model function from within 'dadi_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
+    fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False).
 
    Optional Arguments =
      reps: a list of integers controlling the number of replicates in each of the optimization rounds
@@ -173,8 +167,8 @@ prefix = "V1"
 pts = [50,60,70]
 
 #Remember the order for mandatory arguments as below
-#Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number)
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4)
+#Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
 
 
 
@@ -189,7 +183,7 @@ pts = [50,60,70]
 
 p_labels = "nu1, nu2, m, T"
 
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, param_labels = p_labels)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels)
 
 
 
@@ -205,7 +199,7 @@ p_labels = "nu1, nu2, m, T"
 upper = [20,20,10,15]
 lower = [0.01,0.01,0.01,0.1]
 
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, param_labels = p_labels, in_upper = upper, in_lower = lower)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper = upper, in_lower = lower)
 
 
 
@@ -232,7 +226,7 @@ starting parameters, and a maxiter of 5 for the optimization algorithm steps. Ro
 will have 20 replicates, use 2-fold perturbed starting parameters, and a maxiter of 10
 for the optimization algorithm steps, and etc. for round three. 
 '''
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
 
 
 
@@ -254,4 +248,4 @@ folds = [3,2,1]
 
 for i in range(1,6):
     prefix = "V5_Number_{}".format(i)
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)

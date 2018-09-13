@@ -60,12 +60,6 @@ Notes/Caveats:
  The data are simulated using the fs.sample() method, which is equivalent to a 
  parametric boostrap only if SNPs are unlinked across loci. For ddRADseq data where a 
  single SNP is selected per locus, this is generally true, and this workflow is valid.
- 
- The data are simulated and chi2 results are calculated based on the assumption that your 
- SFS is FOLDED. If your SFS is not folded, you will need to edit the sections indicated 
- within the 'collect_results' and 'Optimize_Empirical' functions in the 
- Optimize_Functions_GOF.py script. The correct lines for unfolded spectra are already
- written and need to be unhashed, and the lines for the folded spectra need to be deleted.
 
 Citations:
  If you use these scripts for your work, please cite the following publications.
@@ -94,7 +88,7 @@ Python modules required:
 Daniel Portik
 daniel.portik@gmail.com
 https://github.com/dportik
-Updated May 2018
+Updated September 2018
 '''
 
 #===========================================================================
@@ -133,7 +127,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 #================================================================================
 ''' 
  We will use a function from the Optimize_Functions_GOF.py script:
- 	Optimize_Empirical(fs, pts, outfile, model_name, func, in_params)
+ 	Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)
 
 Mandatory Arguments =
  	fs:  spectrum object name
@@ -142,6 +136,7 @@ Mandatory Arguments =
  	model_name: a label to help name the output files; ex. "no_mig"
  	func: access the model function from within script
  	in_params: the previously optimized parameters to use
+    fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False).
 '''
 
 
@@ -173,10 +168,15 @@ pts = [50,60,70]
 #These will come from previous analyses you have already completed.
 emp_params = [0.1487,0.1352,0.2477,0.1877]
 
+#**************
+#Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+fs_folded = True
+
+
 #Fit the model using these parameters and return the folded model SFS (scaled by theta).
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is. See above for argument explanations.
-scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params)
+scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
 
 
 
@@ -223,5 +223,5 @@ folds = [3,2,1]
 #Execute the optimization routine for each of the simulated SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is (as the actual values can be changed above).
-Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, reps=reps, maxiters=maxiters, folds=folds)
+Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
 

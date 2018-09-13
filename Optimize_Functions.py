@@ -88,7 +88,7 @@ def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
     #send back values
     return reps_list, maxiters_list, folds_list
 
-def collect_results(fs, sim_model, params_opt, roundrep):
+def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
     #--------------------------------------------------------------------------------------
     # gather up a bunch of results, return a list = [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values] 
     
@@ -96,6 +96,7 @@ def collect_results(fs, sim_model, params_opt, roundrep):
     # fs: spectrum object name
     # sim_model: model fit with optimized parameters
     # params_opt: list of the optimized parameters
+    # fs_folded: a Boolean (True, False) for whether empirical spectrum is folded or not
     #--------------------------------------------------------------------------------------
 
     #create empty list to store results
@@ -115,12 +116,21 @@ def collect_results(fs, sim_model, params_opt, roundrep):
     theta = numpy.around(theta, 2)
     print "\t\t\tTheta = ", theta
 
-    #calculate Chi^2 statistic
-    scaled_sim_model = sim_model*theta
-    folded_sim_model = scaled_sim_model.fold()
-    chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
-    chi2 = numpy.around(chi2, 2)
-    print "\t\t\tChi-Squared = ", chi2
+    if fs_folded is True:
+        #calculate Chi^2 statistic for folded
+        scaled_sim_model = sim_model*theta
+        folded_sim_model = scaled_sim_model.fold()
+        chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
+        chi2 = numpy.around(chi2, 2)
+        print "\t\t\tChi-Squared = ", chi2
+        
+    elif fs_folded is False:
+        #calculate Chi^2 statistic for unfolded
+        scaled_sim_model = sim_model*theta
+        chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
+        chi2 = numpy.around(chi2, 2)
+        print "\t\t\tChi-Squared = ", chi2
+        
 
     #store key results in temporary sublist, append to larger results list
     temp_results.append(roundrep)
@@ -158,7 +168,7 @@ def write_log(outfile, model_name, rep_results, roundrep):
     fh_log.write("Optimized parameters = {}\n".format(rep_results[5]))
     fh_log.close()
 
-def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" "):
+def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" "):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
     #(1) fs:  spectrum object name
@@ -168,15 +178,16 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, r
     #(5) func: access the model function from within 'moments_optimize.py' or from a separate python model script, ex. Models_2D.no_mig
     #(6) rounds: number of optimization rounds to perform
     #(7) param_number: number of parameters in the model selected (can count in params line for the model)
+    #(8) fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
 
     # Optional Arguments =
-    #(8) reps: a list of integers controlling the number of replicates in each of three optimization rounds
-    #(9) maxiters: a list of integers controlling the maxiter argument in each of three optimization rounds
-    #(10) folds: a list of integers controlling the fold argument when perturbing input parameter values
-    #(11) in_params: a list of parameter values 
-    #(12) in_upper: a list of upper bound values
-    #(13) in_lower: a list of lower bound values
-    #(14) param_labels: list of labels for parameters that will be written to the output file to keep track of their order
+    #(9) reps: a list of integers controlling the number of replicates in each of three optimization rounds
+    #(10) maxiters: a list of integers controlling the maxiter argument in each of three optimization rounds
+    #(11) folds: a list of integers controlling the fold argument when perturbing input parameter values
+    #(12) in_params: a list of parameter values 
+    #(13) in_upper: a list of upper bound values
+    #(14) in_lower: a list of lower bound values
+    #(15) param_labels: list of labels for parameters that will be written to the output file to keep track of their order
     #--------------------------------------------------------------------------------------
 
     #call function that determines if our params and bounds have been set or need to be generated for us
@@ -234,7 +245,7 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, r
 
             #collect results into a list using function above - [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values]
             roundrep = "Round_{0}_Replicate_{1}".format(r+1, rep)
-            rep_results = collect_results(fs, sim_model, params_opt, roundrep)
+            rep_results = collect_results(fs, sim_model, params_opt, roundrep, fs_folded)
             
             #reproduce replicate log to bigger log file, because constantly re-written
             write_log(outfile, model_name, rep_results, roundrep)

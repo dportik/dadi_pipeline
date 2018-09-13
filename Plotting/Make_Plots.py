@@ -16,7 +16,6 @@ be edited.
 This script must be in the same working directory as Plotting_Functions.py, which
 contains all the functions necessary for generating simulations and optimizing the model.
 
-
 General workflow:
  The user provides a model and the previously optimized parameters for their empirical 
  data. The model is fit using these parameters, and the resulting model SFS is used to
@@ -25,7 +24,6 @@ General workflow:
 Outputs:
  A summary file of the model fit will be created, along with a pdf of the plot.
  
-
 Notes/Caveats:
  Sometimes you may see the following error when plotting 2D or 3D:
  
@@ -56,7 +54,7 @@ Python modules required:
 Daniel Portik
 daniel.portik@gmail.com
 https://github.com/dportik
-Updated July 2018
+Updated September 2018
 '''
 
 #===========================================================================
@@ -95,7 +93,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 #================================================================================
 ''' 
  We will use a function from the Plotting_Functions.py script:
- 	Fit_Empirical(fs, pts, outfile, model_name, func, in_params)
+ 	Fit_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)
 
 Mandatory Arguments =
  	fs:  spectrum object name
@@ -104,6 +102,7 @@ Mandatory Arguments =
  	model_name: a label to help name the output files; ex. "sym_mig"
  	func: access the model function from within script
  	in_params: the previously optimized parameters to use
+    fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False).
 '''
 
 
@@ -142,7 +141,7 @@ emp_params = [0.1487,0.1352,0.2477,0.1877]
 #Fit the model using these parameters and return the model SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is. See above for argument explanations.
-model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params)
+model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=True)
 
 
 

@@ -7,7 +7,7 @@ import pylab
 import matplotlib.pyplot as plt
 
 
-def collect_results(fs, sim_model, params_opt, roundrep):
+def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
     #--------------------------------------------------------------------------------------
     # gather up a bunch of results, return a list = [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values, sfs_sum] 
     
@@ -15,6 +15,7 @@ def collect_results(fs, sim_model, params_opt, roundrep):
     # fs: spectrum object name
     # sim_model: model fit with optimized parameters
     # params_opt: list of the optimized parameters
+    # fs_folded: a Boolean (True, False) for whether empirical spectrum is folded or not
     #--------------------------------------------------------------------------------------
 
     #create empty list to store results
@@ -34,18 +35,20 @@ def collect_results(fs, sim_model, params_opt, roundrep):
     theta = numpy.around(theta, 2)
     print "\t\t\tTheta = ", theta
 
-    #calculate Chi^2 statistic on folded SFS
-    scaled_sim_model = sim_model*theta
-    folded_sim_model = scaled_sim_model.fold()
-    chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
-    chi2 = numpy.around(chi2, 2)
-    print "\t\t\tChi-Squared = ", chi2
-
-    #This section can be uncommented out, with the above section delete, to get the chi2 from an unfolded sfs
-    #scaled_sim_model = sim_model*theta
-    #chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
-    #chi2 = numpy.around(chi2, 2)
-    #print "\t\t\tChi-Squared = ", chi2
+    if fs_folded is True:
+        #calculate Chi^2 statistic for folded
+        scaled_sim_model = sim_model*theta
+        folded_sim_model = scaled_sim_model.fold()
+        chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
+        chi2 = numpy.around(chi2, 2)
+        print "\t\t\tChi-Squared = ", chi2
+        
+    elif fs_folded is False:
+        #calculate Chi^2 statistic for unfolded
+        scaled_sim_model = sim_model*theta
+        chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
+        chi2 = numpy.around(chi2, 2)
+        print "\t\t\tChi-Squared = ", chi2
 
     #get sum of sfs
     sfs_sum = numpy.around(fs.S(), 2)
@@ -62,7 +65,7 @@ def collect_results(fs, sim_model, params_opt, roundrep):
     #send list of results back
     return temp_results
 
-def Fit_Empirical(fs, pts, outfile, model_name, func, in_params):
+def Fit_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded=True):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
     #(1) fs:  spectrum object name
@@ -71,6 +74,7 @@ def Fit_Empirical(fs, pts, outfile, model_name, func, in_params):
     #(4) model_name: a label to slap on the output files; ex. "no_mig"
     #(5) func: access the model function from within script or from a separate python model script, ex. Models_2D.no_mig
     #(6) in_params: the previously optimized parameters to use
+    #(7) fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False). Default is True.
     #--------------------------------------------------------------------------------------
     
     print "============================================================================\nFitting model '{}' to empirical data...\n============================================================================\n".format(model_name)
@@ -90,7 +94,7 @@ def Fit_Empirical(fs, pts, outfile, model_name, func, in_params):
     #calculate sum of sfs
     sfs_sum = numpy.around(fs.S(), 2)
     
-    rep_results = collect_results(fs, sim_model, in_params, "1")
+    rep_results = collect_results(fs, sim_model, in_params, "1", fs_folded)
     fh_out.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\n".format(model_name, rep_results[0], rep_results[1], rep_results[4], rep_results[6], rep_results[3]))
     fh_out.close()
     

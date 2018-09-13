@@ -29,7 +29,7 @@ Within the *Make_Plots.py* script, let's assume you've supplied the correct info
 
 The model will first be fit to the empirical data using the following function:
 
-***Optimize_Empirical(fs, pts, outfile, model_name, func, in_params)***
+***Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)***
  
 ***Mandatory Arguments:***
 
@@ -39,6 +39,7 @@ The model will first be fit to the empirical data using the following function:
 + **model_name**: a label help name the output files; ex. "sym_mig"
 + **func**: access the model function from within 'Simulate_and_Optimize.py' or from a separate model script
 + **in_params**: the previously optimized parameter values to use
++ **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
 ***Example:***
 
@@ -143,6 +144,24 @@ time the plotting routine is called.
  between 0 and 0.05 (0.05 is the default). I have used values from 0.005-0.01
  with good visual results.
  
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ 
+     #Convert this dictionary into folded AFS object
+     #[polarized = False] creates folded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+
+The above code will create a folded spectrum. When calling the empirical fit function, this must also be indicated in the *fs_folded* argument:
+
+     #for example:
+     model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=True)
+
+To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
+
+     #[polarized = True] creates an unfolded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
+     
+     #and empirical fit function must also be changed:
+     model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=False)
 
 **Test Data Set:**
 

@@ -9,7 +9,7 @@ This is a modified version of the *dadi_Run_Optimizations.py* script in which we
 
 There are many 2D models available that can be applied to your data set. The commands for using all of the available models are in the *dadi_Run_2D_Set.py* script, and these can be modified to only analyze a subset of the models. The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the *Summarize_Outputs.py* script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
 
-To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency spectrum object. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects.
+To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency spectrum object. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects (see Caveats section).
 
 The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_2D_Set.py* that will have to be edited. 
 
@@ -215,7 +215,31 @@ This information can be used for model comparisons using AIC, etc., but see belo
 
  The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
- The chi-squared test statistic is calculated assuming the sfs is folded. If this is not true for your data set, this number will not be accurate. This could be edited in the 'collect_results' function in the *Optimize_Functions.py* script for an unfolded spectrum.
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ 
+     #Convert this dictionary into folded AFS object
+     #[polarized = False] creates folded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+
+The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+
+     #for example:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     
+To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
+
+     #[polarized = True] creates an unfolded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
+     
+     #and the optimization routine function must also be changed:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+     
+It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
+
+     ValueError: Cannot operate with a folded Spectrum and an unfolded one.
+
+If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
+
 
 **Contributing to the 2D Model Set:**
  

@@ -15,6 +15,7 @@ example files.
 **Overview:**
 
 This is meant to be a general use script to run dadi to perform simulations and goodness of fit tests for any model on an afs/jsfs with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *Simulate_and_Optimize.py* that will have to be edited. 
+The frequency spectrum object can be unfolded or folded, which requires minimal script changes (see Caveats section).
 
 The user provides a model and the previously optimized parameters for their empirical 
 data. The model is fit using these parameters, and the resulting model SFS is used to
@@ -35,7 +36,7 @@ Within the *Simulate_and_Optimize.py* script, let's assume you've supplied the c
 
 The model will first be fit to the empirical data using the following function:
 
-***Optimize_Empirical(fs, pts, outfile, model_name, func, in_params)***
+***Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)***
  
 ***Mandatory Arguments:***
 
@@ -45,6 +46,7 @@ The model will first be fit to the empirical data using the following function:
 + **model_name**: a label help name the output files; ex. "sym_mig"
 + **func**: access the model function from within 'Simulate_and_Optimize.py' or from a separate model script
 + **in_params**: the previously optimized parameter values to use
++ **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
 ***Example:***
 
@@ -57,11 +59,14 @@ number of parameter values must match the number in the model.
     #Provide best optimized parameter set for empirical data.
     #These will come from previous analyses you have already completed
 	emp_params = [0.1487,0.1352,0.2477,0.1877]
-     
+    
+    #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+    fs_folded = True
+
     #Fit the model using these parameters and return the folded model SFS (scaled by theta).
 	#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model function,
 	#but everything else can stay as it is. See above for argument explanations.
-	scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params)
+	scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
 
 	
 **Performing Simulations and Optimizations:**
@@ -76,7 +81,7 @@ perturbation of starting parameters (fold) can be supplied by the user for more 
 
 The simulations and optimizations are performed with the following function:
 
-***Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, reps=None, maxiters=None, folds=None)***
+***Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None)***
  
 ***Mandatory Arguments:***
 
@@ -87,6 +92,7 @@ The simulations and optimizations are performed with the following function:
 + **func**: access the model function from within this script
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model to fit
++ **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
 ***Optional Arguments:***
 
@@ -99,6 +105,9 @@ The simulations and optimizations are performed with the following function:
 
 The important arguments will need to be defined in the script. Below shows how to perform
 100 simulations and define an optimization routine. 
+
+    #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+    fs_folded = True
 
     #Set the number of simulations to perform here. This should be ~100 or more.
     sims = 100
@@ -118,7 +127,7 @@ The important arguments will need to be defined in the script. Below shows how t
     #Execute the optimization routine for each of the simulated SFS.
     #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model 
     #function name, but everything else can stay as it is.
-    Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, reps=reps, maxiters=maxiters, folds=folds)
+    Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
 
 The optimization routine set here will have the following settings:
 
@@ -195,57 +204,45 @@ test is not considered passed.
  parametric boostrap ONLY if SNPs are unlinked across loci. For ddRADseq data where a 
  single SNP is selected per locus, this is generally true, and this workflow is valid.
  
- The data are simulated and chi-squared results are calculated based on the assumption that your 
- SFS is FOLDED. If your SFS is not folded, you will need to edit the sections indicated 
- within the ***collect_results*** and ***Optimize_Empirical*** functions in the 
- *Optimize_Functions_GOF.py* script. The correct lines for unfolded spectra are already
- written and simply need to be unhashed, and the lines for the folded spectra should be deleted.
+ To change whether the frequency spectrum is folded vs. unfolded requires two main changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
- For example in ***collect_results*** (beginning on Line 118) change this:
- 
-    #calculate Chi^2 statistic on folded SFS
-    scaled_sim_model = sim_model*theta
-    folded_sim_model = scaled_sim_model.fold()
-    chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
-    chi2 = numpy.around(chi2, 2)
-    print "\t\t\tChi-Squared = ", chi2
+     #Convert this dictionary into folded AFS object
+     #[polarized = False] creates folded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-    #This section can be uncommented out, with the above section deleted, to get the chi2 from an unfolded sfs
-    #scaled_sim_model = sim_model*theta
-    #chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
-    #chi2 = numpy.around(chi2, 2)
-    #print "\t\t\tChi-Squared = ", chi2
+The above code will create a folded spectrum. When calling the empirical fit function or the simulation function, this must also be indicated in the *fs_folded* argument:
 
- to this:
- 
-    #calculate Chi^2 statistic on folded SFS
-    scaled_sim_model = sim_model*theta
-    chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
-    chi2 = numpy.around(chi2, 2)
-    print "\t\t\tChi-Squared = ", chi2
+     #for the empirical fit function:
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=True)
+     
+     #for the simulation function:
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=True, reps=reps, maxiters=maxiters, folds=folds)
 
- And in ***Optimize_Empirical*** (beginning on Line 316) change this:
- 
-    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-    scaled_sim_model = sim_model*theta
-    folded_scaled_model = scaled_sim_model.fold()
+It is much easier to specify a variable with the correct value and refer to this in the functions (as is done in the *Simulate_and_Optimize.py* script):
 
-    #Here is where you can change if the scaled model is folded or unfolded
-    #Uncomment out the line below and delete the subsequent one
-    #return scaled_sim_model
+     #**************
+     #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+     fs_folded = True
+     
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
+     
+To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
-    return folded_scaled_model
-    
-to this:
+     #[polarized = True] creates an unfolded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
+     
+     fs_folded = False
+     
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
+     
+It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 
-    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-    scaled_sim_model = sim_model*theta
-    folded_scaled_model = scaled_sim_model.fold()
+     ValueError: Cannot operate with a folded Spectrum and an unfolded one.
 
-    return scaled_sim_model
+If you see this, check to make sure the relevant arguments actually agree on the spectrum being folded or unfolded.
 
-That should solve known issues for folded vs. unfolded spectra.
- 
 
 **Test Data Set:**
 

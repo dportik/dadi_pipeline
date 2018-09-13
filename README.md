@@ -16,6 +16,8 @@ example files.
 
 This is meant to be a general use script to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_Optimizations.py* that will have to be edited. Any custom model can be used, and below are several examples of how to use various arguments to control the model optimizations. 
 
+The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
+
 If you'd like to use this script for larger sets of models already available, please look in the nested repositories ([Two_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Two_Population_Pipeline), [Three_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Three_Population_Pipeline)) to see how to import models from external model scripts for two population or three population comparisons.
 There are a considerable number of 2D models that can be selected from (32), with a fewer number of 3D models (18).
 
@@ -23,7 +25,6 @@ If you'd like to assess the goodness of fit for your demographic model, please l
 
 If you'd like to create a figure comparing the emprical SFS and model SFS for a demographic model (with residuals), please look in the [Plotting](https://github.com/dportik/dadi_pipeline/tree/master/Plotting) repository.
 
-The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
 
 **Optimizations:**
 
@@ -48,6 +49,7 @@ We will use always use the following function from the Optimize_Functions.py scr
 + **func**: access the model function from within 'dadi_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model selected (can count in params line for the model)
++ **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
 ***Optional Arguments:***
 
@@ -63,7 +65,7 @@ We will use always use the following function from the Optimize_Functions.py scr
 ***Example 1***
 
 Let's use the function to run an optimization routine for our data and this model.
-We need to specify the first six arguments in this function, but there are other options
+We need to specify the first eight required arguments in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
 the basic version here. The argument explanations are above. This would perform three
 rounds of optimizations, using a default number of replicates for each round. At the end
@@ -76,7 +78,7 @@ search space as the rounds continue.
     #make sure to define your extrapolation grid size
     pts = [50,60,70]
     
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4)
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
 
 ***Example 2***
 
@@ -90,7 +92,7 @@ order.
     #here are the labels, given as a string
     p_labels = "nu1, nu2, m, T"
     
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, param_labels = p_labels)
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels)
 
 
 ***Example 3***
@@ -106,7 +108,7 @@ the optional arguments can be placed in any order following the mandatory argume
     upper = [20,20,10,15]
     lower = [0.01,0.01,0.01,0.1]
 
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, param_labels = p_labels, in_upper = upper, in_lower = lower)
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper = upper, in_lower = lower)
 
 ***Example 4***
 
@@ -126,7 +128,7 @@ for each of these, that has three values within (to match three rounds).
     maxiters = [5,10,20]
     folds = [3,2,1]
 
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
 
 Using these arguments will cause round one to have 10 replicates, use 3-fold perturbed
 starting parameters, and a maxiter of 5 for the optimization algorithm steps. Round two
@@ -152,7 +154,7 @@ That's why I have written a range of 1-6 to perform this 5 times.
 
     for i in range(1,6):
         prefix = "V5_Number_{}".format(i)
-        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
+        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
 
 
 **Test Data Set:**
@@ -214,7 +216,30 @@ In general, you should probably run multiple rounds and ensure the log-likelihoo
 
  The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
- The chi-squared test statistic is calculated assuming the sfs is folded. If this is not true for your data set, this number will not be accurate. This could be edited in the 'collect_results' function in the *Optimize_Functions.py* script for an unfolded spectrum.
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ 
+     #Convert this dictionary into folded AFS object
+     #[polarized = False] creates folded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+
+The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+
+     #this is from the first example:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     
+To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
+
+     #[polarized = True] creates an unfolded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
+     
+     #and the optimization routine function must also be changed:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+     
+It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
+
+     ValueError: Cannot operate with a folded Spectrum and an unfolded one.
+
+If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
 
 **Citation Information:**

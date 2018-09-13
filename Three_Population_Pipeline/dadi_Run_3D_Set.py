@@ -53,10 +53,6 @@ Notes/Caveats:
  likelihood and using something like AIC is no longer appropriate for model comparisons.
  See the discussion group for more information on this subject. 
 
- The chi-squared test statistic is calculated assuming the sfs is folded. If this is not
- true for your data set, this number will not be accurate. This could be edited in the
- 'collect_results' function in the Optimize_Functions.py script for an unfolded spectrum.
-
 Citations:
  If you use these scripts or the sets of diversification models for your work, please
  cite the following publications:
@@ -122,7 +118,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 '''
  We will use a function from the Optimize_Functions.py script for our optimization routines:
  
- Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")
+ Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")
  
    Mandatory Arguments =
     fs:  spectrum object name
@@ -132,6 +128,7 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
     func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_3D, calling Models_3D.split_nomig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
+    fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False).
 
    Optional Arguments =
      reps: a list of integers controlling the number of replicates in each of the optimization rounds
@@ -169,14 +166,17 @@ pts = [50,60,70]
 
 #**************
 #Set the number of rounds here
-#rounds = 4
-rounds = 1
+rounds = 4
+
 #define the lists for optional arguments
 #you can change these to alter the settings of the optimization routine
 reps = [10,20,30,40]
 maxiters = [3,5,10,15]
 folds = [3,2,2,1]
 
+#**************
+#Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+fs_folded = True
 
 
 '''
@@ -193,31 +193,31 @@ This first set of models come from the following publication:
 '''
 
 # Split into three populations, no migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig", Models_3D.split_nomig, rounds, 6, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig", Models_3D.split_nomig, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, T1, T2")
 
 # Split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_symmig_all", Models_3D.split_symmig_all, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, m3, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_symmig_all", Models_3D.split_symmig_all, rounds, 10, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, m3, T1, T2")
 
 # Split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_symmig_adjacent", Models_3D.split_symmig_adjacent, rounds, 9, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, m3, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_symmig_adjacent", Models_3D.split_symmig_adjacent, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, m3, T1, T2")
 
 # Adjacent Secondary contact, longest isolation - Split between pop 1 and (2,3) with no migration, then split between pop 2 and 3 with no migration. Period of symmetric secondary contact occurs between adjacent populations (ie 1<->2, 2<->3, but not 1<->3) after all splits are complete.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")
 
 # Adjacent Secondary contact, shorter isolation - Split between pop 1 and (2,3), gene flow does not occur. Split between pop 2 and 3 occurs with gene flow. After appearance of 2 and 3, gene flow also occurs between 1 and 2.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_2", Models_3D.refugia_adj_2, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_2", Models_3D.refugia_adj_2, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2")
 
 # Adjacent Secondary contact, shortest isolation - Split between pop 1 and (2,3) with no migration. Split between pop 2 and 3 occurs with gene flow, and gene flow occurs between 1 and 2 as well.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_3", Models_3D.refugia_adj_3, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, T1a, T1b, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_3", Models_3D.refugia_adj_3, rounds, 10, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, T1a, T1b, T2")
 
 # Adjacent Ancient migration, longest isolation - Split between pop 1 and (2,3) with gene flow, which then stops. Split between pop 2 and 3, migration does not occur at all.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_3", Models_3D.ancmig_adj_3, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, T1a, T1b, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_3", Models_3D.ancmig_adj_3, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, T1a, T1b, T2")
 
 # Adjacent Ancient migration, shorter isolation - Split between pop 1 and (2,3) with gene flow. Split between pop 2 and 3 with no migration between any populations.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_2", Models_3D.ancmig_adj_2, rounds, 7, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_2", Models_3D.ancmig_adj_2, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, T1, T2")
 
 # Adjacent Ancient migration, shortest isolation - Split between pop 1 and (2,3) with gene flow. Split between pop 2 and 3 with gene flow, then all gene flow ceases.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_1", Models_3D.ancmig_adj_1, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_adj_1", Models_3D.ancmig_adj_1, rounds, 10, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, T1, T2, T3")
 
 
 '''
@@ -233,34 +233,34 @@ This second set of models were developed for the following publication:
 ############# Models with simultaneous population splitting 
 
 # Simultaneous split into three populations, no migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_no_mig", Models_3D.sim_split_no_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, T1")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_no_mig", Models_3D.sim_split_no_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, T1")
 
 # Simultaneous split into three populations, no migration, size change.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_no_mig_size", Models_3D.sim_split_no_mig_size, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu3a, nu1b, nu2b, nu3b, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_no_mig_size", Models_3D.sim_split_no_mig_size, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu3a, nu1b, nu2b, nu3b, T1, T2")
 
 # Simultaneous split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_all", Models_3D.sim_split_sym_mig_all, rounds, 7, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, m3, T1")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_all", Models_3D.sim_split_sym_mig_all, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, m3, T1")
 
 # Simultaneous split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_adjacent", Models_3D.sim_split_sym_mig_adjacent, rounds, 6, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, T1")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_adjacent", Models_3D.sim_split_sym_mig_adjacent, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, T1")
 
 # Simultaneous split into three populations, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_all", Models_3D.sim_split_refugia_sym_mig_all, rounds, 8, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, m3, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_all", Models_3D.sim_split_refugia_sym_mig_all, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, m3, T1, T2")
 
 # Simultaneous split into three populations, secondary contact between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent", Models_3D.sim_split_refugia_sym_mig_adjacent, rounds, 7, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent", Models_3D.sim_split_refugia_sym_mig_adjacent, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m2, T1, T2")
 
 
 ############# Models with extra size change variation
 
 # Split into three populations, no migration, size change.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig_size", Models_3D.split_nomig_size, rounds, 10, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nuA, nu2a, nu3a, nu1b, nu2b, nu3b, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig_size", Models_3D.split_nomig_size, rounds, 10, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nuA, nu2a, nu3a, nu1b, nu2b, nu3b, T1, T2, T3")
 
 # Adjacent Ancient migration, shorter isolation, size change - Split between pop 1 and (2,3) with gene flow. Split between pop 2 and 3 with no migration between any populations, then size change and drift.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_2_size", Models_3D.ancmig_2_size, rounds, 11, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nuA, nu2a, nu3a, nu1b, nu2b, nu3b, mA, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "ancmig_2_size", Models_3D.ancmig_2_size, rounds, 11, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nuA, nu2a, nu3a, nu1b, nu2b, nu3b, mA, T1, T2, T3")
 
 # Simultaneous split into three populations, secondary contact between 'adjacent' populations (1<->2, 2<->3, but not 1<->3), then size change step with continued adjacent migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent_size", Models_3D.sim_split_refugia_sym_mig_adjacent_size, rounds, 11, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu3a, nu1b, nu2b, nu3b, m1, m2, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent_size", Models_3D.sim_split_refugia_sym_mig_adjacent_size, rounds, 11, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu3a, nu1b, nu2b, nu3b, m1, m2, T1, T2, T3")
 
 
 
