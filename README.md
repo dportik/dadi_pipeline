@@ -38,7 +38,7 @@ I will show several ways to use the main function for model fitting to highlight
 
 We will use always use the following function from the Optimize_Functions.py script, which requires some explanation:
 
-***Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")***
+***Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")***
  
 ***Mandatory Arguments:***
 
@@ -178,6 +178,32 @@ Here is an example of the output from a summary file, which will be in tab-delim
      sym_mig	Round_1_Replicate_4	-4262.29	8532.58	8907386.55	288.05	0.3689,0.8892,3.0951,2.8496
      sym_mig	Round_1_Replicate_5	-4474.86	8957.72	13029301.84	188.94	2.9248,1.9986,0.2484,0.3688
 
+**Using Folded vs. Unfolded Spectra:**
+
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ 
+     #Convert this dictionary into folded AFS object
+     #[polarized = False] creates folded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+
+The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+
+     #this is from the first example:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     
+To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
+
+     #[polarized = True] creates an unfolded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
+     
+     #and the optimization routine function must also be changed:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+     
+It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
+
+     ValueError: Cannot operate with a folded Spectrum and an unfolded one.
+
+If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
 **Default Settings:**
 
@@ -214,32 +240,7 @@ In general, you should probably run multiple rounds and ensure the log-likelihoo
 
 **Caveats:**
 
- The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
-
- To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
- 
-     #Convert this dictionary into folded AFS object
-     #[polarized = False] creates folded spectrum object
-     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
-
-The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
-
-     #this is from the first example:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
-     
-To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
-
-     #[polarized = True] creates an unfolded spectrum object
-     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
-     
-     #and the optimization routine function must also be changed:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
-     
-It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
-
-     ValueError: Cannot operate with a folded Spectrum and an unfolded one.
-
-If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
+ The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is considered true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
 
 **Citation Information:**
@@ -249,14 +250,14 @@ The scripts involved with this pipeline were originally published as part of the
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 
-If you use or modify this script for your own purposes, please cite this publication.
+If you use or modify these scripts for your own purposes, please cite the publication.
 
 
 **Publications using this workflow:**
 
-+ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology, In Revision.***
++ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology, Early Access.*** *https://doi.org/10.1111/mec.14862*
 
-+ Schield, D.R., Adams, R.H., Card, D.C., Corbin, A.C., Jezkova, T., Hales, N.R., Meik, J.M., Perry, B.W., Spencer, C.L., Smith, L.L., Garcia, G.C., Bouzid, N.M., Strickland, J.L., Parkinson, C.L., Borja, M., Castañeda-Gaytán, G., Bryson, R.W., Flores-Villela, O.A., Mackessy, S.P., and T.A. Castoe. 2018. Cryptic genetic diversity, population structure, and gene flow in the Mojave rattlesnake (Crotalus scutulatus). ***Molecular Phylogenetics and Evolution, Early Access.*** *https://doi.org/10.1016/j.ympev.2018.06.013*
++ Schield, D.R., Adams, R.H., Card, D.C., Corbin, A.C., Jezkova, T., Hales, N.R., Meik, J.M., Perry, B.W., Spencer, C.L., Smith, L.L., Garcia, G.C., Bouzid, N.M., Strickland, J.L., Parkinson, C.L., Borja, M., Castañeda-Gaytán, G., Bryson, R.W., Flores-Villela, O.A., Mackessy, S.P., and T.A. Castoe. 2018. Cryptic genetic diversity, population structure, and gene flow in the Mojave rattlesnake (Crotalus scutulatus). ***Molecular Phylogenetics and Evolution*** 127: 669-681. *https://doi.org/10.1016/j.ympev.2018.06.013*
 
 + Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K., Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. 2018. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). ***Journal of Biogeography*** 45: 1781-1794. *https://doi.org/10.1111/jbi.13365*
 
