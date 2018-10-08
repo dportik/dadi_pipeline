@@ -91,7 +91,7 @@ It is also a good idea to optimize from multiple starting points, that is to run
 This can be accomplished by writing loops or by running the main script multiple times. Here is an example of a custom loop:
 
     for i in range(1,6):
-        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4,  param_labels = p_labels, reps = reps, maxiters = maxiters, folds = folds)
+        Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
 
 The above loop will run the optimization routine to completion five separate times. 
 Note that when you use the range argument in python it will go up to, but not include, the final number.
@@ -107,55 +107,57 @@ The model set can easily be reduced by either blocking out or deleting relevant 
 Let's say you no longer wish to include the first two models in the example below:
 
     # Split into two populations, no migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
 
     # Split into two populations, with continuous symmetric migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
 
     # Split into two populations, with continuous asymmetric migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
 
     # Split with continuous symmetric migration, followed by isolation.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 You can hash out the Optimize_Functions.Optimize_Routine function for those models as here:
 
     # Split into two populations, no migration.
-    #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+    #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
 
     # Split into two populations, with continuous symmetric migration.
-    #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+    #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
 
     # Split into two populations, with continuous asymmetric migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
 
     # Split with continuous symmetric migration, followed by isolation.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 Or you can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes:
 
+
     '''
     # Split into two populations, no migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
 
     # Split into two populations, with continuous symmetric migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
     '''
+
     # Split into two populations, with continuous asymmetric migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
 
     # Split with continuous symmetric migration, followed by isolation.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 Anything contained within the set of ''' will be ignored. 
 
 Finally, you can simply delete these lines:
 
     # Split into two populations, with continuous asymmetric migration.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
 
     # Split with continuous symmetric migration, followed by isolation.
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 
 The model set can be added to by inserting your model in the *Models_2D.py* script, then adding an appropriate
@@ -226,7 +228,7 @@ The above code will create a folded spectrum. When calling the optimization func
      #**************
      #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
      fs_folded = True
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
@@ -236,7 +238,7 @@ To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in th
      #and the optimization routine function must also be changed:
      #Change this variable to False to set the argument fs_folded in all the model optimizations
      fs_folded = False
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 

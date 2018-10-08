@@ -214,8 +214,8 @@ The above code will create a folded spectrum. When calling the empirical optimiz
      #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
      fs_folded = True
      
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, *fs_folded=fs_folded*)
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds)
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
@@ -226,8 +226,8 @@ To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in th
      #Change this variable to False to set the argument fs_folded in all the empirical and simulation optimizations
      fs_folded = False
      
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, *fs_folded=fs_folded*)
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds)
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 
@@ -260,8 +260,7 @@ You may choose to test the script using these data to ensure everything is worki
 
 For the goodness of fit testing scripts:
 
-+ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology, In Revision.***
-
++ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology, Early Access.*** *https://doi.org/10.1111/mec.14862*
 
 
 **Contact:**
