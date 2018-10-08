@@ -134,6 +134,33 @@ Each of the plotting functions (1D, 2D, or 3D) will produce a PDF output file ea
 time the plotting routine is called.
 
 
+**Using Folded vs. Unfolded Spectra:**
+
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ 
+     #Convert this dictionary into folded AFS object
+     #[polarized = False] creates folded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+
+The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+
+     #this is from the first example:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     
+To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
+
+     #[polarized = True] creates an unfolded spectrum object
+     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
+     
+     #and the optimization routine function must also be changed:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+     
+It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
+
+     ValueError: Cannot operate with a folded Spectrum and an unfolded one.
+
+If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
+
 **Helpful Notes:**
 
  Sometimes you may see the following error when plotting 2D or 3D, after the script crashes:
@@ -144,24 +171,6 @@ time the plotting routine is called.
  between 0 and 0.05 (0.05 is the default). I have used values from 0.005-0.01
  with good visual results.
  
- To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
- 
-     #Convert this dictionary into folded AFS object
-     #[polarized = False] creates folded spectrum object
-     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
-
-The above code will create a folded spectrum. When calling the empirical fit function, this must also be indicated in the *fs_folded* argument:
-
-     #for example:
-     model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=True)
-
-To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
-
-     #[polarized = True] creates an unfolded spectrum object
-     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
-     
-     #and empirical fit function must also be changed:
-     model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=False)
 
 **Test Data Set:**
 

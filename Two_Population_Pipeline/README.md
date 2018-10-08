@@ -211,9 +211,7 @@ This file can be sorted for the purpose of performing model comparisons. However
 
 This information can be used for model comparisons using AIC, etc., but see below for an important note about comparisons.
 
-**Caveats:**
-
- The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
+**Using Folded vs. Unfolded Spectra:**
 
  To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
@@ -223,7 +221,7 @@ This information can be used for model comparisons using AIC, etc., but see belo
 
 The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
 
-     #for example:
+     #this is from the first example:
      Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
@@ -239,6 +237,10 @@ It will be clear if either argument has been misspecified because the calculatio
      ValueError: Cannot operate with a folded Spectrum and an unfolded one.
 
 If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
+
+**Caveats:**
+
+ The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
 
 **Contributing to the 2D Model Set:**

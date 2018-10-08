@@ -198,51 +198,40 @@ from the simulations (and the empirical data, if it falls outside this range!). 
 if the empirical value falls outside the simulated value distribution in the direction of worse values, the goodness of fit
 test is not considered passed. 
 
-**Caveats:**
+**Using Folded vs. Unfolded Spectra:**
 
- The data are simulated using the fs.sample() method in dadi, which is equivalent to a 
- parametric boostrap ONLY if SNPs are unlinked across loci. For ddRADseq data where a 
- single SNP is selected per locus, this is generally true, and this workflow is valid.
- 
- To change whether the frequency spectrum is folded vs. unfolded requires two main changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
      #Convert this dictionary into folded AFS object
      #[polarized = False] creates folded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-The above code will create a folded spectrum. When calling the empirical fit function or the simulation function, this must also be indicated in the *fs_folded* argument:
+The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
 
-     #for the empirical fit function:
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=True)
-     
-     #for the simulation function:
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=True, reps=reps, maxiters=maxiters, folds=folds)
-
-It is much easier to specify a variable with the correct value and refer to this in the functions (as is done in the *Simulate_and_Optimize.py* script):
-
-     #**************
-     #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
-     fs_folded = True
-     
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
+     #this is from the first example:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
      #[polarized = True] creates an unfolded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
      
-     fs_folded = False
-     
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
+     #and the optimization routine function must also be changed:
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 
      ValueError: Cannot operate with a folded Spectrum and an unfolded one.
 
-If you see this, check to make sure the relevant arguments actually agree on the spectrum being folded or unfolded.
+If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
+
+**Caveats:**
+
+ The data are simulated using the fs.sample() method in dadi, which is equivalent to a 
+ parametric boostrap ONLY if SNPs are unlinked across loci. For ddRADseq data where a 
+ single SNP is selected per locus, this is generally true, and this workflow is valid.
+ 
 
 **Test Data Set:**
 
