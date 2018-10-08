@@ -142,10 +142,10 @@ time the plotting routine is called.
      #[polarized = False] creates folded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+The above code will create a folded spectrum. When calling the empirical optimization function, this must also be indicated in the *fs_folded* argument:
 
      #this is from the first example:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=True)
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
@@ -153,7 +153,7 @@ To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in th
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
      
      #and the optimization routine function must also be changed:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+     model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=False)
      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 

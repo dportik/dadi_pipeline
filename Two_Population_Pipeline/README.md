@@ -219,10 +219,14 @@ This information can be used for model comparisons using AIC, etc., but see belo
      #[polarized = False] creates folded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+The above code will create a folded spectrum. When calling the optimization function for each model, this is indicated by the *fs_folded* argument:
 
-     #this is from the first example:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     #Note that in the script fs_folded is assigned a variable and referred to in the optimization functions:
+     
+     #**************
+     #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+     fs_folded = True
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
@@ -230,7 +234,9 @@ To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in th
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
      
      #and the optimization routine function must also be changed:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+     #Change this variable to False to set the argument fs_folded in all the model optimizations
+     fs_folded = False
+     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 

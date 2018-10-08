@@ -206,24 +206,32 @@ test is not considered passed.
      #[polarized = False] creates folded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+The above code will create a folded spectrum. When calling the empirical optimization function for the model, this is indicated by the *fs_folded* argument:
 
-     #this is from the first example:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
+     #Note that in the script fs_folded is assigned a variable and referred to in the empirical and simulation optimization functions:
+     
+     #**************
+     #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+     fs_folded = True
+     
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, *fs_folded=fs_folded*)
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds)
      
 To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
 
      #[polarized = True] creates an unfolded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
      
-     #and the optimization routine function must also be changed:
-     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=False)
+
+     #Change this variable to False to set the argument fs_folded in all the empirical and simulation optimizations
+     fs_folded = False
+     
+     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, *fs_folded=fs_folded*)
+     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, *fs_folded=fs_folded*, reps=reps, maxiters=maxiters, folds=folds)
      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 
      ValueError: Cannot operate with a folded Spectrum and an unfolded one.
-
-If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
 
 **Caveats:**
