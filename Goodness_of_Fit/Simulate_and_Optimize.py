@@ -173,7 +173,7 @@ emp_params = [0.1487,0.1352,0.2477,0.1877]
 fs_folded = True
 
 
-#Fit the model using these parameters and return the folded model SFS (scaled by theta).
+#Fit the model using these parameters and return the folded or unfolded model SFS (scaled by theta).
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is. See above for argument explanations.
 scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
