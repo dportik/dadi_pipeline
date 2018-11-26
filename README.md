@@ -18,7 +18,7 @@ In this main repository is a general use script that can be used to run dadi to 
 
 The *dadi_Run_Optimizations.py* script and *Optimize_Functions.py* script must be in the same working directory to run properly.
 
-If you'd like to use the optimization routine of this script to analyze larger sets of published models using established pipelines, please look in the nested repositories ([Two_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Two_Population_Pipeline), [Three_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Three_Population_Pipeline)) to see how to import models from external model scripts for two population or three population comparisons.
+If you'd like to use the optimization routine of this script to analyze larger sets of published models through established pipelines, please look in the nested repositories ([Two_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Two_Population_Pipeline), [Three_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Three_Population_Pipeline)) to see how to import models from external model scripts for two population or three population comparisons.
 There are a considerable number of 2D models that can be selected from (32), with a fewer number of 3D models (18).
 
 If you'd like to assess the goodness of fit for your demographic model, please look in the [Goodness_of_Fit](https://github.com/dportik/dadi_pipeline/tree/master/Goodness_of_Fit) repository.
