@@ -27,6 +27,7 @@ Pearson's chi-squared test statistic, which are used to generate a distribution 
 simulated data values to compare the empirical values to. In addition, theta, the sum of 
 the SFS, and the optimized parameters are also saved.
 
+For a general discussion on this workflow, please see the thread [here](https://groups.google.com/forum/#!topic/dadi-user/cjBOopEhIlQ).
 
 The *Simulate_and_Optimize.py* script and *Optimize_Functions_GOF.py* script must be in the same working directory to run properly.
 
