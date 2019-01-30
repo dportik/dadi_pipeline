@@ -103,7 +103,7 @@ the basic plotting and also change the vmin in the second plot.
     Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig_vmin", vmin_val = vmin_val)
     
 Notice that running the ***Plot_2D*** function creates a pop-up window with the plot in it. To move along to the second plot,
-simply close this window. ***IF YOU DO NOT CLOSE THE PLOT WINDOW BETWEEN MULTIPLE PLOTS, IT WILL NOT UPDATE WITH THE NEXT PLOT***. The plot will be saved to a PDF file in the working directory automatically.
+simply close this window. **IF YOU DO NOT CLOSE THE PLOT WINDOW BETWEEN MULTIPLE PLOTS, IT WILL NOT UPDATE WITH THE NEXT PLOT**. The plot will be saved to a PDF file in the working directory automatically.
 
 The functions are nearly identical for 1D and 3D plotting:
 
