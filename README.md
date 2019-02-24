@@ -255,6 +255,8 @@ If you use or modify these scripts for your own purposes, please cite the public
 
 **Publications using this workflow:**
 
++ Gray, L.N., Barley, A.J., Poe, S., Thomson, R.C., Nieto-Montes de Oca, A., and I.J. Wang. Phylogeography of a widespread lizard complex reflects patterns of both geographic and ecological isolation. 2019. ***Molecular Ecology*** 28: 644-657. *https://doi.org/10.1111/mec.14970*
+
 + Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology*** 27: 4289-4308. *https://doi.org/10.1111/mec.14862*
 
 + Schield, D.R., Adams, R.H., Card, D.C., Corbin, A.C., Jezkova, T., Hales, N.R., Meik, J.M., Perry, B.W., Spencer, C.L., Smith, L.L., Garcia, G.C., Bouzid, N.M., Strickland, J.L., Parkinson, C.L., Borja, M., Castañeda-Gaytán, G., Bryson, R.W., Flores-Villela, O.A., Mackessy, S.P., and T.A. Castoe. 2018. Cryptic genetic diversity, population structure, and gene flow in the Mojave rattlesnake (Crotalus scutulatus). ***Molecular Phylogenetics and Evolution*** 127: 669-681. *https://doi.org/10.1016/j.ympev.2018.06.013*
