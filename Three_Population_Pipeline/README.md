@@ -1,4 +1,4 @@
-### Three Population Demographic Modeling Pipeline using dadi
+# Three Population Demographic Modeling Pipeline using dadi
 
 ---------------------------------
 
@@ -20,26 +20,26 @@ The `dadi_Run_3D_Set.py`, `Optimize_Functions.py` (from the [main](https://githu
 
 Here is a running list of the models currently available. The name of the model function in the `Models_3D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file `Models_3D.pdf`. If you use these models and scripts for your work, please provide proper citations (provided below).
 
-***Diversification Model Set***
+**Diversification Model Set**
 
-1. *split_nomig*: Split into three populations, no migration.
-2. *split_symmig_all*: Split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
-3. *split_symmig_adjacent*: Split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-4. *refugia_adj_1*: Adjacent secondary contact, longest isolation. See full description in script.
-5. *refugia_adj_2*: Adjacent secondary contact, shorter isolation. See full description in script.
-6. *refugia_adj_3*: Adjacent secondary contact, shortest isolation. See full description in script.
-7. *ancmig_adj_3*: Adjacent ancient migration, longest isolation. See full description in script.
-8. *ancmig_adj_2*: Adjacent ancient migration, shorter isolation. See full description in script.
-9. *ancmig_adj_1*: Adjacent ancient migration, shortest isolation. See full description in script.
-10. *sim_split_no_mig*: Simultaneous split, no migration.
-11. *sim_split_no_mig_size*: Simultaneous split, no migration, size change.
-12. *sim_split_sym_mig_all*: Simultaneous split, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
-13. *sim_split_sym_mig_adjacent*: Simultaneous split, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-14. *sim_split_refugia_sym_mig_all*: Simultaneous split, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
-15. *sim_split_refugia_sym_mig_adjacent*: Simultaneous split, between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
-16. *split_nomig_size*:  Split into three populations, no migration, size change.
-17. *ancmig_2_size*: Adjacent ancient migration, shorter isolation, size change.
-18. *sim_split_refugia_sym_mig_adjacent_size*: Simultaneous split, between 'adjacent' populations, size change.
++ *split_nomig*: Split into three populations, no migration.
++ *split_symmig_all*: Split into three populations, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
++ *split_symmig_adjacent*: Split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
++ *refugia_adj_1*: Adjacent secondary contact, longest isolation. See full description in script.
++ *refugia_adj_2*: Adjacent secondary contact, shorter isolation. See full description in script.
++ *refugia_adj_3*: Adjacent secondary contact, shortest isolation. See full description in script.
++ *ancmig_adj_3*: Adjacent ancient migration, longest isolation. See full description in script.
++ *ancmig_adj_2*: Adjacent ancient migration, shorter isolation. See full description in script.
++ *ancmig_adj_1*: Adjacent ancient migration, shortest isolation. See full description in script.
++ *sim_split_no_mig*: Simultaneous split, no migration.
++ *sim_split_no_mig_size*: Simultaneous split, no migration, size change.
++ *sim_split_sym_mig_all*: Simultaneous split, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
++ *sim_split_sym_mig_adjacent*: Simultaneous split, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
++ *sim_split_refugia_sym_mig_all*: Simultaneous split, secondary contact between all populations (1<->2, 2<->3, and 1<->3).
++ *sim_split_refugia_sym_mig_adjacent*: Simultaneous split, between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
++ *split_nomig_size*:  Split into three populations, no migration, size change.
++ *ancmig_2_size*: Adjacent ancient migration, shorter isolation, size change.
++ *sim_split_refugia_sym_mig_adjacent_size*: Simultaneous split, between 'adjacent' populations, size change.
 
 
 ## Optimization Settings:
@@ -89,7 +89,7 @@ Executing the optimization routine multiple times can be accomplished by writing
 The above loop will run the optimization routine to completion five separate times. 
 Note that when you use the range argument in python it will go up to, but not include, the final number.
 That's why I have written a range of 1-6 to perform this 5 times. Also note the indentation required when
-writing loops in python.
+writing loops in python, the proper indentation required to create a loop is four spaces!
 
 As an alternative to custom loops, you can also just execute the script multiple times, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
 the outputs across models can be easily summarized as described below. 
@@ -98,7 +98,7 @@ the outputs across models can be easily summarized as described below.
 ## Modifying the Model Set to Analyze:
 
 The model set can easily be reduced by either blocking out or deleting relevant sections. 
-Let's say you no longer wish to include the first two models in the example below:
+Let's say you no longer wish to include the first two models in the example below. There are three easy options for doing this.
 
     # Split into three populations, no migration.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig", Models_3D.split_nomig, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, T1, T2")
@@ -112,7 +112,7 @@ Let's say you no longer wish to include the first two models in the example belo
     # Adjacent Secondary contact, longest isolation - Split between pop 1 and (2,3) with no migration, then split between pop 2 and 3 with no migration. Period of symmetric secondary contact occurs between adjacent populations (ie 1<->2, 2<->3, but not 1<->3) after all splits are complete.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")
 
-You can hash out the Optimize_Functions.Optimize_Routine function for those models as here:
+**Option 1:** You can hash out the Optimize_Functions.Optimize_Routine function for those models, using the # character.
 
     # Split into three populations, no migration.
     #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_nomig", Models_3D.split_nomig, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, T1, T2")
@@ -126,7 +126,7 @@ You can hash out the Optimize_Functions.Optimize_Routine function for those mode
     # Adjacent Secondary contact, longest isolation - Split between pop 1 and (2,3) with no migration, then split between pop 2 and 3 with no migration. Period of symmetric secondary contact occurs between adjacent populations (ie 1<->2, 2<->3, but not 1<->3) after all splits are complete.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")
 
-Or you can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes:
+**Option 2:** You can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes. Anything contained within the set of ''' will be ignored. 
 
     '''
     # Split into three populations, no migration.
@@ -142,9 +142,7 @@ Or you can block out this section of the Optimize_Functions.Optimize_Routine fun
     # Adjacent Secondary contact, longest isolation - Split between pop 1 and (2,3) with no migration, then split between pop 2 and 3 with no migration. Period of symmetric secondary contact occurs between adjacent populations (ie 1<->2, 2<->3, but not 1<->3) after all splits are complete.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")
 
-Anything contained within the set of ''' will be ignored. 
-
-Finally, you can simply delete these lines:
+**Option 3:** You can simply delete the lines!
 
     # Split into three populations, symmetric migration between 'adjacent' populations (1<->2, 2<->3, but not 1<->3).
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_symmig_adjacent", Models_3D.split_symmig_adjacent, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m1, m2, m3, T1, T2")
@@ -240,7 +238,7 @@ If you see this, check to make sure both relevant arguments actually agree on th
 
 ## Contributing to the 3D Model Set:
  
- If you would like to contribute your custom 3D models to the model set, please email me at daniel.portik@gmail.com. If your models have been or will be published, I will provide explicit citation information for the contributed models (see below). 
+ If you would like to contribute your custom 3D models to the model set, please email me at daniel.portik@gmail.com. If your models have been or will be published, I will provide explicit citation information for the contributed models (as below). 
  
 ## Citation Information:
 

@@ -1,4 +1,4 @@
-### Two Population Demographic Modeling Pipeline using dadi
+# Two Population Demographic Modeling Pipeline using dadi
 
 ---------------------------------
 
@@ -20,45 +20,45 @@ The `dadi_Run_2D_Set.py`, `Optimize_Functions.py` (from the [main](https://githu
 
 Here is a running list of the models currently available. The name of the model function in the `Models_2D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file `Models_2D.pdf`. If you use these models and scripts for your work, please provide proper citations (provided below).
 
-***Diversification Model Set***
+**Diversification Model Set**
 
-1. *no_mig*: Split into two populations, no migration.
-2. *sym_mig*: Split into two populations, with continuous symmetric migration.
-3. *asym_mig*: Split into two populations, with continuous asymmetric migration.
-4. *anc_sym_mig*: Split with continuous symmetric migration, followed by isolation.
-5. *anc_asym_mig*: Split with continuous asymmetric migration, followed by isolation.
-6. *sec_contact_sym_mig*: Split with no gene flow, followed by period of continuous symmetrical gene flow.
-7. *sec_contact_asym_mig*: Split with no gene flow, followed by period of continuous asymmetrical gene flow.
-8. *no_mig_size*: Split with no migration, then instantaneous size change with no migration.
-9. *sym_mig_size*: Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
-10. *asym_mig_size*: Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
-11. *anc_sym_mig_size*: Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
-12. *anc_asym_mig_size*: Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
-13. *sec_contact_sym_mig_size*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
-14. *sec_contact_asym_mig_size*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
-15. *sym_mig_twoepoch*: Split into two populations, with continuous symmetric migration, rate varying across two epochs.
-16. *asym_mig_twoepoch*: Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
-17. *sec_contact_sym_mig_three_epoch*: Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
-18. *sec_contact_asym_mig_three_epoch*: Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
-19. *sec_contact_sym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
-20. *sec_contact_asym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
++ *no_mig*: Split into two populations, no migration.
++ *sym_mig*: Split into two populations, with continuous symmetric migration.
++ *asym_mig*: Split into two populations, with continuous asymmetric migration.
++ *anc_sym_mig*: Split with continuous symmetric migration, followed by isolation.
++ *anc_asym_mig*: Split with continuous asymmetric migration, followed by isolation.
++ *sec_contact_sym_mig*: Split with no gene flow, followed by period of continuous symmetrical gene flow.
++ *sec_contact_asym_mig*: Split with no gene flow, followed by period of continuous asymmetrical gene flow.
++ *no_mig_size*: Split with no migration, then instantaneous size change with no migration.
++ *sym_mig_size*: Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
++ *asym_mig_size*: Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
++ *anc_sym_mig_size*: Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.  
++ *anc_asym_mig_size*: Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
++ *sec_contact_sym_mig_size*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
++ *sec_contact_asym_mig_size*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
++ *sym_mig_twoepoch*: Split into two populations, with continuous symmetric migration, rate varying across two epochs.
++ *asym_mig_twoepoch*: Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
++ *sec_contact_sym_mig_three_epoch*: Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
++ *sec_contact_asym_mig_three_epoch*: Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
++ *sec_contact_sym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
++ *sec_contact_asym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
 
-***Island Model Set***
+**Island Model Set**
 
 For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. Vicariance events involve no population size change, whereas founder event models always enforce exponential growth in pop2 (the island population). Discrete admixture events are included as a comparison to intervals of continuous migration, and are represented by parameter 'f', in which a fraction f of the mainland population is instantaneously present in the post-admixture island population. Because of the way these models are constructed, you should not analyze these in combination with the Diversification Model Set for the purpose of performing model selection.
 
-21. *vic_no_mig*: Vicariance with no migration.
-22. *vic_anc_asym_mig*: Vicariance with with ancient continuous asymmetric migration.
-23. *vic_sec_contact_asym_mig*: Vicariance with no migration, secondary contact with continuous asymmetric migration
-24. *founder_nomig*: Founder event with no migration.
-25. *founder_sym*: Founder event with continuous symmetric migration.
-26. *founder_asym*: Founder event with continuous asymmetric migration.
-27. *vic_no_mig_admix_early*: Vicariance, early unidirectional discrete admixture event (before any drift).
-28. *vic_no_mig_admix_late*: Vicariance, late unidirectional discrete admixture event (after any drift).
-29. *vic_two_epoch_admix*: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-30. *founder_nomig_admix_early*: Founder event, early unidirectional discrete admixture event (before any drift).
-31. *founder_nomig_admix_late*: Founder event, late unidirectional discrete admixture event (after any drift).
-32. *founder_nomig_admix_two_epoch*: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
++ *vic_no_mig*: Vicariance with no migration.
++ *vic_anc_asym_mig*: Vicariance with with ancient continuous asymmetric migration.
++ *vic_sec_contact_asym_mig*: Vicariance with no migration, secondary contact with continuous asymmetric migration
++ *founder_nomig*: Founder event with no migration.
++ *founder_sym*: Founder event with continuous symmetric migration.
++ *founder_asym*: Founder event with continuous asymmetric migration.
++ *vic_no_mig_admix_early*: Vicariance, early unidirectional discrete admixture event (before any drift).
++ *vic_no_mig_admix_late*: Vicariance, late unidirectional discrete admixture event (after any drift).
++ *vic_two_epoch_admix*: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
++ *founder_nomig_admix_early*: Founder event, early unidirectional discrete admixture event (before any drift).
++ *founder_nomig_admix_late*: Founder event, late unidirectional discrete admixture event (after any drift).
++ *founder_nomig_admix_two_epoch*: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 
 
 ## Optimization Routine Settings:
@@ -81,9 +81,9 @@ of the arguments across rounds are summarized in the table below.
 
 | Argument | Round 1 | Round 2  | Round 3 | Round 4 |
 | ------ |------:| -----:| -----:| -----:|
-| ***reps***    | 10 | 20 | 30 | 40 | 
-| ***maxiter*** | 3 |  5  | 10 | 15 |
-| ***fold*** |  3 |  2   | 2 | 1 |
+| reps    | 10 | 20 | 30 | 40 | 
+| maxiter | 3 |  5  | 10 | 15 |
+| fold |  3 |  2   | 2 | 1 |
 
 
 If you change the number of rounds, you have to change the list length of the reps, maxiters, and folds arguments to match.
@@ -108,7 +108,7 @@ Executing the optimization routine multiple times can be accomplished by writing
 The above loop will run the optimization routine to completion five separate times. 
 Note that when you use the range argument in python it will go up to, but not include, the final number.
 That's why I have written a range of 1-6 to perform this 5 times. Also note the indentation required when
-writing loops in python.
+writing loops in python, the proper indentation required to create a loop is four spaces!
 
 As an alternative to custom loops, you can also just execute the script multiple times, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
 the outputs across models can be easily summarized as described below. 
@@ -117,7 +117,7 @@ the outputs across models can be easily summarized as described below.
 ## Modifying the Model Set to Analyze:
 
 The model set can easily be reduced by either blocking out or deleting relevant sections. 
-Let's say you no longer wish to include the first two models in the example below:
+Let's say you no longer wish to include the first two models in the example below. There are three easy options for doing this.
 
     # Split into two populations, no migration.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
@@ -131,7 +131,7 @@ Let's say you no longer wish to include the first two models in the example belo
     # Split with continuous symmetric migration, followed by isolation.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
-You can hash out the Optimize_Functions.Optimize_Routine function for those models as here:
+**Option 1:** You can hash out the Optimize_Functions.Optimize_Routine function for those models, using the # character.
 
     # Split into two populations, no migration.
     #Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
@@ -145,8 +145,7 @@ You can hash out the Optimize_Functions.Optimize_Routine function for those mode
     # Split with continuous symmetric migration, followed by isolation.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
-Or you can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes:
-
+**Option 2:** You can block out this section of the Optimize_Functions.Optimize_Routine function for those models using triple quotes. Anything contained within the set of ''' will be ignored. 
 
     '''
     # Split into two populations, no migration.
@@ -162,9 +161,7 @@ Or you can block out this section of the Optimize_Functions.Optimize_Routine fun
     # Split with continuous symmetric migration, followed by isolation.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
-Anything contained within the set of ''' will be ignored. 
-
-Finally, you can simply delete these lines:
+**Option 3:** You can simply delete the lines!
 
     # Split into two populations, with continuous asymmetric migration.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
@@ -175,8 +172,8 @@ Finally, you can simply delete these lines:
 
 The model set can be added to by inserting your model in the *Models_2D.py* script, then adding an appropriate
 call for the Optimize_Functions.Optimize_Routine function, similar to the other models. However,
-the simplest and easiest way to analyze a custom model is to use the flexible *dadi_Run_Optimizations.py* script,
-changing the optional arguments to match the settings used here. 
+the simplest and easiest way to analyze a new or custom model is to use the flexible *dadi_Run_Optimizations.py* script,
+changing the optional arguments to match the settings used here for the four rounds. 
 
 
 ## Outputs:
@@ -266,7 +263,7 @@ If you see this, check to make sure both relevant arguments actually agree on th
 
 ## Contributing to the 2D Model Set:
  
- If you would like to contribute your custom 2D models to the model set, please email me at daniel.portik@gmail.com. If your models have been or will be published, I will provide explicit citation information for the contributed models (see below). 
+ If you would like to contribute your custom 2D models to the model set, please email me at daniel.portik@gmail.com. If your models have been or will be published, I will provide explicit citation information for the contributed models (as below). 
  
 ## Citation Information:
 

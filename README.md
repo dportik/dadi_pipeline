@@ -216,26 +216,26 @@ based on the number of rounds selected:
 
 | Argument | Round 1 | Round 2  | Round 3|
 | ------ |------:| -----:| -----:|
-| ***reps***    | 10 | 10 | 20 |
-| ***maxiter*** | 5 |  5  | 5 |
-| ***fold*** |  3 |  2   | 1 |
+| reps    | 10 | 10 | 20 |
+| maxiter | 5 |  5  | 5 |
+| fold |  3 |  2   | 1 |
 
 
 **Two rounds:**
 
 | Argument | Round 1 | Round 2  |
 | ------ |------:| -----:|
-| ***reps***    | 10 | 20 |
-| ***maxiter*** | 5  | 5 |
-| ***fold*** |  2   | 1 |
+| reps    | 10 | 20 |
+| maxiter | 5  | 5 |
+| fold |  2   | 1 |
 
 **X Rounds (>3):**
 
 | Argument | Round 1 | Round 2  | Round 3| Round *X-1* | Round *X* |
 | ------ |------:| -----:| -----:| -----:| -----:|
-| ***reps***    | 10 | 10 | 10 | 10 | 20 |
-| ***maxiter*** | 5 |  5  | 5 | 5 | 5 |
-| ***fold*** |  3 |  3  | 3 | 2 | 1 |
+| reps    | 10 | 10 | 10 | 10 | 20 |
+| maxiter | 5 |  5  | 5 | 5 | 5 |
+| fold |  3 |  3  | 3 | 2 | 1 |
 
 ## Why perform multiple rounds of optimizations?
 
