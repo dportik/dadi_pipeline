@@ -47,7 +47,7 @@ We will use always use the following function from the Optimize_Functions.py scr
 + **pts**: grid size for extrapolation, list of three values
 + **outfile**:  prefix for output naming
 + **model_name**: a label help name the output files; ex. "no_mig"
-+ **func**: access the model function from within 'dadi_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
++ **func**: access the model function from within `dadi_Run_Optimizations.py` or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model selected (can count in params line for the model)
 + **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
@@ -160,7 +160,7 @@ That's why I have written a range of 1-6 to perform this 5 times.
 
 ## Test Data Set:
 
-In the folder labeled *Example_Data* you will find a SNPs input file that will run with the *dadi_Run_Optimizations.py* script.
+In the folder labeled *Example_Data* you will find a SNPs input file that will run with the `dadi_Run_Optimizations.py` script.
 You will only need to edit the path to the file in the script, and then you will be able to run all five examples above. The 
 outputs for these examples are also contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
 Please test the script using these data to ensure everything is working properly before examining your own empirical data. 
@@ -243,7 +243,7 @@ When fitting demographic models it is important to perform multiple runs and ens
 
 Below is a summary of the log-likelihood scores obtained using the default four round optimization settings in the 2D pipeline for a particular model (nomig) using the example data. You can clearly see the improvement in log-likelihood scores and decrease in variation among replicates as the optimization rounds progress. 
 
-[Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Older_2D_Pipelines/2D_Pipeline_v1/NoMig_Zoom.png)
+![Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Older_2D_Pipelines/2D_Pipeline_v1/NoMig_Zoom.png)
 
 
 
