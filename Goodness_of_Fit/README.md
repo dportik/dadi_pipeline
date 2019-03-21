@@ -1,7 +1,8 @@
-**Performing Simulations and Goodness of Fit Tests With dadi**
+# Performing Simulations and Goodness of Fit Tests Using dadi
+
 ---------------------------------
 
-**Purpose:**
+## Purpose:
 
 Perform goodness of fit tests for demographic models using dadi.
 
@@ -12,9 +13,9 @@ questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user)
 to use these scripts, read over the user manual for dadi and try running the program with the 
 example files.
 
-**Overview:**
+## Overview:
 
-This is meant to be a general use script to run dadi to perform simulations and goodness of fit tests for any model on an afs/jsfs with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *Simulate_and_Optimize.py* that will have to be edited. 
+This is meant to be a general use script to run dadi to perform simulations and goodness of fit tests for any model on an afs/jsfs with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `Simulate_and_Optimize.py` that will have to be edited. 
 The frequency spectrum object can be unfolded or folded, which requires minimal script changes (see Caveats section).
 
 The user provides a model and the previously optimized parameters for their empirical 
@@ -29,11 +30,11 @@ the SFS, and the optimized parameters are also saved.
 
 For a general discussion on this workflow, please see the thread [here](https://groups.google.com/forum/#!topic/dadi-user/cjBOopEhIlQ).
 
-The *Simulate_and_Optimize.py* script and *Optimize_Functions_GOF.py* script must be in the same working directory to run properly.
+The `Simulate_and_Optimize.py` script and `Optimize_Functions_GOF.py` script must be in the same working directory to run properly.
 
-**Empirical Data Optimization:**
+## Empirical Data Optimization:
 
-Within the *Simulate_and_Optimize.py* script, let's assume you've supplied the correct information about your SNPs input file, population IDs, projection sizes, and are using the model in the script (sym_mig).
+Within the `Simulate_and_Optimize.py` script, let's assume you've supplied the correct information about your SNPs input file, population IDs, projection sizes, and are using the model in the script (sym_mig).
 
 The model will first be fit to the empirical data using the following function:
 
@@ -49,7 +50,7 @@ The model will first be fit to the empirical data using the following function:
 + **in_params**: the previously optimized parameter values to use
 + **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
-***Example:***
+***Example Usage:***
 
 In the script you will need to define the extrapolation grid size and the parameter values. The 
 number of parameter values must match the number in the model. 
@@ -70,7 +71,7 @@ number of parameter values must match the number in the model.
 	scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
 
 	
-**Performing Simulations and Optimizations:**
+## Performing Simulations and Model Optimizations:
 
 After the model is fit to the empirical data, the model SFS can be used to generate a user-selected number of Poisson-sampled SFS,
 in other words, the simulated data. For each simulation, an optimization routine is performed that is similar in structure
@@ -102,7 +103,7 @@ The simulations and optimizations are performed with the following function:
 + **folds**: a list of integers controlling the fold argument when perturbing input parameter values
 
 
-***Example:***
+***Example Usage:***
 
 The important arguments will need to be defined in the script. Below shows how to perform
 100 simulations and define an optimization routine. 
@@ -143,9 +144,9 @@ routine will use the default values for each round described [here](https://gith
 
 Because it may take some time to optimize each simulated SFS, the elapsed time is provided along
 the way which can help provide an estimate of the total time necessary. You may choose to adjust
-the optimization routine accordingly, or change the number of simulations.
+the optimization routine accordingly, or change the number of simulations. In general, it is much easier to fit models to the simulated data, so I have created default settings for the optimization routine that are less stringent than the 2D or 3D pipelines.
 
-**Outputs:**
+## Analysis Outputs:
 
 The ***Optimize_Empirical*** function will produce an output file for the empirical fit, which will be in tab-delimited format:
 
@@ -169,7 +170,7 @@ with a prefix matching the simulation number. The optimization summary output fi
      sym_mig	Round_3_Replicate_2	-509.41	1026.82	705.95	339.42	0.5187,0.3782,0.1482,0.8757
      sym_mig	Round_3_Replicate_3	-467.93	943.86	474.19	513.94	0.2516,0.2106,0.4328,0.8059
 
-After all simulations are complete, the main output file *Simulation_Results.txt* will be created.
+After all simulations are complete, the main output file `Simulation_Results.txt` will be created.
 This file contains the best scoring replicate for each simulation, and contains the 
 log-likelihood, theta, sum of sfs, Pearson's chi-squared test statistic, and optimized parameter
 values. It will also be in tab-delimited format:
@@ -181,15 +182,15 @@ values. It will also be in tab-delimited format:
      4	Round_3_Replicate_3	-488.11	133.42	1568.0	688.36	1.175,1.0293,0.0753,5.6391
      5	Round_3_Replicate_3	-456.46	621.48	1522.0	397.07	0.1981,0.164,0.631,1.8222
 
-**Plotting Results:**
+## Plotting Goodness of Fit Results:
 
-The R-script *Plot_GOF.R* can be used to visualize the results. Essentially, the simulations will
+The R-script `Plot_GOF.R `can be used to quickly visualize the main results. Essentially, the simulations will
 be used to create a distribution of values to which the empirical value will be
 compared. The script will create a histogram of the simulated data values, and a blue line will
 be plotted showing the empirical value. This will be done for the log-likelihood scores and for 
 the log-transformed Pearson's chi-squared test statistic. 
 
-The script will need to be edited to indicate the path to the *Simulation_Results.txt* file and the 
+The script will need to be edited to indicate the path to the `Simulation_Results.txt` file and the 
 output file for the empirical data. The script will also need to be tailored to create histograms that match the empirical distributions 
 for your data set. This can be done by editing the 'seq' function to create an appropriate range of 
 bin sizes and overall number of bins for the histograms. The 'seq' function takes three arguments: a 
@@ -199,7 +200,7 @@ from the simulations (and the empirical data, if it falls outside this range!). 
 if the empirical value falls outside the simulated value distribution in the direction of worse values, the goodness of fit
 test is not considered passed. 
 
-**Using Folded vs. Unfolded Spectra:**
+## Using Folded vs. Unfolded Spectra:
 
  To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
@@ -235,36 +236,37 @@ It will be clear if either argument has been misspecified because the calculatio
      ValueError: Cannot operate with a folded Spectrum and an unfolded one.
 
 
-**Caveats:**
+## Caveats:
 
  The data are simulated using the fs.sample() method in dadi, which is equivalent to a 
  parametric boostrap ONLY if SNPs are unlinked across loci. For ddRADseq data where a 
  single SNP is selected per locus, this is generally true, and this workflow is valid.
  
 
-**Test Data Set:**
+## Example Data Set:
 
-In the folder labeled *Example_Data* you will find a SNPs input file that will run with the *Simulate_and_Optimize.py* script.
+In the folder labeled *Example_Data* you will find a SNPs input file that will run with the `Simulate_and_Optimize.py` script.
 You will only need to edit the path to the file in the script, and then the script should run normally. The 
 outputs for five simulations (from truncated optimizations) are contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
-Running the *Simulate_and_Optimize.py* script as is will actually produce 100 simulations, rather than five. 
+Running the `Simulate_and_Optimize.py` script as is will actually produce 100 simulations, rather than five. 
 You may choose to test the script using these data to ensure everything is working properly before examining your own empirical data. 
 
 
-**Citation Information:**
+## Citation Information:
 
- If you use or modify these scripts for your work, please cite the following publications.
- 
- For the general optimization routine:
+The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
 
-+ Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
++ *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 
-For the goodness of fit testing scripts:
+If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite this publication.
+
+The goodness of fit testing scripts were written for the following publication:
 
 + Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology*** 27: 4289-4308. *https://doi.org/10.1111/mec.14862*
 
+If you conduct goodness of fit tests using these scripts, please also cite this publication.
 
-**Contact:**
+## Contact:
 
 Daniel Portik, PhD
 

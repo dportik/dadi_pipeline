@@ -1,7 +1,8 @@
-**Create SFS Comparison Plots**
+# Create SFS Comparison Plots Using dadi
+
 ---------------------------------
 
-**Purpose:**
+## Purpose:
 
 Create figures comparing the data and model sfs for 1D, 2D, or 3D spectra.
 
@@ -12,7 +13,7 @@ questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user)
 to use these scripts, read over the user manual for dadi and try running the program with the 
 example files.
 
-**Overview:**
+## Overview:
 
 This is meant to be a general use script to run dadi to fit any model on an afs/jsfs with one to three populations, then create figures comparing the data and model sfs. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *Make_Plots.py* that will have to be edited. 
 
@@ -21,11 +22,11 @@ data. The model is fit using these parameters, and the resulting model SFS is us
 create a figure comparing the data and model SFS, including the residuals.
 
 
-The *Make_Plots.py* script and *Plotting_Functions.py* script must be in the same working directory to run properly.
+The `Make_Plots.py` script and `Plotting_Functions.py` script must be in the same working directory to run properly.
 
-**Empirical Data Optimization:**
+## Empirical Data Optimization:
 
-Within the *Make_Plots.py* script, let's assume you've supplied the correct information about your SNPs input file, population IDs, projection sizes, and are using the model in the script (sym_mig).
+Within the `Make_Plots.py` script, let's assume you've supplied the correct information about your SNPs input file, population IDs, projection sizes, and are using the model in the script (sym_mig).
 
 The model will first be fit to the empirical data using the following function:
 
@@ -37,11 +38,11 @@ The model will first be fit to the empirical data using the following function:
 + **pts**: grid size for extrapolation, list of three values
 + **outfile**:  prefix for output naming
 + **model_name**: a label help name the output files; ex. "sym_mig"
-+ **func**: access the model function from within 'Simulate_and_Optimize.py' or from a separate model script
++ **func**: access the model function from within this script or from a separate model script
 + **in_params**: the previously optimized parameter values to use
 + **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
-***Example:***
+***Example Usage:***
 
 In the script you will need to define the extrapolation grid size and the parameter values. The 
 number of parameter values must match the number in the model. 
@@ -63,7 +64,7 @@ number of parameter values must match the number in the model.
 	model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=True)
 
 	
-**Plotting Functions:**
+## Plotting Functions:
 
 After the model is fit to the empirical data, the model SFS can be compared to the data SFS to create plots.
 Depending on whether the SFS is 1D, 2D, or 3D, a different plotting function will be used. They all follow
@@ -84,7 +85,7 @@ The 2D plotting is performed with the following function:
 
 + **vmin_val**: Minimum values plotted for sfs. The default is 0.05, and to fix the common plotting error this should be changed to something between 0 and 0.05.
 
-***Example:***
+***Example Usage:***
 
 The important arguments will need to be defined in the script. Below shows how to perform
 the basic plotting and also change the vmin in the second plot. 
@@ -121,7 +122,7 @@ You would use these in the same fashion:
     Plotting_Functions.Plot_3D(fs, model_fit, prefix, "something", vmin_val = vmin_val)
 
 
-**Outputs:**
+## Outputs:
 
 The ***Optimize_Empirical*** function will produce an output file for the empirical fit, which will be in tab-delimited format:
 
@@ -134,7 +135,7 @@ Each of the plotting functions (1D, 2D, or 3D) will produce a PDF output file ea
 time the plotting routine is called.
 
 
-**Using Folded vs. Unfolded Spectra:**
+## Using Folded vs. Unfolded Spectra:
 
  To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
@@ -161,7 +162,7 @@ It will be clear if either argument has been misspecified because the calculatio
 
 If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
-**Helpful Notes:**
+## Helpful Tips:
 
  Sometimes you may see the following error when plotting 2D or 3D, after the script crashes:
  
@@ -172,19 +173,21 @@ If you see this, check to make sure both relevant arguments actually agree on th
  with good visual results.
  
 
-**Test Data Set:**
+## Example Data Set:
 
-In the folder labeled *Example_Data* you will find a SNPs input file that will run with the *Make_Plots.py* script.
+In the folder labeled *Example_Data* you will find a SNPs input file that will run with the `Make_Plots.py` script.
 You will only need to edit the path to the file in the script, and then the script should run normally. The 
 output file of the model fit and both 2D plots from the above example are contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
 You should test the script using these data to ensure everything is working properly before examining your own empirical data. 
 
 
-**Citation Information:**
+## Citation Information:
 
- If you use or modify these scripts for your work, please cite the following publication.
- 
-+ Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
+The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
+
++ *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
+
+If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite this publication.
 
 
 **Contact:**
