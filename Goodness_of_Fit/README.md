@@ -135,9 +135,9 @@ The optimization routine set here will have the following settings:
 
 | Argument | Round 1 | Round 2  | Round 3|
 | ------ |------:| -----:| -----:|
-| ***reps***    | 20 | 30 | 50 |
-| ***maxiter*** | 5 |  10  | 20 |
-| ***fold*** |  3 |  2   | 1 |
+| reps    | 20 | 30 | 50 |
+| maxiter | 5 |  10  | 20 |
+| fold |  3 |  2   | 1 |
 
 If only the number of rounds is provided, but no additional optional arguments, the optimization
 routine will use the default values for each round described [here](https://github.com/dportik/dadi_pipeline).

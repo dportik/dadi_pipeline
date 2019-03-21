@@ -15,7 +15,7 @@ example files.
 
 ## Overview:
 
-This is meant to be a general use script to run dadi to fit any model on an afs/jsfs with one to three populations, then create figures comparing the data and model sfs. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *Make_Plots.py* that will have to be edited. 
+This is meant to be a general use script to run dadi to fit any model on an afs/jsfs with one to three populations, then create figures comparing the data and model sfs. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `Make_Plots.py` that will have to be edited. 
 
 The user provides a model and the previously optimized parameters for their empirical 
 data. The model is fit using these parameters, and the resulting model SFS is used to
