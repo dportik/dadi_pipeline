@@ -237,9 +237,9 @@ based on the number of rounds selected:
 | ***maxiter*** | 5 |  5  | 5 | 5 | 5 |
 | ***fold*** |  3 |  3  | 3 | 2 | 1 |
 
-**Why perform multiple rounds of optimizations?**
+## Why perform multiple rounds of optimizations?
 
-When fitting demographic models it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In the first round the starting parameters for all replicates are random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. This strategy of focusing the parameter search space improves the log-likelihood scores and results in convergence in subsequent rounds. 
+When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In the first round the starting parameters for all replicates are random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. This strategy of focusing the parameter search space improves the log-likelihood scores and results in convergence in subsequent rounds. 
 
 Below is a summary of the log-likelihood scores obtained using the default four round optimization settings in the 2D pipeline for a particular model (nomig) using the example data. You can clearly see the improvement in log-likelihood scores and decrease in variation among replicates as the optimization rounds progress. 
 
