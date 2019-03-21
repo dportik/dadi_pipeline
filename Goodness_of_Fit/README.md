@@ -192,9 +192,9 @@ the log-transformed Pearson's chi-squared test statistic.
 
 The script will need to be edited to indicate the path to the `Simulation_Results.txt` file and the 
 output file for the empirical data. The script will also need to be tailored to create histograms that match the empirical distributions 
-for your data set. This can be done by editing the 'seq' function to create an appropriate range of 
-bin sizes and overall number of bins for the histograms. The 'seq' function takes three arguments: a 
-minimum range value, maximum range value, and increment value. So, seq(0,20,1) will created bins ranging 
+for your data set. This can be done by editing the `seq()` function to create an appropriate range of 
+bin sizes and overall number of bins for the histograms. The `seq()` function takes three arguments: a 
+minimum range value, maximum range value, and increment value. So, `seq(0,20,1)` will created bins ranging 
 from zero to twenty by increments of one. You'll need to adjust the range to include the values
 from the simulations (and the empirical data, if it falls outside this range!). In general,
 if the empirical value falls outside the simulated value distribution in the direction of worse values, the goodness of fit
