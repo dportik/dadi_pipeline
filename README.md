@@ -254,13 +254,11 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 ## Citation Information:
 
-***Using the demographic modeling pipeline.***
-
-The scripts involved with this pipeline were originally published as part of the following work:
+The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 
-If you use or modify these scripts for your own purposes, please cite the publication.
+If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite this publication.
 
 
 **Publications using the demographic modeling pipeline:**
