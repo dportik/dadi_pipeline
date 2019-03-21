@@ -37,7 +37,7 @@ Let's assume you've supplied the correct information about your SNPs input file,
 
 I will show several ways to use the main function for model fitting to highlight different options. 
 
-We will use always use the following function from the Optimize_Functions.py script, which requires some explanation:
+We will use always use the following function from the `Optimize_Functions.py` script, which requires some explanation:
 
 ***Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")***
  
@@ -62,11 +62,12 @@ We will use always use the following function from the Optimize_Functions.py scr
 + **in_lower**: a list of lower bound values
 + **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
 
+The mandatory arguments must always be included when using the ***Optimize_Routine*** function, and the arguments must be provided in the exact order listed above (also known as positional arguments). The optional arguments can be included in any order after the required arguments, and are referred to by their name, followed by an equal sign, followed by a value (example: `reps = 4`). The usage is explained in the following examples.
 
 ### Example 1
 
 Let's use the function to run an optimization routine for our data and this model.
-We need to specify the first eight required arguments in this function, but there are other options
+We always need to specify the eight required arguments (in order) in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
 the basic version here. The argument explanations are above. This would perform three
 rounds of optimizations, using a default number of replicates for each round. At the end
