@@ -1,25 +1,26 @@
-**Two Populations dadi Pipeline**
+### Two Population Demographic Modeling Pipeline using dadi
+
 ---------------------------------
 
 Explore demographic models capturing variation in migration rates, periods of isolation, and population size change associated with the divergence between two populations.
 
-This is a modified version of the *dadi_Run_Optimizations.py* script in which we run optimizations for 2D comparisons for a large set of models that have been made available as part of published works. These models are stored in the *Models_2D.py* script, and will be called directly here. 
+This is a modified version of the `dadi_Run_Optimizations.py` script in which we run optimizations for 2D comparisons for a large set of models that have been made available as part of published works. These models are stored in the `Models_2D.py` script, and will be called directly here. 
 
-**General Overview:**
+## General Overview:
 
-There are many 2D models available that can be applied to your data set. The commands for using all of the available models are in the *dadi_Run_2D_Set.py* script, and these can be modified to only analyze a subset of the models. The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the *Summarize_Outputs.py* script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
+There are many 2D models available that can be applied to your data set. The commands for using all of the available models are in the `dadi_Run_2D_Set.py `script, and these can be modified to only analyze a subset of the models. The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the `Summarize_Outputs.py` script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
 
 To use this workflow, you'll need a SNPs input text file to create the 2D joint site frequency spectrum object. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects (see Caveats section).
 
-The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_2D_Set.py* that will have to be edited. 
+The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `dadi_Run_2D_Set.py` that will have to be edited. 
 
-The *dadi_Run_2D_Set.py*, *Optimize_Functions.py* (from the [main](https://github.com/dportik/dadi_pipeline) repository), and *Models_2D.py* scripts must all be in the same working directory for *dadi_Run_2D_Set.py* to run properly.
+The `dadi_Run_2D_Set.py`, `Optimize_Functions.py` (from the [main](https://github.com/dportik/dadi_pipeline) repository), and `Models_2D.py` scripts must all be in the same working directory for `dadi_Run_2D_Set.py` to run properly.
 
-**Available 2D Models**
+## Available Two Population (2D) Models:
 
-Here is a running list of the models currently available. The name of the model function in the *Models_2D.py* script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file *Models_2D.pdf*. If you use these models and scripts for your work, please provide proper citations (provided below).
+Here is a running list of the models currently available. The name of the model function in the `Models_2D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file `Models_2D.pdf`. If you use these models and scripts for your work, please provide proper citations (provided below).
 
-***Diversification Model Set:***
+***Diversification Model Set***
 
 1. *no_mig*: Split into two populations, no migration.
 2. *sym_mig*: Split into two populations, with continuous symmetric migration.
@@ -42,7 +43,7 @@ Here is a running list of the models currently available. The name of the model 
 19. *sec_contact_sym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
 20. *sec_contact_asym_mig_size_three_epoch*: Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
 
-***Island Model Set:***
+***Island Model Set***
 
 For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. Vicariance events involve no population size change, whereas founder event models always enforce exponential growth in pop2 (the island population). Discrete admixture events are included as a comparison to intervals of continuous migration, and are represented by parameter 'f', in which a fraction f of the mainland population is instantaneously present in the post-admixture island population. Because of the way these models are constructed, you should not analyze these in combination with the Diversification Model Set for the purpose of performing model selection.
 
@@ -60,7 +61,7 @@ For all the following models, pop2 is assumed to be the 'island' population, and
 32. *founder_nomig_admix_two_epoch*: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 
 
-**Optimization Settings:**
+## Optimization Routine Settings:
 
 To control the optimization routine is relatively easy, and the arguments are located in the script before all the
 commands to call the models:
@@ -87,8 +88,19 @@ of the arguments across rounds are summarized in the table below.
 
 If you change the number of rounds, you have to change the list length of the reps, maxiters, and folds arguments to match.
 
-It is also a good idea to optimize from multiple starting points, that is to run the above configuration multiple times.
-This can be accomplished by writing loops or by running the main script multiple times. Here is an example of a custom loop:
+## Why Perform Multiple Rounds of Optimizations?
+
+When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In this workflow, the starting parameters used for all replicates in first round are random. After each round is completed, the parameters of the best scoring replicate from the previous round are then used to generate perturbed starting parameters for the replicates of the subsequent round. This optimization strategy of focusing the parameter search space improves the log-likelihood scores and generally results in convergence in the final round. 
+
+Below is a summary of the log-likelihood scores obtained using the default four-round optimization settings present in the 2D pipeline. This analysis was conducted for a particular model (nomig, the simplest 2D model) using the example data provided. You can clearly see the improvement in log-likelihood scores and decrease in variation among replicates as the optimization rounds progress. 
+
+![Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Older_2D_Pipelines/2D_Pipeline_v1/NoMig_Zoom.png)
+
+## Performing Multiple Independent Optimization Routines:
+
+It is also a good idea to optimize from multiple starting points, that is to run the complete optimization routine multiple times. If the true log-likelihood is being reached, the same score (or close) should be present in the final round across multiple independent executions of the optimization routine.
+
+Executing the optimization routine multiple times can be accomplished by writing loops in the script, or by running the script multiple times. Here is an example of a custom loop:
 
     for i in range(1,6):
         Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
@@ -101,7 +113,8 @@ writing loops in python.
 As an alternative to custom loops, you can also just execute the script multiple times, and the same output files will simply be added to similar to what occurs with the loop. In both cases,
 the outputs across models can be easily summarized as described below. 
 
-**Modifying the Model Set to Analyze:**
+
+## Modifying the Model Set to Analyze:
 
 The model set can easily be reduced by either blocking out or deleting relevant sections. 
 Let's say you no longer wish to include the first two models in the example below:
@@ -166,7 +179,7 @@ the simplest and easiest way to analyze a custom model is to use the flexible *d
 changing the optional arguments to match the settings used here. 
 
 
-**Outputs:**
+## Outputs:
 
  For each model run, there will be a log file showing the optimization steps per replicate and a summary file that has all the important information. 
  
@@ -179,16 +192,16 @@ Here is an example of the output from a summary file, which will be in tab-delim
      sym_mig	Round_1_Replicate_4	-4262.29	8532.58	8907386.55	288.05	0.3689,0.8892,3.0951,2.8496
      sym_mig	Round_1_Replicate_5	-4474.86	8957.72	13029301.84	188.94	2.9248,1.9986,0.2484,0.3688
 
-**Summarizing Outputs Across Models:**
+## Summarizing Outputs Across Models:
 
- The information contained in each model summary file can be quickly sorted and extracted using the *Summarize_Outputs.py* script. 
+ The information contained in each model summary file can be quickly sorted and extracted using the `Summarize_Outputs.py` script. 
  
  The usage of this script is straightforward, and only requires placing the path to the directory containing the outputs on the command line. Here is an example of the usage, where
  the path to a folder called *My_Output_files* is specified:
  
      python Summarize_Outputs.py /Users/dan/dadi_pipeline/TwoPopulationComparisons/My_Output_files
  
- Here, the information for the best-scoring replicate for each model will be compiled and written to a tab-delimited output file called *Results_Summary_Short.txt*. Here is an example of the contents:
+ Here, the information for the best-scoring replicate for each model will be compiled and written to a tab-delimited output file called `Results_Summary_Short.txt`. Here is an example of the contents:
  
 
     Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params
@@ -197,7 +210,7 @@ Here is an example of the output from a summary file, which will be in tab-delim
     sym_mig_size	Round_4_Replicate_4	-845.24	1704.48	589.66	294.33	2.2229,9.7653,2.6256,0.178,0.082,4.1593,0.0897	
 	sec_contact_sym_mig_size	Round_4_Replicate_39	-874.78	1763.56	714.24	546.93	1.62,4.4826,0.9601,0.0897,0.2029,1.4814,0.0389	
 
-This file can be sorted for the purpose of performing model comparisons. However, it is a good idea to inspect not only the top replicate, but several of the highest scoring replicates to check for consistency. For this reason, a second output file is created that is called *Results_Summary_Extended.txt*. Rather than simply containing the top-scoring replicate, it will contain the top five replicates for each model. Here is an example of the contents:
+This file can be sorted for the purpose of performing model comparisons. However, it is a good idea to inspect not only the top replicate, but several of the highest scoring replicates to check for consistency. For this reason, a second output file is created that is called `Results_Summary_Extended.txt`. Rather than simply containing the top-scoring replicate, it will contain the top five replicates for each model. Here is an example of the contents:
 
     Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params
     anc_asym_mig	Round_4_Replicate_19	-1131.52	2275.04	1500.39	267.16	2.8073,1.4011,0.0808,0.607,8.8704,0.7333	
@@ -213,7 +226,7 @@ This file can be sorted for the purpose of performing model comparisons. However
 
 This information can be used for model comparisons using AIC, etc., but see below for an important note about comparisons.
 
-**Using Folded vs. Unfolded Spectra:**
+## Using Folded vs. Unfolded Spectra:
 
  To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
@@ -246,21 +259,22 @@ It will be clear if either argument has been misspecified because the calculatio
 
 If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
-**Caveats:**
+## Caveats:
 
  The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
 
-**Contributing to the 2D Model Set:**
+## Contributing to the 2D Model Set:
  
  If you would like to contribute your custom 2D models to the model set, please email me at daniel.portik@gmail.com. If your models have been or will be published, I will provide explicit citation information for the contributed models (see below). 
  
-**Citation Information:**
+## Citation Information:
 
-***Using the pipeline.***
-The scripts involved with this pipeline were originally published as part of the following work:
+The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
 
-+ Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
++ *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
+
+If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite this publication.
 
 
 ***Using specific 2D models.***
@@ -275,7 +289,7 @@ Models 15-20 and 21-32 were written for:
 + Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K., Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. 2018. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). ***Journal of Biogeography*** 45: 1781-1794. *https://doi.org/10.1111/jbi.13365*
 
 
-**Contact**
+## Contact:
 
 Daniel Portik, PhD
 
