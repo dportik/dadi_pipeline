@@ -237,7 +237,7 @@ based on the number of rounds selected:
 | maxiter | 5 |  5  | 5 | 5 | 5 |
 | fold |  3 |  3  | 3 | 2 | 1 |
 
-## Why perform multiple rounds of optimizations?
+## Why Perform Multiple Rounds of Optimizations?
 
 When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In this workflow, the starting parameters used for all replicates in first round are random. After each round is completed, the parameters of the best scoring replicate from the previous round are then used to generate perturbed starting parameters for the replicates of the subsequent round. This optimization strategy of focusing the parameter search space improves the log-likelihood scores and generally results in convergence in the final round. 
 
@@ -258,7 +258,7 @@ The optimization strategy and the scripts associated with this pipeline were ori
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 
-If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite this publication.
+If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite the above publication.
 
 
 **Publications using the demographic modeling pipeline:**
