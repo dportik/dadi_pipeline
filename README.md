@@ -1,4 +1,4 @@
-### Demographic Modeling With dadi
+# Demographic Modeling With dadi
 
 ---------------------------------
 
@@ -63,7 +63,7 @@ We will use always use the following function from the Optimize_Functions.py scr
 + **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
 
 
-# Example 1
+### Example 1
 
 Let's use the function to run an optimization routine for our data and this model.
 We need to specify the first eight required arguments in this function, but there are other options
@@ -81,7 +81,7 @@ search space as the rounds continue.
     
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
 
-# Example 2
+### Example 2
 
 It is a good idea to include the labels of the parameters so they can get written to the
 output file, otherwise you'll have to go back to the model each time you wanted to see their
@@ -96,7 +96,7 @@ order.
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels)
 
 
-# Example 3
+### Example 3
 
 Here is the same example but also including your own custom parameter bounds. Notice
 the optional arguments can be placed in any order following the mandatory arguments.
@@ -111,7 +111,7 @@ the optional arguments can be placed in any order following the mandatory argume
 
     Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper = upper, in_lower = lower)
 
-# Example 4
+### Example 4
 
 You can also be very explicit about the optimization routine, controlling what happens
 across each round. Let's keep the three rounds, but change the number of replicates,
@@ -137,7 +137,7 @@ will have 20 replicates, use 2-fold perturbed starting parameters, and a maxiter
 for the optimization algorithm steps, and etc. for round three. 
 
 
-# Example 5
+### Example 5
 
 It's also good run the optimization routine multiple times. Let's write a short
 loop to do the above optimization routine five times. We will name the prefix based
@@ -237,7 +237,15 @@ based on the number of rounds selected:
 | ***maxiter*** | 5 |  5  | 5 | 5 | 5 |
 | ***fold*** |  3 |  3  | 3 | 2 | 1 |
 
-In general, you should probably run multiple rounds and ensure the log-likelihoods are converging.
+**Why perform multiple rounds of optimizations?**
+
+When fitting demographic models it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In the first round the starting parameters for all replicates are random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. This strategy of focusing the parameter search space improves the log-likelihood scores and results in convergence in subsequent rounds. 
+
+Below is a summary of the log-likelihood scores obtained using the default four round optimization settings in the 2D pipeline for a particular model (nomig) using the example data. You can clearly see the improvement in log-likelihood scores and decrease in variation among replicates as the optimization rounds progress. 
+
+[Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Older_2D_Pipelines/2D_Pipeline_v1/NoMig_Zoom.png)
+
+
 
 ## Caveats:
 
@@ -246,7 +254,8 @@ In general, you should probably run multiple rounds and ensure the log-likelihoo
 
 ## Citation Information:
 
-***Using the pipeline.***
+***Using the demographic modeling pipeline.***
+
 The scripts involved with this pipeline were originally published as part of the following work:
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
@@ -254,19 +263,19 @@ The scripts involved with this pipeline were originally published as part of the
 If you use or modify these scripts for your own purposes, please cite the publication.
 
 
-**Publications using this demographic modeling workflow:**
+**Publications using the demographic modeling pipeline:**
 
-+ Gray, L.N., Barley, A.J., Poe, S., Thomson, R.C., Nieto-Montes de Oca, A., and I.J. Wang. Phylogeography of a widespread lizard complex reflects patterns of both geographic and ecological isolation. 2019. ***Molecular Ecology*** 28: 644-657. *https://doi.org/10.1111/mec.14970*
++ Gray, L.N., Barley, A.J., Poe, S., Thomson, R.C., Nieto-Montes de Oca, A., and I.J. Wang. **2019**. Phylogeography of a widespread lizard complex reflects patterns of both geographic and ecological isolation. ***Molecular Ecology*** 28: 644-657. *https://doi.org/10.1111/mec.14970*
 
-+ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology*** 27: 4289-4308. *https://doi.org/10.1111/mec.14862*
++ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. **2018**. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology*** 27: 4289-4308. *https://doi.org/10.1111/mec.14862*
 
-+ Schield, D.R., Adams, R.H., Card, D.C., Corbin, A.C., Jezkova, T., Hales, N.R., Meik, J.M., Perry, B.W., Spencer, C.L., Smith, L.L., Garcia, G.C., Bouzid, N.M., Strickland, J.L., Parkinson, C.L., Borja, M., Castañeda-Gaytán, G., Bryson, R.W., Flores-Villela, O.A., Mackessy, S.P., and T.A. Castoe. 2018. Cryptic genetic diversity, population structure, and gene flow in the Mojave rattlesnake (Crotalus scutulatus). ***Molecular Phylogenetics and Evolution*** 127: 669-681. *https://doi.org/10.1016/j.ympev.2018.06.013*
++ Schield, D.R., Adams, R.H., Card, D.C., Corbin, A.C., Jezkova, T., Hales, N.R., Meik, J.M., Perry, B.W., Spencer, C.L., Smith, L.L., Garcia, G.C., Bouzid, N.M., Strickland, J.L., Parkinson, C.L., Borja, M., Castañeda-Gaytán, G., Bryson, R.W., Flores-Villela, O.A., Mackessy, S.P., and T.A. Castoe. **2018**. Cryptic genetic diversity, population structure, and gene flow in the Mojave rattlesnake (Crotalus scutulatus). ***Molecular Phylogenetics and Evolution*** 127: 669-681. *https://doi.org/10.1016/j.ympev.2018.06.013*
 
-+ Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K., Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. 2018. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). ***Journal of Biogeography*** 45: 1781-1794. *https://doi.org/10.1111/jbi.13365*
++ Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K., Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. **2018**. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). ***Journal of Biogeography*** 45: 1781-1794. *https://doi.org/10.1111/jbi.13365*
 
-+ Schield, D.R., Adams, R.H., Card, D.C., Perry, B.W., Pasquesi, G.M., Jezkova, T., Portik, D.M., Andrew, A.L., Spencer, C.L., Sanchez, E.E., Fujita, M.K., Mackessy, S.P., and T.A. Castoe. 2017. Genomic patterns of divergence and admixture in a widely-distributed rattlesnake provide insight into speciation with gene flow. ***Ecology and Evolution*** 7: 3951–3966. *https://doi.org/10.1002/ece3.2996*
++ Schield, D.R., Adams, R.H., Card, D.C., Perry, B.W., Pasquesi, G.M., Jezkova, T., Portik, D.M., Andrew, A.L., Spencer, C.L., Sanchez, E.E., Fujita, M.K., Mackessy, S.P., and T.A. Castoe. **2017**. Genomic patterns of divergence and admixture in a widely-distributed rattlesnake provide insight into speciation with gene flow. ***Ecology and Evolution*** 7: 3951–3966. *https://doi.org/10.1002/ece3.2996*
 
-+ Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
++ Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. **2017**. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
 
 
 ## License:
