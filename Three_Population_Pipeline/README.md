@@ -18,7 +18,7 @@ The `dadi_Run_3D_Set.py`, `Optimize_Functions.py` (from the [main](https://githu
 
 ## Available Three Population (3D) Models:
 
-Here is a running list of the models currently available. The name of the model function in the `Models_3D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file `Models_3D.pdf`. If you use these models and scripts for your work, please provide proper citations (provided below).
+Here is a running list of the models currently available. The name of the model function in the `Models_3D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file [Models_3D.pdf](https://github.com/dportik/dadi_pipeline/blob/master/Three_Population_Pipeline/Models_3D.pdf). If you use these models and scripts for your work, please provide proper citations (provided below).
 
 **Diversification Model Set**
 

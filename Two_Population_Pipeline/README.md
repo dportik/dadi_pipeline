@@ -18,7 +18,7 @@ The `dadi_Run_2D_Set.py`, `Optimize_Functions.py` (from the [main](https://githu
 
 ## Available Two Population (2D) Models:
 
-Here is a running list of the models currently available. The name of the model function in the `Models_2D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file `Models_2D.pdf`. If you use these models and scripts for your work, please provide proper citations (provided below).
+Here is a running list of the models currently available. The name of the model function in the `Models_2D.py` script is given, along with a brief description, and a corresponding visual representation of the model is provided in the file [Models_2D.pdf](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Models_2D.pdf). If you use these models and scripts for your work, please provide proper citations (provided below).
 
 **Diversification Model Set**
 
