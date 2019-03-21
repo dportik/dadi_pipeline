@@ -238,9 +238,9 @@ It will be clear if either argument has been misspecified because the calculatio
 
 ## Caveats:
 
- The data are simulated using the fs.sample() method in dadi, which is equivalent to a 
+ The data are simulated using the `fs.sample()` method in dadi, which is equivalent to a 
  parametric boostrap ONLY if SNPs are unlinked across loci. For ddRADseq data where a 
- single SNP is selected per locus, this is generally true, and this workflow is valid.
+ single SNP is selected per locus, this is generally true, and this workflow is valid. However, there is also debate about whether we should be using nonparametric bootstraps instead (see the discussion thread [here](https://groups.google.com/forum/#!topic/dadi-user/e7MI1-wU98Q)). To reiterate, this workflow only performs parametric bootstraps, and you will need to decide if this is appropriate for your particular data set.
  
 
 ## Example Data Set:
