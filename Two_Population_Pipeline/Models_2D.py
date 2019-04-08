@@ -909,7 +909,7 @@ def founder_nomig_admix_two_epoch(params, ns, pts):
     phi = Integration.two_pops(phi, xx, T1, nu1, nu2_func, m12=0, m21=0)
     phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
     
-    phi = Integration.two_pops(phi, xx, T1, nu1, nu2, m12=0, m21=0)
+    phi = Integration.two_pops(phi, xx, T2, nu1, nu2, m12=0, m21=0)
 
     fs = Spectrum.from_phi(phi, ns, (xx,xx))
     return fs
