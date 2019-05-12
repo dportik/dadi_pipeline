@@ -170,7 +170,8 @@ with a prefix matching the simulation number. The optimization summary output fi
      sym_mig	Round_3_Replicate_2	-509.41	1026.82	705.95	339.42	0.5187,0.3782,0.1482,0.8757
      sym_mig	Round_3_Replicate_3	-467.93	943.86	474.19	513.94	0.2516,0.2106,0.4328,0.8059
 
-After all simulations are complete, the main output file `Simulation_Results.txt` will be created.
+After all simulations are complete, the main output file `
+ults.txt` will be created.
 This file contains the best scoring replicate for each simulation, and contains the 
 log-likelihood, theta, sum of sfs, Pearson's chi-squared test statistic, and optimized parameter
 values. It will also be in tab-delimited format:
@@ -190,7 +191,7 @@ compared. The script will create a histogram of the simulated data values, and a
 be plotted showing the empirical value. This will be done for the log-likelihood scores and for 
 the log-transformed Pearson's chi-squared test statistic. 
 
-The script will need to be edited to indicate the path to the `Simulation_Results.txt` file and the 
+The script will need to be edited to indicate the path to the `Simulation_Results_YOURMODELNAME.txt` file and the 
 output file for the empirical data. The script will also need to be tailored to create histograms that match the empirical distributions 
 for your data set. This can be done by editing the `seq()` function to create an appropriate range of 
 bin sizes and overall number of bins for the histograms. The `seq()` function takes three arguments: a 
