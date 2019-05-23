@@ -350,7 +350,7 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
     sims = int(sim_number)
 
     #Output file information
-    sim_out = "Simulation_Results.txt"
+    sim_out = "Simulation_Results_"+model_name+".txt"
     fh_out = open(sim_out, 'a')
     fh_out.write("Simulation"+'\t'+"Best_Replicate"+'\t'+"log-likelihood"+'\t'+"theta"+'\t'+"sfs_sum"+'\t'+"chi-squared"+'\t'+"optimized_params"+'\n')
     fh_out.close()
