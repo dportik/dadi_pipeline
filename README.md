@@ -267,6 +267,8 @@ If you use the 2D, 3D, or custom demographic modeling pipelines for your work, o
 
 **Publications using the demographic modeling pipeline:**
 
++ Krohn, A.R., Diepeveen, E.T., Bi, K., and E.B. Rosenblum. **2019**. Local adaptation does not lead to genome-wide differentiation in lava flow lizards. ***Ecology and Evolution*** Early Access. *https://doi.org/10.1002/ece3.5231*
+
 + Gray, L.N., Barley, A.J., Poe, S., Thomson, R.C., Nieto-Montes de Oca, A., and I.J. Wang. **2019**. Phylogeography of a widespread lizard complex reflects patterns of both geographic and ecological isolation. ***Molecular Ecology*** 28: 644-657. *https://doi.org/10.1111/mec.14970*
 
 + Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. **2018**. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology*** 27: 4289-4308. *https://doi.org/10.1111/mec.14862*
