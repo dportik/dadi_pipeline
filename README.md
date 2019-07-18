@@ -15,7 +15,7 @@ example files.
 
 ## Overview:
 
-In this main repository is a general use script (`dadi_Run_Optimizations.py`) that can be used to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum containing one to three populations. This script will perform a general optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266) and will produce associated output files. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_Optimizations.py* that will have to be edited. Any custom model can be used, and below are several examples of how to use various arguments to control the model optimizations. 
+In this main repository of *dadi_pipeline* is a general use script (`dadi_Run_Optimizations.py`) that can be used to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum containing one to three populations. This script will perform a general optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266) and will produce associated output files. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_Optimizations.py* that will have to be edited. Any custom model can be used, and below are several examples of how to use various arguments to control the model optimizations. 
 
 The `dadi_Run_Optimizations.py` script and `Optimize_Functions.py` script must be in the same working directory to run properly.
 
@@ -31,7 +31,7 @@ If you'd like to create a figure comparing the empirical SFS and model SFS for a
 
 ## Optimizations:
 
-The `dadi_Run_Optimizations.py` and associated 2D and 3D population pipelines were designed to implement the optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). This optimization routine includes fitting the model using particular settings for a given number of replicates, then using the parameters from the best scoring replicate to seed a subsequent round of model fitting using updated settings. This process occurs across multiple rounds, which improves the log-likelihood scores and generally results in convergence in the final round.
+The `dadi_Run_Optimizations.py` and associated 2D and 3D population pipelines are components of *dadi_pipeline* that each were designed to implement the optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). This optimization routine includes fitting the model using particular settings for a given number of replicates, then using the parameters from the best scoring replicate to seed a subsequent round of model fitting using updated settings. This process occurs across multiple rounds, which improves the log-likelihood scores and generally results in convergence in the final round.
 
 In the `dadi_Run_Optimizations.py` script, the optimization routine contains a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. This flexibility should allow these scripts to be generally useful for fitting any model to any data set. 
 
@@ -245,13 +245,13 @@ based on the number of rounds selected:
 
 ## Why Perform Multiple Rounds of Optimizations?
 
-When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In this workflow, the starting parameters used for all replicates in first round are random. After each round is completed, the parameters of the best scoring replicate from the previous round are then used to generate perturbed starting parameters for the replicates of the subsequent round. This optimization strategy of focusing the parameter search space improves the log-likelihood scores and generally results in convergence in the final round. 
+When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In the 2D, 3D, and custom workflows of *dadi_pipeline*, the default starting parameters used for all replicates in first round are random. After each round is completed, the parameters of the best scoring replicate from the previous round are then used to generate perturbed starting parameters for the replicates of the subsequent round. This optimization strategy of focusing the parameter search space improves the log-likelihood scores and generally results in convergence in the final round. 
 
 Below is a summary of the log-likelihood scores obtained using the default four-round optimization settings present in the 2D pipeline. This analysis was conducted for a particular model (nomig, the simplest 2D model) using the example data provided. You can clearly see the improvement in log-likelihood scores and decrease in variation among replicates as the optimization rounds progress. 
 
 ![Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Older_2D_Pipelines/2D_Pipeline_v1/NoMig_Zoom.png)
 
-
+If several independent runs for this model each converge on similar log-likelihood scores in the fourth round, you can be mostly confident that analyses are not getting trapped on local optima.
 
 ## Caveats:
 
@@ -273,7 +273,7 @@ The main motivation behind the creation of this workflow was to increase transpa
 
 The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. 
 
-There are other features of dadi_pipeline that were developed for other publications. For example, several 2D and 3D models were published as part of Charles et al. (2018) and Barratt et al. (2018), and the goodness of fit tests were published as part of Barratt et al. (2018). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
+There are other features of *dadi_pipeline* that were developed for other publications. For example, several 2D and 3D models were published as part of Charles et al. (2018) and Barratt et al. (2018), and the goodness of fit tests were published as part of Barratt et al. (2018). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
 
 
 > We included a set of 24 models (Portik et al. 2017; Charles et al. 2018)...
