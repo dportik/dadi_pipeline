@@ -4,7 +4,7 @@
 
 ## Purpose:
 
-Perform demographic model optimizations and comparisons with this accessible and flexible dadi tool.
+Perform demographic model optimizations and comparisons with this accessible and flexible  tool called *dadi_pipeline*.
 
 This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) 
 and assumes you already have the package installed. You'll need to be familiar with how dadi works, 
