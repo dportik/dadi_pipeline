@@ -26,6 +26,8 @@ If you'd like to assess the goodness of fit for your demographic model, please l
 
 If you'd like to create a figure comparing the empirical SFS and model SFS for a demographic model (with residuals), please look in the [Plotting](https://github.com/dportik/dadi_pipeline/tree/master/Plotting) repository.
 
+**For information on how to cite dadi_pipeline, please see the Citation section at the bottom of this page.**
+
 
 ## Optimizations:
 
@@ -258,16 +260,45 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 ## Citation Information:
 
-The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
+###How to cite dadi_pipeline
+
+This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, the dadi_pipeline is not a 'wrapper' for dadi, but rather an additional program. It was published as part of Portik et al. (2017). If you have used dadi_pipeline to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
+
+*To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit XX demographic models using the demographic modeling workflow (dadi_pipeline) from Portik et al. (2017).*
+
+The main motivation behind the creation of this pipeline was to increase transparency and reproducibility in demographic modeling, and in your publication you should also report key parameters of the optimization routine. The goal is to allow other researchers to plug your data into the dadi_pipeline workflow and be able to run the same analyses. For example:
+
+*For all models, we performed consecutive rounds of optimizations following Portik et al. (2017). For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.*
+
+The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. 
+
+There are other features of dadi_pipeline that were developed for other publications. For example, several 2D and 3D models were published as part of Charles et al. (2018) and Barratt et al. (2018), and the goodness of fit tests were published as part of Barratt et al. (2018). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
+
+*We included a set of XX models (Portik et al. 2017; Charles et al. 2018)...*
+
+*To determine if the top-ranked models were reasonable explanations of the JSFS, we also performed goodness of fit tests following Barratt et al. (2018).*
+
+Here is a list of the publications mentioned above, for easy reference:
+
++ *Gutenkunst, R. N., Hernandez, R. D., Williamson, S. H., & Bustamante, C. D. ( 2009). Inferring the joint demographic history of multiple populations from multidimensional SNP frequency data. PLoS Genetics, 5, e1000695.*
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 
-If you use the 2D, 3D, or custom demographic modeling pipelines for your work, or modify these scripts for your own purposes, please cite the above publication.
++ *Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K., Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. 2018. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Journal of Biogeography 45: 1781-1794. https://doi.org/10.1111/jbi.13365*
 
++ *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. Molecular Ecology 27: 4289-4308. https://doi.org/10.1111/mec.14862*
 
-**Publications using the demographic modeling pipeline:**
+###Publications that have used the demographic modeling workflow (dadi_pipeline):
 
-+ Krohn, A.R., Diepeveen, E.T., Bi, K., and E.B. Rosenblum. **2019**. Local adaptation does not lead to genome-wide differentiation in lava flow lizards. ***Ecology and Evolution*** Early Access. *https://doi.org/10.1002/ece3.5231*
++ Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***bioRxiv***. *https://doi.org/10.1101/450692*
+
++ Choi, J.Y., Purugganan, M., and E.A. Stacy. **2019**. Divergent selection and primary gene flow shape incipient speciation of a riparian tree on Hawaii Island. ***bioRxiv***. *https://doi.org/10.1101/698225*
+
++ Schield, D.R., Perry, B.W., Adams, R.H., Card, D.C., Jezkova, T., Pasquesi, G.I.M., Nikolakis, Z.L., Row, K., Meik, J.M., Smith, C.F., Mackessy, S.P., and T.A. Castoe. **2019**. Allopatric divergence and secondary contact with gene flow: a recurring theme in rattlesnake speciation. ***Biological Journal of the Linnaean Society*** Early View. *https://doi.org/10.1093/biolinnean/blz077*
+
++ Merondun, J., Murray, D.L., and A.B.A. Shafer. **2019**. Genome-scale sampling suggests cryptic epigenetic structuring and insular divergence in Canada lynx. ***Molecular Ecology*** Early View. *https://doi.org/10.1111/mec.15131*
+
++ Krohn, A.R., Diepeveen, E.T., Bi, K., and E.B. Rosenblum. **2019**. Local adaptation does not lead to genome-wide differentiation in lava flow lizards. ***Ecology and Evolution*** 9: 6810-6820. *https://doi.org/10.1002/ece3.5231*
 
 + Gray, L.N., Barley, A.J., Poe, S., Thomson, R.C., Nieto-Montes de Oca, A., and I.J. Wang. **2019**. Phylogeography of a widespread lizard complex reflects patterns of both geographic and ecological isolation. ***Molecular Ecology*** 28: 644-657. *https://doi.org/10.1111/mec.14970*
 
