@@ -282,7 +282,7 @@ maxiters = [3,5,10,15]
 folds = [3,2,2,1]
 ```
 
-These need to be changed to reflect the fact that we want to 'start' in round 3 and continue to round 4. We also want to use the best parameters from round 2 to start, so we will need to add a params variable. The arguments can be adjusted like so:
+These need to be changed to reflect the fact that we want to 'start' in round 3 and continue to round 4. We also want to use the best parameters from round 2 to seed round 3, so we will need to add a `params` variable. The arguments can be adjusted like so:
 ```
 #**************
 #Set the number of rounds here
@@ -296,13 +296,13 @@ folds = [2,1]
 params = [0.7541,2.1299,12.2678,0.8252,0.6424,0.6868,0.3189,1.3291,0.9736]
 ```
 
-Finally, in the actual call for the model we will need to add the optional flag `in_params=params` to let the routine know we are supplying the starting parameters.
+Finally, in the actual call for the model we will need to add the optional flag `in_params=params` to let the routine know we are supplying the starting parameters to seed the replicates.
  
-For example, change this:
+For example, add the `in_params=params` argument to this:
 
 `Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")`
 
-to this:
+so that it looks like this:
 
 `Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, in_params=params, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")`
 
