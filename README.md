@@ -1,4 +1,4 @@
-# Perform Demographic Modeling With dadi Using dadi_pipeline
+# Perform Demographic Modeling with *dadi* using *dadi_pipeline*
 
 ---------------------------------
 
