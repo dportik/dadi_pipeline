@@ -26,7 +26,7 @@ If you'd like to assess the goodness of fit for your demographic model, please l
 
 If you'd like to create a figure comparing the empirical SFS and model SFS for a demographic model (with residuals), please look in the [Plotting](https://github.com/dportik/dadi_pipeline/tree/master/Plotting) repository.
 
-**For information on how to cite dadi_pipeline, please see the Citation section at the bottom of this page.**
+**For information on how to cite *dadi_pipeline*, please see the Citation section at the bottom of this page.**
 
 
 ## Optimizations:
