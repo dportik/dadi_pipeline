@@ -253,6 +253,62 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 If several independent runs for this model each converge on similar log-likelihood scores in the fourth round, you can be mostly confident that analyses are not getting trapped on local optima, and that the true log-likelihood has been obtained.
 
+## My Analysis Crashed! What Now?
+
+For various reasons, sometimes an analysis can crash. In some cases, it is not desirable to re-start a model optimization routine from scratch. You can essentially pick up where you left off through a couple of simple actions. First, you will need to find the highest scoring replicate that occurred during the round that crashed. These parameter values will be used as input parameters. Second, the number of rounds and corresponding reps, maxiters, and folds arguments will need to be adjusted to start in the later rounds.
+
+For example, let's say the program crashed fitting a model during round 2 (of 4). You can quickly sort the output file to find the best scoring replicate:
+
+```
+Model	Replicate	log-likelihood	AIC	chi-squared	theta	optimized_params(nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3)
+refugia_adj_1	Round_2_Replicate_1	-2227.89	4473.78	14271.56	180.26	0.7541,2.1299,12.2678,0.8252,0.6424,0.6868,0.3189,1.3291,0.9736
+refugia_adj_1	Round_2_Replicate_7	-2283.95	4585.9	3131.07	182.59	0.6738,3.0342,5.7909,0.8692,0.3357,0.346,0.2572,2.2233,1.1109
+refugia_adj_1	Round_2_Replicate_9	-2297.34	4612.68	4517.14	185.11	0.798,0.9479,6.9163,2.5229,0.3895,0.235,0.2362,1.2066,0.5539
+```
+
+In this example above, we want the parameters from Round_2_Replicate1: 
+`0.7541,2.1299,12.2678,0.8252,0.6424,0.6868,0.3189,1.3291,0.9736`
+
+In the script running this model, we will need to change the following arguments:
+```
+#**************
+#Set the number of rounds here
+rounds = 4
+
+#define the lists for optional arguments
+#you can change these to alter the settings of the optimization routine
+reps = [10,20,30,40]
+maxiters = [3,5,10,15]
+folds = [3,2,2,1]
+```
+
+These need to be changed to reflect the fact that we want to 'start' in round 3 and continue to round 4. We also want to use the best parameters from round 2 to start, so we will need to add a params variable. The arguments can be adjusted like so:
+```
+#**************
+#Set the number of rounds here
+rounds = 2
+
+#define the lists for optional arguments
+#you can change these to alter the settings of the optimization routine
+reps = [30,40]
+maxiters = [10,15]
+folds = [2,1]
+params = [0.7541,2.1299,12.2678,0.8252,0.6424,0.6868,0.3189,1.3291,0.9736]
+```
+
+Finally, in the actual call for the model we will need to add the optional flag `in_params=params` to let the routine know we are supplying the starting parameters.
+ 
+For example, change this:
+
+`Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")`
+
+to this:
+
+`Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_1", Models_3D.refugia_adj_1, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, in_params=params, param_labels = "nu1, nuA, nu2, nu3, m1, m2, T1, T2, T3")`
+
+That will allow you to more or less pick up where you left off. Please note that if running multiple models in a given script, changing the rounds, reps, maxiters, and folds arguments will affect all of them. So, it is best to isolate a single model to jump-start a crashed analysis.
+
+
 ## Caveats:
 
  The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is considered true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
@@ -266,12 +322,12 @@ This demographic modeling pipeline was built with a novel multi-round optimizati
 
 > To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using the demographic modeling workflow (dadi_pipeline) from Portik et al. (2017).
 
-The main motivation behind the creation of this workflow was to increase transparency and reproducibility in demographic modeling. In your publication you should report the key parameters of the optimization routine. The goal is to allow other researchers to plug your data into the dadi_pipeline workflow and be able to run the same analyses. For example:
+The main motivation behind the creation of this workflow was to increase transparency and reproducibility in demographic modeling. In your publication you should report the key parameters of the optimization routine. The goal is to allow other researchers to plug your data into *dadi_pipeline* and run the same analyses. For example:
 
 
 > For all models, we performed consecutive rounds of optimizations following Portik et al. (2017). For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.
 
-The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. 
+The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. This can include changes to the number of rounds, replicates, maxiters, folds, or other optional features (such as supplying parameter values or changing the default parameter bounds).
 
 There are other features of *dadi_pipeline* that were developed for other publications. For example, several 2D and 3D models were published as part of Charles et al. (2018) and Barratt et al. (2018), and the goodness of fit tests were published as part of Barratt et al. (2018). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
 
