@@ -260,7 +260,7 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 ## Citation Information:
 
-### How to cite *dadi_pipeline*
+### How to cite *dadi_pipeline*:
 
 This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, *dadi_pipeline* is not a 'wrapper' for dadi, but rather an additional program. It was published as part of Portik et al. (2017). If you have used dadi_pipeline to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
