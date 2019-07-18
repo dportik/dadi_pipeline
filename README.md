@@ -318,7 +318,7 @@ That will allow you to more or less pick up where you left off. Please note that
 
 ### How to cite *dadi_pipeline*:
 
-This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, *dadi_pipeline* is not a 'wrapper' for dadi, but rather an additional package. It was published as part of Portik et al. (2017). If you have used dadi_pipeline to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
+This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, *dadi_pipeline* is not a 'wrapper' for dadi, but rather an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used *dadi_pipeline* to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
 > To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using the demographic modeling workflow (dadi_pipeline) from Portik et al. (2017).
 
@@ -329,7 +329,7 @@ The main motivation behind the creation of this workflow was to increase transpa
 
 The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. This can include changes to the number of rounds, replicates, maxiters, folds, or other optional features (such as supplying parameter values or changing the default parameter bounds).
 
-There are other features of *dadi_pipeline* that were developed for other publications. For example, several 2D and 3D models were published as part of Charles et al. (2018) and Barratt et al. (2018), and the goodness of fit tests were published as part of Barratt et al. (2018). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
+There are other features of *dadi_pipeline* that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365) and [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and the goodness of fit tests were published as part of Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
 
 
 > We included a set of 24 models (Portik et al. 2017; Charles et al. 2018)...
