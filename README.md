@@ -278,7 +278,7 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 ![Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Example_Data/NoMig_Zoom.png)
 
-**Please understand that it is possible for a single execution of the pipeline to get stuck on a local optima for any given model! This is why I strongly recommend running the pipeline multiple times for a given model.** If several independent runs for this model each converge on similar log-likelihood scores in the fourth round, you can be mostly confident that analyses are not getting trapped on local optima, and that the true log-likelihood has been obtained.
+**Please understand that it is possible for a single execution of the pipeline to get stuck on a local optima for any given model! This is why I strongly recommend running the pipeline multiple times for a given model.** If several independent runs for this model each converge on similar log-likelihood scores in the last optimization round, you can be mostly confident that analyses are not getting trapped on local optima, and that the true log-likelihood has been obtained.
 
 ## **My Analysis Crashed! What Now?** <a name="AC"></a>
 
