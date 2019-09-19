@@ -1,11 +1,3 @@
-import sys
-import os
-import numpy
-import dadi
-import pylab
-from datetime import datetime
-import Optimize_Functions
-
 '''
 Usage: python dadi_Run_Optimizations.py
 
@@ -60,7 +52,7 @@ Citations:
     doi: 10.1111/mec.14266
 
 -------------------------
-Written for Python 2.7
+Written for Python 2.7 and 3.7
 Python modules required:
 -Numpy
 -Scipy
@@ -70,15 +62,22 @@ Python modules required:
 Daniel Portik
 daniel.portik@gmail.com
 https://github.com/dportik
-Updated May 2018
+Updated September 2019
 '''
+
+import sys
+import os
+import numpy
+import dadi
+from datetime import datetime
+import Optimize_Functions
 
 #===========================================================================
 # Import data to create joint-site frequency spectrum
 #===========================================================================
 
 #**************
-snps = "/Users/dan/Dropbox/dadi_inputs/General_Script/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)
@@ -96,11 +95,12 @@ proj = [16,32]
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
 #print some useful information about the afs or jsfs
-print "\n\n============================================================================\nData for site frequency spectrum\n============================================================================\n"
-print "projection", proj
-print "sample sizes", fs.sample_sizes
-sfs_sum = numpy.around(fs.S(), 2)
-print "Sum of SFS = ", sfs_sum, '\n', '\n'
+print("\n\n============================================================================")
+print("\nData for site frequency spectrum:\n")
+print("Projection: {}".format(proj))
+print("Sample sizes: {}".format(fs.sample_sizes))
+print("Sum of SFS: {}".format(numpy.around(fs.S(), 2)))
+print("\n============================================================================\n")
 
 #================================================================================
 # Here is an example of using a custom model within this script
@@ -108,14 +108,17 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 '''
  We will use a function from the Optimize_Functions.py script:
  
- Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")
+ Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, 
+                          reps=None, maxiters=None, folds=None, in_params=None, 
+                          in_upper=None, in_lower=None, param_labels=" ")
  
    Mandatory Arguments =
     fs:  spectrum object name
     pts: grid size for extrapolation, list of three values
     outfile:  prefix for output naming
-    model_name: a label to slap on the output files; ex. "no_mig"
-    func: access the model function from within 'dadi_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
+    model_name: a label for the output files; ex. "no_mig"
+    func: access the model function from within 'dadi_Run_Optimizations.py' or 
+          from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
     fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False).
@@ -151,11 +154,9 @@ def sym_mig(params, ns, pts):
     return fs
 
 
-
-
 '''
 Example 1. Now let's use the function to run an optimization routine for our data and this model.
-We need to specify the first six arguments in this function, but there are other options
+We need to specify the first seven arguments in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
 the basic version here. The argument explanations are above. This would perform three
 rounds of optimizations, using a default number of replicates for each round (see documentation
@@ -176,21 +177,22 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, f
 '''
 Example 2. It is a good idea to include the labels of the parameters so they can get written to the
 output file, otherwise you'll have to go back to the model each time you wanted to see their
-order.
+order. The optional arguments require using the = sign to assign a variable or value to the argument.
 '''
 prefix = "V2"
 pts = [50,60,70]
 
 p_labels = "nu1, nu2, m, T"
 
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True,
+                                        param_labels = p_labels)
 
 
 
 
 '''
-Example 3. Here is the same example but also including your own custom parameter bounds. Notice
-the optional arguments can be placed in any order following the mandatory arguments.
+Example 3. Here is the same example but also including your own custom parameter bounds. Notice the 
+optional arguments can be placed in any order following the mandatory arguments. 
 '''
 prefix = "V3"
 pts = [50,60,70]
@@ -199,7 +201,8 @@ p_labels = "nu1, nu2, m, T"
 upper = [20,20,10,15]
 lower = [0.01,0.01,0.01,0.1]
 
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper = upper, in_lower = lower)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True,
+                                        param_labels = p_labels, in_upper = upper, in_lower = lower)
 
 
 
@@ -226,7 +229,9 @@ starting parameters, and a maxiter of 5 for the optimization algorithm steps. Ro
 will have 20 replicates, use 2-fold perturbed starting parameters, and a maxiter of 10
 for the optimization algorithm steps, and etc. for round three. 
 '''
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True,
+                                        param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps,
+                                        maxiters = maxiters, folds = folds)
 
 
 
@@ -248,4 +253,6 @@ folds = [3,2,1]
 
 for i in range(1,6):
     prefix = "V5_Number_{}".format(i)
-    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
+    Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True,
+                                            param_labels = p_labels, in_upper=upper, in_lower=lower,
+                                            reps = reps, maxiters = maxiters, folds = folds)

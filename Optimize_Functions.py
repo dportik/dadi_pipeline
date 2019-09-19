@@ -1,3 +1,17 @@
+'''
+-------------------------
+Written for Python 2.7 and 3.7
+Python modules required:
+-Numpy
+-Scipy
+-dadi
+-------------------------
+
+Daniel Portik
+daniel.portik@gmail.com
+https://github.com/dportik
+Updated September 2019
+'''
 import sys
 import os
 import numpy
@@ -15,6 +29,7 @@ def parse_params(param_number, in_params=None, in_upper=None, in_lower=None):
     # in_lower: a list of lower bound values
     #--------------------------------------------------------------------------------------
     param_number = int(param_number)
+    
     #param set
     if in_params is None:
         params = [1] * param_number
@@ -22,6 +37,7 @@ def parse_params(param_number, in_params=None, in_upper=None, in_lower=None):
         raise ValueError("Set of input parameters does not contain the correct number of values: {}".format(param_number))
     else:
         params = in_params
+        
     #upper bound    
     if in_upper is None:
         upper_bound = [30] * param_number
@@ -29,6 +45,7 @@ def parse_params(param_number, in_params=None, in_upper=None, in_lower=None):
         raise ValueError("Upper bound set for parameters does not contain the correct number of values: {}".format(param_number))
     else:
         upper_bound = in_upper
+        
     #lower bounds
     if in_lower is None:
         lower_bound = [0.01] * param_number
@@ -36,7 +53,7 @@ def parse_params(param_number, in_params=None, in_upper=None, in_lower=None):
         raise ValueError("Lower bound set for parameters does not contain the correct number of values: {}".format(param_number))
     else:
         lower_bound = in_lower
-    #send back values
+        
     return params, upper_bound, lower_bound
 
 def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
@@ -50,6 +67,7 @@ def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
     # folds: a list of integers controlling the fold argument when perturbing input parameter values
     #--------------------------------------------------------------------------------------
     rounds = int(rounds)
+    
     #rep set
     #create scheme where final replicates will be 20, and all previous 10
     if reps is None:
@@ -62,6 +80,7 @@ def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
         raise ValueError("List length of replicate values does match the number of rounds: {}".format(rounds))
     else:
         reps_list = reps
+        
     #maxiters   
     if maxiters is None:
         maxiters_list = [5] * rounds
@@ -69,6 +88,7 @@ def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
         raise ValueError("List length of maxiter values does match the number of rounds: {}".format(rounds))
     else:
         maxiters_list = maxiters
+        
     #folds
     #create scheme so if rounds is greater than three, will always end with two fold and then one fold
     if folds is None:
@@ -85,7 +105,7 @@ def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
         raise ValueError("List length of fold values does match the number of rounds: {}".format(rounds))
     else:
         folds_list = folds
-    #send back values
+        
     return reps_list, maxiters_list, folds_list
 
 def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
@@ -99,48 +119,36 @@ def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
     # fs_folded: a Boolean (True, False) for whether empirical spectrum is folded or not
     #--------------------------------------------------------------------------------------
 
-    #create empty list to store results
-    temp_results = []
-
     #calculate likelihood
     ll = dadi.Inference.ll_multinom(sim_model, fs)
     ll = numpy.around(ll, 2)
-    print "\t\t\tLikelihood = ", ll
+    print("\t\t\tLikelihood = {:,}".format(ll))
 
     #calculate AIC 
     aic = ( -2*( float(ll))) + (2*len(params_opt))
-    print "\t\t\tAIC = ", aic
+    print("\t\t\tAIC = {:,}".format(aic))
 
     #calculate theta
     theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
     theta = numpy.around(theta, 2)
-    print "\t\t\tTheta = ", theta
+    print("\t\t\tTheta = {:,}".format(theta))
 
+    #get Chi^2
+    scaled_sim_model = sim_model*theta
     if fs_folded is True:
         #calculate Chi^2 statistic for folded
-        scaled_sim_model = sim_model*theta
         folded_sim_model = scaled_sim_model.fold()
         chi2 = numpy.sum((folded_sim_model - fs)**2/folded_sim_model)
         chi2 = numpy.around(chi2, 2)
-        print "\t\t\tChi-Squared = ", chi2
-        
     elif fs_folded is False:
         #calculate Chi^2 statistic for unfolded
-        scaled_sim_model = sim_model*theta
         chi2 = numpy.sum((scaled_sim_model - fs)**2/scaled_sim_model)
         chi2 = numpy.around(chi2, 2)
-        print "\t\t\tChi-Squared = ", chi2
-        
+    print("\t\t\tChi-Squared = {:,}".format(chi2))        
 
     #store key results in temporary sublist, append to larger results list
-    temp_results.append(roundrep)
-    temp_results.append(ll)
-    temp_results.append(aic)
-    temp_results.append(chi2)
-    temp_results.append(theta)
-    temp_results.append(params_opt)
+    temp_results = [roundrep, ll, aic, chi2, theta, params_opt]
 
-    #send list of results back
     return temp_results
 
 def write_log(outfile, model_name, rep_results, roundrep):
@@ -162,13 +170,15 @@ def write_log(outfile, model_name, rep_results, roundrep):
             fh_log.write(line)
         fh_templog.close()
     except IOError:
-        print "Nothing written to log file this replicate..."
+        print("Nothing written to log file this replicate...")
     fh_log.write("likelihood = {}\n".format(rep_results[1]))
     fh_log.write("theta = {}\n".format(rep_results[4]))
     fh_log.write("Optimized parameters = {}\n".format(rep_results[5]))
     fh_log.close()
 
-def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" "):
+def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True,
+                         reps=None, maxiters=None, folds=None, in_params=None,
+                         in_upper=None, in_lower=None, param_labels=" "):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
     #(1) fs:  spectrum object name
@@ -196,24 +206,24 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
     #call function that determines if our replicates, maxiter, and fold have been set or need to be generated for us
     reps_list, maxiters_list, folds_list = parse_opt_settings(rounds, reps, maxiters, folds)
     
-    print "\n\n============================================================================\nModel {}\n============================================================================".format(model_name)
+    print("\n\n============================================================================"
+              "\nModel {}\n============================================================================\n\n".format(model_name))
 
     #start keeping track of time it takes to complete optimizations for this model
-    tb_round = datetime.now()
+    tbr = datetime.now()
     
     # We need an output file that will store all summary info for each replicate, across rounds
-    outname = "{0}.{1}.optimized.txt".format(outfile,model_name)
-    fh_out = open(outname, 'a')
-    fh_out.write("Model"+'\t'+"Replicate"+'\t'+"log-likelihood"+'\t'+"AIC"+'\t'+"chi-squared"+'\t'+"theta"+'\t'+"optimized_params({})".format(param_labels)+'\n')
-    fh_out.close()
-    
+    outname = "{0}.{1}.optimized.txt".format(outfile, model_name)
+    with open(outname, 'a') as fh_out:
+        fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params({})\n".format(param_labels))
+        
     #Create list to store sublists of [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values] for every replicate
     results_list = []
     
     #for every round, execute the assigned number of replicates with other round-defined args (maxiter, fold, best_params)
     rounds = int(rounds)
     for r in range(rounds):
-        print "\tBeginning Optimizations for Round {}:".format(r+1)
+        print("\tBeginning Optimizations for Round {}:".format(r+1))
        
         #make sure first round params are assigned (either user input or auto generated)
         if r == int(0):
@@ -224,28 +234,34 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
 
         #perform an optimization routine for each rep number in this round number
         for rep in range(1, (reps_list[r]+1) ):
-            print "\t\tRound {0} Replicate {1} of {2}:".format(r+1, rep, (reps_list[r]))
+            print("\n\t\tRound {0} Replicate {1} of {2}:".format(r+1, rep, (reps_list[r])))
             
             #keep track of start time for rep
             tb_rep = datetime.now()
             
             #create an extrapolating function 
             func_exec = dadi.Numerics.make_extrap_log_func(func)
-
             
             #perturb starting parameters
-            params_perturbed = dadi.Misc.perturb_params(best_params, fold=folds_list[r], upper_bound=upper_bound, lower_bound=lower_bound)
-
+            params_perturbed = dadi.Misc.perturb_params(best_params, fold=folds_list[r],
+                                                            upper_bound=upper_bound, lower_bound=lower_bound)
+            
+            print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
+            
             #optimize from perturbed parameters
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts, lower_bound=lower_bound, upper_bound=upper_bound, verbose=1, maxiter=maxiters_list[r], output_file = "{}.log.txt".format(model_name))
-            print "\t\t\tOptimized parameters = ", params_opt
-
+            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                                                              lower_bound=lower_bound, upper_bound=upper_bound,
+                                                              verbose=1, maxiter=maxiters_list[r],
+                                                              output_file = "{}.log.txt".format(model_name))
+            
+            print("\t\t\tOptimized parameters =[{}]\n".format(", ".join([str(numpy.around(x, 6)) for x in params_opt[0]])))
+            
             #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
+            sim_model = func_exec(params_opt[0], fs.sample_sizes, pts)
 
             #collect results into a list using function above - [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values]
             roundrep = "Round_{0}_Replicate_{1}".format(r+1, rep)
-            rep_results = collect_results(fs, sim_model, params_opt, roundrep, fs_folded)
+            rep_results = collect_results(fs, sim_model, params_opt[0], roundrep, fs_folded)
             
             #reproduce replicate log to bigger log file, because constantly re-written
             write_log(outfile, model_name, rep_results, roundrep)
@@ -254,25 +270,37 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
             results_list.append(rep_results)
             
             #write all this info to our main results file
-            fh_out = open(outname, 'a')
-            #join the param values together with commas
-            easy_p = ",".join(str(numpy.around(x, 4)) for x in rep_results[5])
-            fh_out.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\n".format(model_name, rep_results[0], rep_results[1], rep_results[2], rep_results[3], rep_results[4], easy_p))
-            fh_out.close()
+            with open(outname, 'a') as fh_out:
+                #join the param values together with commas
+                easy_p = ",".join([str(numpy.around(x, 4)) for x in rep_results[5]])
+                fh_out.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\n".format(model_name, rep_results[0],
+                                                                              rep_results[1], rep_results[2],
+                                                                              rep_results[3], rep_results[4],
+                                                                              easy_p))
 
             #calculate elapsed time for replicate
             tf_rep = datetime.now()
             te_rep = tf_rep - tb_rep
-            print "\n\t\t\tReplicate time: {0} (H:M:S)\n".format(te_rep)
+            print("\n\t\t\tReplicate time: {0} (H:M:S)\n".format(te_rep))
 
-        #Now that this round is over, sort results in order of likelihood score, we'll use the parameters from the best rep to start the next round as the loop continues
+        #Now that this round is over, sort results in order of likelihood score
+        #we'll use the parameters from the best rep to start the next round as the loop continues
         results_list.sort(key=lambda x: float(x[1]), reverse=True)
-        print "\tBest so far: {0}, ll = {1}\n\n".format(results_list[0][0], results_list[0][1])
+        print("\n\t----------------------------------------------\n"
+                  "\tBest replicate: {0}\n"
+                  "\t\tLikelihood = {1:,}\n\t\tAIC = {2:,}\n"
+                  "\t\tChi-Squared = {3:,}\n\t\tParams = [{4}]\n"
+                  "\t----------------------------------------------\n\n".format(results_list[0][0],
+                                                                              results_list[0][1],
+                                                                              results_list[0][2],
+                                                                              results_list[0][3],
+                                                                              ", ".join([str(numpy.around(x, 4)) for x in rep_results[5]])))
 
     #Now that all rounds are over, calculate elapsed time for the whole model
-    tf_round = datetime.now()
-    te_round = tf_round - tb_round
-    print "\n{0} Analysis Time for Model: {1} (H:M:S)\n\n============================================================================".format(model_name, te_round)
+    tfr = datetime.now()
+    ter = tfr - tbr
+    print("\nAnalysis Time for Model '{0}': {1} (H:M:S)\n\n"
+              "============================================================================".format(model_name, ter))
 
     #cleanup file
     os.remove("{}.log.txt".format(model_name))

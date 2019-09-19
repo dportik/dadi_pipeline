@@ -1,12 +1,3 @@
-import sys
-import os
-import numpy
-import dadi
-import pylab
-from datetime import datetime
-import Optimize_Functions
-import Models_2D
-
 '''
 Usage: python dadi_Run_2D_Set.py
 
@@ -67,13 +58,14 @@ Citations:
     Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,
     Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
     and forest islands: diversification in the African leaf-folding frog
-    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access,
-    Journal of Biogeography.
+    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae).
+    Journal of Biogeography 45: 1781-1794. 
+    doi: 10.1111/jbi.13365
         
  If you are interesting in contributing your models to this workflow, please email me!
 
 -------------------------
-Written for Python 2.7
+Written for Python 2.7 and 3.7
 Python modules required:
 -Numpy
 -Scipy
@@ -83,15 +75,25 @@ Python modules required:
 Daniel Portik
 daniel.portik@gmail.com
 https://github.com/dportik
-Updated May 2018
+Updated September 2019
 '''
+
+import sys
+import os
+import numpy
+import dadi
+import pylab
+from datetime import datetime
+import Optimize_Functions
+import Models_2D
+
 
 #===========================================================================
 # Import data to create joint-site frequency spectrum
 #===========================================================================
 
 #**************
-snps = "/Users/dan/Dropbox/dadi_inputs/General_Script/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)
@@ -102,18 +104,19 @@ pop_ids=["North", "South"]
 
 #**************
 #projection sizes, in ALLELES not individuals
-proj = [16,32]
+proj = [16, 32]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
 #print some useful information about the afs or jsfs
-print "\n\n============================================================================\nData for site frequency spectrum\n============================================================================\n"
-print "projection", proj
-print "sample sizes", fs.sample_sizes
-sfs_sum = numpy.around(fs.S(), 2)
-print "Sum of SFS = ", sfs_sum, '\n', '\n'
+print("\n\n============================================================================")
+print("\nData for site frequency spectrum:\n")
+print("Projection: {}".format(proj))
+print("Sample sizes: {}".format(fs.sample_sizes))
+print("Sum of SFS: {}".format(numpy.around(fs.S(), 2)))
+print("\n============================================================================\n")
 
 #================================================================================
 # Calling external 2D models from the Models_2D.py script
@@ -121,14 +124,17 @@ print "Sum of SFS = ", sfs_sum, '\n', '\n'
 '''
  We will use a function from the Optimize_Functions.py script for our optimization routines:
  
- Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")
+ Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, 
+                        reps=None, maxiters=None, folds=None, in_params=None, 
+                        in_upper=None, in_lower=None, param_labels=" ")
  
    Mandatory Arguments =
     fs:  spectrum object name
     pts: grid size for extrapolation, list of three values
     outfile:  prefix for output naming
     model_name: a label to help label the output files; ex. "no_mig"
-    func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
+    func: access the model function from within 'moments_Run_Optimizations.py' or from a separate python model script, 
+          ex. after importing Models_2D, calling Models_2D.no_mig
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
     fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False).
@@ -167,7 +173,7 @@ prefix = "_".join(pop_ids)
 #**************
 #make sure to define your extrapolation grid size (based on your projections)
 pts = [50,60,70]
-
+'''
 #**************
 #Set the number of rounds here
 rounds = 4
@@ -177,6 +183,16 @@ rounds = 4
 reps = [10,20,30,40]
 maxiters = [3,5,10,15]
 folds = [3,2,2,1]
+'''
+#**************
+#Set the number of rounds here
+rounds = 1
+
+#define the lists for optional arguments
+#you can change these to alter the settings of the optimization routine
+reps = [1]
+maxiters = [1]
+folds = [1]
 
 #**************
 #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
@@ -197,59 +213,73 @@ This first set of models come from the following publication:
 '''
 
 # Split into two populations, no migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig", Models_2D.no_mig, rounds, 3, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, T")
 
 
 # Split into two populations, with continuous symmetric migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", Models_2D.sym_mig, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T")
 
 
 # Split into two populations, with continuous asymmetric migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig", Models_2D.asym_mig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T")
 
 
 # Split with continuous symmetric migration, followed by isolation.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig", Models_2D.anc_sym_mig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 
 # Split with continuous asymmetric migration, followed by isolation.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_asym_mig", Models_2D.anc_asym_mig, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_asym_mig", Models_2D.anc_asym_mig, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T1, T2")
 
 
 # Split with no gene flow, followed by period of continuous symmetrical gene flow.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig", Models_2D.sec_contact_sym_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig", Models_2D.sec_contact_sym_mig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2")
 
 
 # Split with no gene flow, followed by period of continuous asymmetrical gene flow.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig", Models_2D.sec_contact_asym_mig, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig", Models_2D.sec_contact_asym_mig, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T1, T2")
 
 
 # Split with no migration, then instantaneous size change with no migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig_size", Models_2D.no_mig_size, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "no_mig_size", Models_2D.no_mig_size, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, T1, T2")
 
 
 # Split with symmetric migration, then instantaneous size change with continuous symmetric migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig_size", Models_2D.sym_mig_size, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig_size", Models_2D.sym_mig_size, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2")
 
 
 # Split with different migration rates, then instantaneous size change with continuous asymmetric migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig_size", Models_2D.asym_mig_size, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig_size", Models_2D.asym_mig_size, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2")
 
 
 # Split with continuous symmetrical gene flow, followed by instantaneous size change with no migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig_size", Models_2D.anc_sym_mig_size, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_sym_mig_size", Models_2D.anc_sym_mig_size, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2")
 
 
 # Split with continuous asymmetrical gene flow, followed by instantaneous size change with no migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_asym_mig_size", Models_2D.anc_asym_mig_size, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "anc_asym_mig_size", Models_2D.anc_asym_mig_size, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2")
 
 
 # Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig_size", Models_2D.sec_contact_sym_mig_size, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig_size", Models_2D.sec_contact_sym_mig_size, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2")
 
 
 # Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_size", Models_2D.sec_contact_asym_mig_size, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_size", Models_2D.sec_contact_asym_mig_size, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2")
 
 '''
 The following 6 models were added to the Diversification Model Set by:
@@ -257,45 +287,51 @@ The following 6 models were added to the Diversification Model Set by:
     Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,
     Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
     and forest islands: diversification in the African leaf-folding frog
-    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access,
-    Journal of Biogeography.
+    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae).
+    Journal of Biogeography 45: 1781-1794. 
+    doi: 10.1111/jbi.13365
 '''
 # Split into two populations, with continuous symmetric migration, rate varying across two epochs.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig_twoepoch", Models_2D.sym_mig_twoepoch, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m1, m2, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig_twoepoch", Models_2D.sym_mig_twoepoch, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m1, m2, T1, T2")
 
 
 # Split into two populations, with continuous asymmetric migration, rate varying across two epochs.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig_twoepoch", Models_2D.asym_mig_twoepoch, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12a, m21a, m12b, m21b, T1, T2")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "asym_mig_twoepoch", Models_2D.asym_mig_twoepoch, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12a, m21a, m12b, m21b, T1, T2")
 
 
 # Split with no gene flow, followed by period of continuous symmetrical migration, then isolation.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig_three_epoch", Models_2D.sec_contact_sym_mig_three_epoch, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig_three_epoch", Models_2D.sec_contact_sym_mig_three_epoch, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m, T1, T2, T3")
 
 
 # Split with no gene flow, followed by period of continuous asymmetrical migration, then isolation.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_three_epoch", Models_2D.sec_contact_asym_mig_three_epoch, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_three_epoch", Models_2D.sec_contact_asym_mig_three_epoch, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, m12, m21, T1, T2, T3")
 
 
 # Split with no gene flow, followed by instantaneous size change with continuous symmetrical migration, then isolation.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig_size_three_epoch", Models_2D.sec_contact_sym_mig_size_three_epoch, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2, T3")
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_sym_mig_size_three_epoch", Models_2D.sec_contact_sym_mig_size_three_epoch, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m, T1, T2, T3")
 
 
 # Split with no gene flow, followed by instantaneous size change with continuous asymmetrical migration, then isolation.
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_size_three_epoch", Models_2D.sec_contact_asym_mig_size_three_epoch, rounds, 9, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2, T3")
-
-
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_size_three_epoch", Models_2D.sec_contact_asym_mig_size_three_epoch, rounds, 9, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2, T3")
 
 
 '''
-Island Model Set
+Island Diversification Model Set
 
-This set of models come from the following publication:
+This model set comes from the following publication:
 
     Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,
-    Gvodk, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
+    Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
     and forest islands: diversification in the African leaf-folding frog
-    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). Early Access,
-    Journal of Biogeography.
+    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae).
+    Journal of Biogeography 45: 1781-1794. 
+    doi: 10.1111/jbi.13365
 
 For all the following models, pop2 is assumed to be the 'island' population,
 and pop2=nuA(s), pop1=nuA(1-s), where NuA = ancestral population and 's' is
@@ -310,79 +346,91 @@ similar for models with discrete admixture events, for which we need to
 constrain 'f' to between 0-1.
 
 In general, you would not want to run these with the above model set,
-because they are constructed quite differently.
+because they are constructed differently.
 
 '''
 
 # Island: Vicariance with no migration.
 up = [20, 20, 20, 10, 0.5]
-ps = [1,1,1,1,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig", Models_2D.vic_no_mig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig", Models_2D.vic_no_mig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s", in_upper=up, in_params=ps)
 
 
 # Island: Vicariance with with ancient continuous asymmetric migration.
 up = [20, 20, 20, 10, 10, 10, 10, 0.5]
-ps = [1,1,1,1,1,1,1,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_anc_asym_mig", Models_2D.vic_anc_asym_mig, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m12, m21, T1, T2, s", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_anc_asym_mig", Models_2D.vic_anc_asym_mig, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m12, m21, T1, T2, s", in_upper=up, in_params=ps)
 
 
 # Island: Vicariance with no migration, secondary contact with continuous asymmetric migration
 up = [20, 20, 20, 10, 10, 10, 10, 0.5]
-ps = [1,1,1,1,1,1,1,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_sec_contact_asym_mig", Models_2D.vic_sec_contact_asym_mig, rounds, 8, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m12, m21, T1, T2, s", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_sec_contact_asym_mig", Models_2D.vic_sec_contact_asym_mig, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m12, m21, T1, T2, s", in_upper=up, in_params=ps)
 
 
 # Island: Founder event with no migration.
 up = [20, 20, 20, 10, 0.5]
-ps = [1,1,1,1,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig", Models_2D.founder_nomig, rounds, 5, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig", Models_2D.founder_nomig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s", in_upper=up, in_params=ps)
 
 
 # Island: Founder event with continuous symmetric migration.
 up = [20, 20, 20, 20, 10, 0.5]
-ps = [1,1,1,1,1,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_sym", Models_2D.founder_sym, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m, T, s", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_sym", Models_2D.founder_sym, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m, T, s", in_upper=up, in_params=ps)
 
 
 # Island: Founder event with continuous asymmetric migration.
 up = [20, 20, 20, 20, 20, 10, 0.5]
-ps = [1,1,1,1,1,1,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_asym", Models_2D.founder_asym, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m12, m21, T, s", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_asym", Models_2D.founder_asym, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, m12, m21, T, s", in_upper=up, in_params=ps)
 
 
 # Island: Vicariance, early unidirectional discrete admixture event (before any drift).
 up = [20, 20, 20, 10, 0.5, 0.99]
-ps = [1,1,1,1,0.25,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig_admix_early", Models_2D.vic_no_mig_admix_early, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig_admix_early", Models_2D.vic_no_mig_admix_early, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
 
 
 # Island: Vicariance, late unidirectional discrete admixture event (after any drift).
 up = [20, 20, 20, 10, 0.5, 0.99]
-ps = [1,1,1,1,0.25,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig_admix_late", Models_2D.vic_no_mig_admix_late, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig_admix_late", Models_2D.vic_no_mig_admix_late, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
 
 
 # Island: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 up = [20, 20, 20, 10, 10, 0.5, 0.99]
-ps = [1,1,1,1,1,0.25,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_two_epoch_admix", Models_2D.vic_two_epoch_admix, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T1, T2, s, f", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_two_epoch_admix", Models_2D.vic_two_epoch_admix, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T1, T2, s, f", in_upper=up, in_params=ps)
 
 
 # Founder event with no migration, early unidirectional discrete admixture event.
 up = [20, 20, 10, 10, 0.5, 0.99]
-ps = [1,1,1,1,0.25,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_early", Models_2D.founder_nomig_admix_early, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_early", Models_2D.founder_nomig_admix_early, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
 
 
 # Founder event with no migration, late unidirectional discrete admixture event.
 up = [20, 20, 10, 10, 0.5, 0.99]
-ps = [1,1,1,1,0.25,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_late", Models_2D.founder_nomig_admix_late, rounds, 6, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_late", Models_2D.founder_nomig_admix_late, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T, s, f", in_upper=up, in_params=ps)
 
 
 # Island: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
 up = [20, 20, 10, 10, 10, 0.5, 0.99]
-ps = [1,1,1,1,1,0.25,0.25]
-Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_two_epoch", Models_2D.founder_nomig_admix_two_epoch, rounds, 7, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T1, T2, s, f", in_upper=up, in_params=ps)
+ps = [1, 1, 1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_two_epoch", Models_2D.founder_nomig_admix_two_epoch, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuA, nu1, nu2, T1, T2, s, f", in_upper=up, in_params=ps)
 
 

@@ -1,9 +1,3 @@
-import sys
-import os
-import numpy
-import dadi
-import Plotting_Functions
-
 '''
 Usage: python Make_Plots.py
 
@@ -44,7 +38,7 @@ Citations:
     doi: 10.1111/mec.14266
     
 -------------------------
-Written for Python 2.7
+Written for Python 2.7 and 3.7
 Python modules required:
 -Numpy
 -Scipy
@@ -54,15 +48,19 @@ Python modules required:
 Daniel Portik
 daniel.portik@gmail.com
 https://github.com/dportik
-Updated September 2018
+Updated September 2019
 '''
+import os
+import numpy
+import dadi
+import Plotting_Functions
 
 #===========================================================================
 # Import data to create joint-site frequency spectrum
 #===========================================================================
 
 #**************
-snps = "/Users/dan/Dropbox/dadi_inputs/General_Script/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)
@@ -73,19 +71,19 @@ pop_ids=["North", "South"]
 
 #**************
 #projection sizes, in ALLELES not individuals
-proj = [16,32]
+proj = [16, 32]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
 #print some useful information about the afs or jsfs
-print "\n\n============================================================================\nData for site frequency spectrum\n============================================================================\n"
-print "projection", proj
-print "sample sizes", fs.sample_sizes
-sfs_sum = numpy.around(fs.S(), 2)
-print "Sum of SFS = ", sfs_sum, '\n', '\n'
-
+print("\n\n============================================================================")
+print("\nData for site frequency spectrum:\n")
+print("Projection: {}".format(proj))
+print("Sample sizes: {}".format(fs.sample_sizes))
+print("Sum of SFS: {}".format(numpy.around(fs.S(), 2)))
+print("\n============================================================================\n")
 
 
 #================================================================================
@@ -144,7 +142,6 @@ emp_params = [0.1487,0.1352,0.2477,0.1877]
 model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig, emp_params, fs_folded=True)
 
 
-
 #================================================================================
 # Plotting 2D
 #================================================================================
@@ -171,8 +168,8 @@ Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig")
 #Although the above function does not produce an error, let's pretend it did and
 #change the vmin value. You can see the effect on the colors in the plot. We will
 #edit the "model_name" string so the output file will be called something different.  
-vmin_val = float(0.01)
-Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig_vmin", vmin_val = vmin_val)
+vmin = float(0.01)
+Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig_vmin", vmin_val = vmin)
 
 
 

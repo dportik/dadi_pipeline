@@ -96,7 +96,7 @@ Updated September 2018
 #===========================================================================
 
 #**************
-snps = "/Users/dan/Dropbox/dadi_inputs/General_Script/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)
@@ -114,13 +114,12 @@ proj = [16,32]
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
 #print some useful information about the afs or jsfs
-print "\n\n============================================================================\nData for site frequency spectrum\n============================================================================\n"
-print "projection", proj
-print "sample sizes", fs.sample_sizes
-sfs_sum = numpy.around(fs.S(), 2)
-print "Sum of SFS = ", sfs_sum, '\n', '\n'
-
-
+print("\n\n============================================================================")
+print("\nData for site frequency spectrum\n")
+print("Projection: {}".format(proj))
+print("Sample sizes: {}".format(fs.sample_sizes))
+print("Sum of SFS: {}".format(numpy.around(fs.S(), 2)))
+print("\n============================================================================\n")
 
 #================================================================================
 # Fit the empirical data based on prior optimization results, obtain model SFS
@@ -185,7 +184,7 @@ scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym
 #================================================================================
 '''
  We will use a function from the Optimize_Functions_GOF.py script:
- 	Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, 
+ 	Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded,
  				reps=None, maxiters=None, folds=None)
 
 Mandatory Arguments =
@@ -196,6 +195,7 @@ Mandatory Arguments =
     func: access the model function from within this script
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
+    fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False).
 
 Optional Arguments =
      reps: a list of integers controlling the number of replicates in each of the optimization rounds
@@ -205,11 +205,11 @@ Optional Arguments =
 
 #**************
 #Set the number of simulations to perform here. This should be ~100 or more.
-sims = 100
+sims = 3
 
 #**************
 #Enter the number of parameters found in the model to test.
-p_num = 4
+pnum = 4
 
 #**************
 #Set the number of rounds here.
@@ -220,8 +220,10 @@ reps = [20,30,50]
 maxiters = [5,10,20]
 folds = [3,2,1]
 
+
 #Execute the optimization routine for each of the simulated SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is (as the actual values can be changed above).
-Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
+Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, pnum, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds)
 

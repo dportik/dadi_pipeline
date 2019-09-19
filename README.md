@@ -2,7 +2,26 @@
 
 ---------------------------------
 
-## Purpose:
+## Overview of Page Contents
+
++ [Purpose](#P)
++ [Version](#V)
++ [Dadi Pipeline Overview](#PO)
++ [Optimization Routine Overview](#OR)
++ [Examples of Usage](#EU)
++ [Test Data](#TD)
++ [Outputs](#O)
++ [Designating Folded vs. Unfolded Spectra](#FU)
++ [Default Optimization Routine Settings](#DOR)
++ [Why Perform Multiple Rounds of Optimizations?](#WMR)
++ [My Analysis Crashed! What Now?](#AC)
++ [Caveats](#C)
++ [Citation Information](#CI)
++ [Publications](#PUBS)
++ [License](#LIC)
++ [Contact](#CON)
+
+## **Purpose** <a name="P"></a>
 
 Perform demographic model optimizations and comparisons with this accessible and flexible  tool called *dadi_pipeline*.
 
@@ -13,7 +32,13 @@ questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user)
 to use these scripts, read over the user manual for dadi and try running the program with the 
 example files.
 
-## Overview:
+## **Version** <a name="V"></a>
+
+The current version of *dadi_pipeline* is v3.1. What's new in version 3.1?
+
++ All scripts upgraded to Python 3 (tested for 3.7).
+
+## **Dadi Pipeline Overview** <a name="PO"></a>
 
 In this main repository of *dadi_pipeline* is a general use script (`dadi_Run_Optimizations.py`) that can be used to run dadi to fit any model on an allele frequency spectrum/joint-site frequency spectrum containing one to three populations. This script will perform a general optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266) and will produce associated output files. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the *dadi_Run_Optimizations.py* that will have to be edited. Any custom model can be used, and below are several examples of how to use various arguments to control the model optimizations. 
 
@@ -29,14 +54,14 @@ If you'd like to create a figure comparing the empirical SFS and model SFS for a
 **For information on how to cite *dadi_pipeline*, please see the Citation section at the bottom of this page.**
 
 
-## Optimizations:
+## **Optimization Routine Overview** <a name="OR"></a>
 
 The `dadi_Run_Optimizations.py` and associated 2D and 3D population pipelines are components of *dadi_pipeline* that each were designed to implement the optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). This optimization routine includes fitting the model using particular settings for a given number of replicates, then using the parameters from the best scoring replicate to seed a subsequent round of model fitting using updated settings. This process occurs across multiple rounds, which improves the log-likelihood scores and generally results in convergence in the final round.
 
 In the `dadi_Run_Optimizations.py` script, the optimization routine contains a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. This flexibility should allow these scripts to be generally useful for fitting any model to any data set. 
 
 
-## Examples of Usage:
+## **Examples of Usage** <a name="EU"></a>
 
 Let's assume you've supplied the correct information about your SNPs input file, population IDs, projection sizes, and are using the model in the script (sym_mig).
 
@@ -164,7 +189,7 @@ That's why I have written a range of 1-6 to perform this 5 times.
         Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, param_labels = p_labels, in_upper=upper, in_lower=lower, reps = reps, maxiters = maxiters, folds = folds)
 
 
-## Test Data Set:
+## **Test Data** <a name="TD"></a>
 
 In the folder labeled *Example_Data* you will find a SNPs input file that will run with the `dadi_Run_Optimizations.py` script.
 You will only need to edit the path to the file in the script, and then you will be able to run all five examples above. The 
@@ -172,7 +197,7 @@ outputs for these examples are also contained within the *Example_Data* folder, 
 Please test the script using these data to ensure everything is working properly before examining your own empirical data. 
 
 
-## Outputs:
+## **Outputs** <a name="O"></a>
 
  For each model run, there will be a log file showing the optimization steps per replicate and a summary file that has all the important information. 
  
@@ -185,7 +210,7 @@ Here is an example of the output from a summary file, which will be in tab-delim
      sym_mig	Round_1_Replicate_4	-4262.29	8532.58	8907386.55	288.05	0.3689,0.8892,3.0951,2.8496
      sym_mig	Round_1_Replicate_5	-4474.86	8957.72	13029301.84	188.94	2.9248,1.9986,0.2484,0.3688
 
-## Using Folded vs. Unfolded Spectra:
+## **Designating Folded vs. Unfolded Spectra** <a name="FU"></a>
 
  To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
  
@@ -212,7 +237,7 @@ It will be clear if either argument has been misspecified because the calculatio
 
 If you see this, check to make sure both relevant arguments actually agree on the spectrum being folded or unfolded.
 
-## Default Optimization Settings:
+## **Default Optimization Settings** <a name="DOR"></a>
 
 The optimization routine arguments offer a lot of flexibility, but the default settings can also be used. If only
 the number of rounds is changed, here are the defaults for the optional arguments (reps, maxiters, folds)
@@ -243,7 +268,7 @@ based on the number of rounds selected:
 | maxiter | 5 |  5  | 5 | 5 | 5 |
 | fold |  3 |  3  | 3 | 2 | 1 |
 
-## Why Perform Multiple Rounds of Optimizations?
+## **Why Perform Multiple Rounds of Optimizations?** <a name="WMR"></a>
 
 When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In the 2D, 3D, and custom workflows of *dadi_pipeline*, the default starting parameters used for all replicates in first round are random. After each round is completed, the parameters of the best scoring replicate from the previous round are then used to generate perturbed starting parameters for the replicates of the subsequent round. This optimization strategy of focusing the parameter search space improves the log-likelihood scores and generally results in convergence in the final round. 
 
@@ -251,9 +276,9 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 ![Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Older_2D_Pipelines/2D_Pipeline_v1/NoMig_Zoom.png)
 
-If several independent runs for this model each converge on similar log-likelihood scores in the fourth round, you can be mostly confident that analyses are not getting trapped on local optima, and that the true log-likelihood has been obtained.
+Please understand that it is possible for a single execution of the pipeline to get stuck on a local optima for any given model! This is why I strongly recommend running the pipeline multiple times for a given model. If several independent runs for this model each converge on similar log-likelihood scores in the fourth round, you can be mostly confident that analyses are not getting trapped on local optima, and that the true log-likelihood has been obtained.
 
-## My Analysis Crashed! What Now?
+## **My Analysis Crashed! What Now?** <a name="AC"></a>
 
 For various reasons, sometimes an analysis can crash. In some cases, it is not desirable to re-start a model optimization routine from scratch. You can essentially pick up where you left off through a couple of simple actions. First, you will need to find the highest scoring replicate that occurred during the round that crashed. These parameter values will be used as input parameters. Second, the number of rounds and corresponding reps, maxiters, and folds arguments will need to be adjusted to start in the later rounds.
 
@@ -309,12 +334,12 @@ so that it looks like this:
 That will allow you to more or less pick up where you left off. Please note that if running multiple models in a given script, changing the rounds, reps, maxiters, and folds arguments will affect all of them. So, it is best to isolate a single model to jump-start a crashed analysis.
 
 
-## Caveats:
+## **Caveats** <a name="C"></a>
 
  The likelihood and AIC returned represent the true likelihood only if the SNPs are unlinked across loci. For ddRADseq data where a single SNP is selected per locus, this is considered true, but if SNPs are linked across loci then the likelihood is actually a composite likelihood and using something like AIC is no longer appropriate for model comparisons. See the discussion group for more information on this subject. 
 
 
-## Citation Information:
+## **Citation Information** <a name="CI"></a>
 
 ### How to cite *dadi_pipeline*:
 
@@ -347,7 +372,9 @@ Here is a list of the publications mentioned above, for easy reference:
 
 + *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. Molecular Ecology 27: 4289-4308. https://doi.org/10.1111/mec.14862*
 
-### Publications that have used the demographic modeling workflow (dadi_pipeline):
+### **Publications** <a name="PUBS"></a>
+
+The following is a running list of publications that have used this demographic modeling workflow (dadi_pipeline):
 
 + Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***bioRxiv***. *https://doi.org/10.1101/450692*
 
@@ -372,11 +399,11 @@ Here is a list of the publications mentioned above, for easy reference:
 + Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. **2017**. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
 
 
-## License:
+## **License** <a name="LIC"></a>
 
 GNU Lesser General Public License v3.0
 
-## Contact:
+## **Contact** <a name="CON"></a>
 
 Daniel Portik, PhD
 

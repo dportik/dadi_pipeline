@@ -1,6 +1,3 @@
-import sys
-import os
-import shutil
 '''
 usage: python Summarize_Outputs.py [full path to directory with results files]
 
@@ -24,14 +21,18 @@ You should probably inspect that the top-scoring replicates were ERROR-FREE.
 Often errors are logged on screen and log-likelihoods are still produced.
 
 -------------------------
-Written for Python 2.7
+Written for Python 2.7 and 3.7
+No dependencies
 -------------------------
 
 Daniel Portik
-danielportik@email.arizona.edu
+daniel.portik@gmail.com
 https://github.com/dportik
-May 2018
+Updated September 2019
 '''
+
+import sys
+import os
 
 #===========================================================================
 file_dir = sys.argv[1]
@@ -41,65 +42,52 @@ os.chdir(file_dir)
 summary_list = []
 simple_list = []
 
+#list comprehension to find output files
+flist = [f for f in os.listdir('.') if f.endswith(".optimized.txt")]
+print("\n\nFound {} output files to summarize.\n".format(len(flist)))
 
-#search working directory
-for filetype in os.listdir('.'):
-    #find output files by extension name
-    if filetype.endswith(".optimized.txt"):
-        #now to get contents into an empty list
-        content = []
-        #open file
-        fh_temp = open(filetype, 'r')
-        print "Examining file {}".format(filetype)
-        #read lines into memory
-        lines = fh_temp.readlines()
-        #iterate over lines but skip header line
-        for line in lines[1:]:
-            line = line.strip()
-            line_items = line.split('\t')
-            content.append(line_items)
-        #close file
-        fh_temp.close()
+#iterate over output files
+for f in flist:
+    content = []
+    print("\tExtracting contents from: {}".format(f))
+    #open file, skip first line
+    with open(f, 'r') as fh:
+        next(fh)
+        #split lines and add contents to list
+        for line in fh:
+            content.append(line.strip().split('\t'))
+    #content list items will have order: "Model"	"Replicate"	"log-likelihood"	"AIC"	"chi-squared"	"theta"	"optimized_params(xxx)"
+    #let's sort all the rows by AIC, lowest to highest
+    content.sort(key=lambda x: float(x[3]))
         
-        #content list items will have order: "Model"	"Replicate"	"log-likelihood"	"AIC"	"chi-squared"	"theta"	"optimized_params(xxx)"
-        #let's sort all the rows by AIC, lowest to highest
-        content.sort(key=lambda x: float(x[3]))
+    #add top five entries to summary list
+    for i in content[:5]:
+        summary_list.append(i)
         
-        #add top five entries to summary list
-        for i in content[:5]:
-            summary_list.append(i)
-        #add top entry to easy list
-        simple_list.append(content[0])
+    #add top entry to easy list
+    simple_list.append(content[0])
    
 #sort the list containing only the top entry for each model by order of AIC
 simple_list.sort(key=lambda x: float(x[3]))
 
 #create output file 1
 out1 = "Results_Summary_Extended.txt"
-fh_out1 = open(out1, 'a')
-
-#write tab-delimited file with extended results
-fh_out1.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params\n")
-for row in summary_list:
-    for val in row:
-        fh_out1.write("{}\t".format(val))
-    fh_out1.write("\n")
+with open(out1, 'a') as fh:
+    #write tab-delimited file with extended results
+    fh.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params\n")
+    for row in summary_list:
+        for val in row:
+            fh.write("{}\t".format(val))
+        fh.write("\n")
 
 #create output file 2
 out2 = "Results_Summary_Short.txt"
-fh_out2 = open(out2, 'a')
+with open(out2, 'a') as fh:
+    #write tab-delimited file with simplified results
+    fh.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params\n")
+    for row in simple_list:
+        for val in row:
+            fh.write("{}\t".format(val))
+        fh.write("\n")
 
-#write tab-delimited file with simplified results
-fh_out2.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params\n")
-for row in simple_list:
-    for val in row:
-        fh_out2.write("{}\t".format(val))
-    fh_out2.write("\n")
-
-#close output files
-fh_out1.close()
-fh_out2.close()
-
-print "\n\nSummary files '{0}' and '{1}' have been written to {2}\n\n".format(out1, out2, file_dir)
-
-#===========================================================================
+print("\n\nSummary files '{0}' and '{1}' have been written to: \n\t{2}\n\n".format(out1, out2, file_dir))
