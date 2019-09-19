@@ -34,9 +34,11 @@ example files.
 
 ## **Version** <a name="V"></a>
 
-The current version of *dadi_pipeline* is v3.1. What's new in version 3.1?
+The current version of **dadi_pipeline*** is v3.1. 
 
-+ All scripts upgraded to Python 3 (tested for 3.7).
+What's new in version 3.1?
+
++ All scripts have been upgraded to Python 3 (tested for 3.7).
 
 ## **Dadi Pipeline Overview** <a name="PO"></a>
 
