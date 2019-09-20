@@ -102,10 +102,7 @@ Let's use the function to run an optimization routine for our data and this mode
 We always need to specify the eight required arguments (in order) in this function, but there are other options
 we can also use if we wanted more control over the optimization scheme. We'll start with
 the basic version here. The argument explanations are above. This would perform three
-rounds of optimizations, using a default number of replicates for each round. At the end
-of each round, the parameters of the best-scoring replicate are used to generate the starting
-parameters for the replicates of the next round, and so on. This will help focus the parameter
-search space as the rounds continue.
+rounds of optimizations, using a default number of replicates for each round. For details on these defaults, please see the [Default Optimization Routine Settings](#DOR) section. At the end of each round, the parameters of the best-scoring replicate are used to generate the starting parameters for the replicates of the next round, and so on. This will help focus the parameter search space as the rounds continue. 
 
     #create a prefix to label the output files
     prefix = "V1"
@@ -117,8 +114,7 @@ search space as the rounds continue.
 ### Example 2
 
 It is a good idea to include the labels of the parameters so they can get written to the
-output file, otherwise you'll have to go back to the model each time you wanted to see their
-order.
+output file, otherwise you'll have to go back to the model each time you wanted to see their order. Notice that the optional arguments require using the = sign to assign a variable or value to the argument.
 
     prefix = "V2"
     pts = [50,60,70]
