@@ -25,12 +25,9 @@
 
 Perform demographic model optimizations and comparisons with this accessible and flexible  tool called *dadi_pipeline*.
 
-This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) 
-and assumes you already have the package installed. This pipeline was designed to work with the Python3 version of dadi (>v2). It has been tested with Python 3.7, and is also backwards compatible with Python 2 (though dadi v2 may no longer be!). You'll need to be familiar with how dadi works, 
-and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related 
-questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting
-to use these scripts, read over the user manual for dadi and try running the program with the 
-example files.
+This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) and assumes you already have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting to use these scripts, read over the user manual for dadi and try running the program with the example files.
+
+The most current version of this pipeline is designed to run in Python 3 and requires the Python 3 version of dadi (>v2.0). The pipeline has been tested with Python 3.7. If you need to run the pipeline with Python 2 (no longer recommended), you can download and use the [v3.0 release here](https://github.com/dportik/dadi_pipeline/releases/tag/v3.0), but this also requires obtaining an older version of dadi (v1.x). 
 
 ## **Version** <a name="V"></a>
 
