@@ -15,6 +15,7 @@
 + [Default Optimization Routine Settings](#DOR)
 + [Why Perform Multiple Rounds of Optimizations?](#WMR)
 + [My Analysis Crashed! What Now?](#AC)
++ [Reporting Bugs/Errors](#RBE)
 + [Caveats](#C)
 + [Citation Information](#CI)
 + [Publications](#PUBS)
@@ -25,7 +26,7 @@
 
 Perform demographic model optimizations and comparisons with this accessible and flexible  tool called *dadi_pipeline*.
 
-This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) and assumes you already have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting to use these scripts, read over the user manual for dadi and try running the program with the example files.
+This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) and assumes you already have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related questions is the [dadi user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting to use these scripts, read over the user manual for dadi and try running the program with the example files.
 
 The most current version of this pipeline is designed to run in Python 3 and requires the Python 3 version of dadi (>v2.0). The pipeline has been tested with Python 3.7. If you need to run the pipeline with Python 2 (no longer recommended), you can download and use the [v3.0 release here](https://github.com/dportik/dadi_pipeline/releases/tag/v3.0), but this also requires obtaining an older version of dadi (v1.x). 
 
@@ -328,6 +329,9 @@ so that it looks like this:
 
 That will allow you to more or less pick up where you left off. Please note that if running multiple models in a given script, changing the rounds, reps, maxiters, and folds arguments will affect all of them. So, it is best to isolate a single model to jump-start a crashed analysis.
 
+## **Reporting Bugs/Errors** <a name="RBE"></a>
+
+If you encounter any issues while using *dadi_pipeline*, it could be the result of a dadi-specific problem or an error in dadi_pipeline. I strongly recommend looking through the [dadi user group](https://groups.google.com/forum/#!forum/dadi-user) to see if a similar issue has been raised previously. This community resource is extremely helpful for troubleshooting. If you believe the issue is specific to dadi_pipeline, please post the error along with the relevant details of the analysis in the [issues page](https://github.com/dportik/dadi_pipeline/issues) in the repository. 
 
 ## **Caveats** <a name="C"></a>
 
