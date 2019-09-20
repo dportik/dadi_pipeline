@@ -78,7 +78,7 @@ We will use always use the following function from the `Optimize_Functions.py` s
 + **fs**:  spectrum object name
 + **pts**: grid size for extrapolation, list of three values
 + **outfile**:  prefix for output naming
-+ **model_name**: a label help name the output files; ex. "no_mig"
++ **model_name**: a name to help label the output files; ex. "no_mig"
 + **func**: access the model function from within `dadi_Run_Optimizations.py` or from a separate python model script, ex. after importing Models_2D, calling Models_2D.no_mig
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model selected (can count in params line for the model)
@@ -411,7 +411,7 @@ Daniel Portik, PhD
 
 Postdoctoral Researcher
 
-University of Arizona
+California Academy of Sciences 
 
 daniel.portik@gmail.com
 

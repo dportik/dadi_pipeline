@@ -90,7 +90,7 @@ The simulations and optimizations are performed with the following function:
 + **sim_number**: the number of simulations to perform
 + **model_fs**:  the scaled model spectrum object name
 + **pts**: grid size for extrapolation, list of three values
-+ **model_name**: a label to help label on the output files; ex. "sym_mig"
++ **model_name**: a name to help label on the output files; ex. "sym_mig"
 + **func**: access the model function from within this script
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model to fit
@@ -269,10 +269,6 @@ If you conduct goodness of fit tests using these scripts, please also cite this 
 ## Contact:
 
 Daniel Portik, PhD
-
-Postdoctoral Researcher
-
-University of Arizona
 
 daniel.portik@gmail.com
 

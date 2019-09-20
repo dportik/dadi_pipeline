@@ -79,7 +79,7 @@ The 2D plotting is performed with the following function:
 + **fs**:  spectrum object name
 + **pts**: grid size for extrapolation, list of three values
 + **outfile**:  prefix for output naming
-+ **model_name**: a label help name the output files; ex. "sym_mig"
++ **model_name**: a label to help name the output files; ex. "sym_mig"
 
 ***Optional Arguments:***
 
@@ -193,10 +193,6 @@ If you use the 2D, 3D, or custom demographic modeling pipelines for your work, o
 **Contact:**
 
 Daniel Portik, PhD
-
-Postdoctoral Researcher
-
-University of Arizona
 
 daniel.portik@gmail.com
 

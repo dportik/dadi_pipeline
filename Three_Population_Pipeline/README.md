@@ -281,7 +281,7 @@ Daniel Portik, PhD
 
 Postdoctoral Researcher
 
-University of Arizona
+California Academy of Sciences
 
 daniel.portik@gmail.com
 
