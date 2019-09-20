@@ -194,5 +194,9 @@ If you use the 2D, 3D, or custom demographic modeling pipelines for your work, o
 
 Daniel Portik, PhD
 
+Postdoctoral Researcher
+
+California Academy of Sciences
+
 daniel.portik@gmail.com
 

@@ -306,7 +306,7 @@ Daniel Portik, PhD
 
 Postdoctoral Researcher
 
-California Academy of Sciences 
+California Academy of Sciences
 
 daniel.portik@gmail.com
 
