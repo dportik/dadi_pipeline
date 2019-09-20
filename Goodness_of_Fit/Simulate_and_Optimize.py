@@ -205,7 +205,7 @@ Optional Arguments =
 
 #**************
 #Set the number of simulations to perform here. This should be ~100 or more.
-sims = 3
+sims = 100
 
 #**************
 #Enter the number of parameters found in the model to test.

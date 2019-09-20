@@ -167,16 +167,6 @@ pts = [50,60,70]
 
 #**************
 #Set the number of rounds here
-rounds = 1
-
-#define the lists for optional arguments
-#you can change these to alter the settings of the optimization routine
-reps = [1]
-maxiters = [3]
-folds = [3]
-'''
-#**************
-#Set the number of rounds here
 rounds = 4
 
 #define the lists for optional arguments
@@ -184,7 +174,7 @@ rounds = 4
 reps = [10,20,30,40]
 maxiters = [3,5,10,15]
 folds = [3,2,2,1]
-'''
+
 #**************
 #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
 fs_folded = True
