@@ -43,7 +43,7 @@ summary_list = []
 simple_list = []
 
 #list comprehension to find output files
-flist = [f for f in os.listdir('.') if f.endswith(".optimized.txt")]
+flist = sorted([f for f in os.listdir('.') if f.endswith(".optimized.txt")])
 print("\n\nFound {} output files to summarize.\n".format(len(flist)))
 
 #iterate over output files
