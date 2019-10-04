@@ -171,6 +171,10 @@ If you see this, check to make sure both relevant arguments actually agree on th
  Sometimes you may see the following error when plotting 2D or 3D, after the script crashes:
  
      "ValueError: Data has no positive values, and therefore can not be log-scaled."
+
+Sometimes this error can also appear as:
+
+     "ZeroDivisionError: float division by zero"
  
  To deal with this, you can change the optional argument vmin_val to a value
  between 0 and 0.05 (0.05 is the default). I have used values from 0.005-0.01
