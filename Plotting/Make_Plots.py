@@ -54,16 +54,19 @@ import os
 import numpy
 import dadi
 import Plotting_Functions
+from dadi import Numerics, PhiManip, Integration
+from dadi.Spectrum_mod import Spectrum
 
 #===========================================================================
 # Import data to create joint-site frequency spectrum
 #===========================================================================
 
 #**************
+#path to your input file
 snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
-dd = dadi.Misc.make_data_dict(snps)
+dd = Misc.make_data_dict(snps)
 
 #**************
 #pop_ids is a list which should match the populations headers of your SNPs file columns
@@ -103,8 +106,10 @@ Mandatory Arguments =
     fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False).
 '''
 
+#**************
+#COPY AND PASTE YOUR MODEL HERE, do not use this one!
+#you can copy/paste directly from the Models_2D.py or Models_3D.py scripts
 
-#Let's start by defining our model
 def sym_mig(params, ns, pts):
     """
     Split into two populations, with symmetric migration.
@@ -125,6 +130,7 @@ def sym_mig(params, ns, pts):
 
 #create a prefix based on the population names to label the output files
 #ex. Pop1_Pop2
+#DO NOT EDIT THIS
 prefix = "_".join(pop_ids)
 
 #**************
@@ -136,6 +142,7 @@ pts = [50,60,70]
 #These will come from previous analyses you have already completed.
 emp_params = [0.1487,0.1352,0.2477,0.1877]
 
+#**************
 #Fit the model using these parameters and return the model SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is. See above for argument explanations.
@@ -143,7 +150,7 @@ model_fit = Plotting_Functions.Fit_Empirical(fs, pts, prefix, "sym_mig", sym_mig
 
 
 #================================================================================
-# Plotting 2D
+# Plotting a 2D spectrum
 #================================================================================
 '''
  We will use a function from the Plotting_Functions.py script to plot:
@@ -159,12 +166,12 @@ Optional Arguments =
      vmin_val: Minimum values plotted for sfs, default is 0.05 and to fix the common error this should
                be changed to something between 0 and 0.05.
 '''
-
+#**************
 #Now we simply call the function with the correct arguments (notice many are the same from the
 #empirical fit).
 Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig")
 
-
+#**************
 #Although the above function does not produce an error, let's pretend it did and
 #change the vmin value. You can see the effect on the colors in the plot. We will
 #edit the "model_name" string so the output file will be called something different.  
@@ -174,11 +181,11 @@ Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig_vmin", vmin_val = vmi
 
 
 #================================================================================
-# Plotting 1D or 3D spectra
+# Plotting a 1D spectrum
 #================================================================================
 
 #Although we've used the script to plot a 2D jsfs, it can also be used to create
-#plots for 1D and 3D spectra in much the same way.
+#plots for a 1D spectrum in much the same way.
  
 '''
 For a 1D sfs:
@@ -190,13 +197,24 @@ For a 1D sfs:
     model_fit:  the model spectrum object name
  	outfile: prefix for output naming
  	model_name: a label to help name the output files; ex. "sym_mig"
+'''
 
-Example 1D plot call (will not work with this 2D sfs!):
+#Example 1D plot call (will not work with the example 2D sfs!):
+#**************
+#Unhash the command below to run the 1D plot, make sure to change
+#the 'prefix' and 'something' args to fit your dataset 
 
-Plotting_Functions.Plot_1D(fs, model_fit, prefix, "something")
+#Plotting_Functions.Plot_1D(fs, model_fit, prefix, "something")
 
 
+#================================================================================
+# Plotting a 3D spectrum
+#================================================================================
 
+#Although we've used the script to plot a 2D jsfs, it can also be used to create
+#plots a 3D spectrum in much the same way.
+
+'''
 For a 3D jsfs:
  We will use a function from the Plotting_Functions.py script to plot:
  	Plot_3D(fs, model_fit, outfile, model_name, vmin_val=None)
@@ -210,9 +228,13 @@ For a 3D jsfs:
  Optional Arguments =
      vmin_val: Minimum values plotted for sfs, default is 0.05 and to fix the common error this should
                be changed to something between 0 and 0.05.
-
-#Example 3D plot call (will not work with this 2D sfs!):
-
-Plotting_Functions.Plot_3D(fs, model_fit, prefix, "something")
 '''
+
+#Example 3D plot call (will not work with the example 2D sfs!):
+#**************
+#Unhash the command below to run the 1D plot, make sure to change
+#the 'prefix' and 'something' args to fit your dataset 
+
+#Plotting_Functions.Plot_3D(fs, model_fit, prefix, "something")
+
 

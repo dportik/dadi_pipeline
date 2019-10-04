@@ -24,6 +24,10 @@ create a figure comparing the data and model SFS, including the residuals.
 
 The `Make_Plots.py` script and `Plotting_Functions.py` script must be in the same working directory to run properly.
 
+## What to Edit:
+
+Within the script, you will need to edit information about your input file and spectrum characteristics, similar to all other scripts in *dadi_pipeline*. In addition, you will need to copy and paste the demographic model into the script. This can be copy/pasted directly from the [Models_2D.py](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Models_2D.py) file or [Models_3D.py](https://github.com/dportik/dadi_pipeline/blob/master/Three_Population_Pipeline/Models_3D.py) file. The parameter values of the best-fit replicate will need to be supplied, which are used to generate the model SFS. More details about what to edit are provided in the two sections below. 
+
 ## Empirical Data Optimization:
 
 Within the `Make_Plots.py` script, let's assume you've supplied the correct information about your SNPs input file, population IDs, projection sizes, and are using the model in the script (sym_mig).
