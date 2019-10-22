@@ -45,20 +45,7 @@ Here is a running list of the models currently available. The name of the model 
 
 **Island Model Set**
 
-For all the following models, pop2 is assumed to be the 'island' population, and pop2=nuA(s), pop1=nuA(1-s), where NuA = ancestral population and 's' is a fraction. Vicariance events involve no population size change, whereas founder event models always enforce exponential growth in pop2 (the island population). Discrete admixture events are included as a comparison to intervals of continuous migration, and are represented by parameter 'f', in which a fraction f of the mainland population is instantaneously present in the post-admixture island population. Because of the way these models are constructed, you should not analyze these in combination with the Diversification Model Set for the purpose of performing model selection.
-
-+ *vic_no_mig*: Vicariance with no migration.
-+ *vic_anc_asym_mig*: Vicariance with with ancient continuous asymmetric migration.
-+ *vic_sec_contact_asym_mig*: Vicariance with no migration, secondary contact with continuous asymmetric migration
-+ *founder_nomig*: Founder event with no migration.
-+ *founder_sym*: Founder event with continuous symmetric migration.
-+ *founder_asym*: Founder event with continuous asymmetric migration.
-+ *vic_no_mig_admix_early*: Vicariance, early unidirectional discrete admixture event (before any drift).
-+ *vic_no_mig_admix_late*: Vicariance, late unidirectional discrete admixture event (after any drift).
-+ *vic_two_epoch_admix*: Vicariance, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
-+ *founder_nomig_admix_early*: Founder event, early unidirectional discrete admixture event (before any drift).
-+ *founder_nomig_admix_late*: Founder event, late unidirectional discrete admixture event (after any drift).
-+ *founder_nomig_admix_two_epoch*: Founder event, two epochs with unidirectional discrete admixture event occurring at beginning of the second epoch.
+The island model set is currently in revision, please check back soon!
 
 
 ## Optimization Routine Settings:
