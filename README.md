@@ -37,7 +37,8 @@ The current version of **dadi_pipeline** is v3.1.1.
 What's new in version 3.1+?
 
 + All scripts have been upgraded to Python 3 (tested with 3.7), allowing compatibility with dadi v2.
-+ Prints perturbed starting parameters to screen for each replicate, allowing comparison to final optimized parameters and to starting parameters of other replicates.
++ Prints parameter labels and perturbed starting parameters to screen for each replicate. This allows quick visual comparisons of the initial and final optimized parameters among replicates.
++ The 2D island model set has been revised and updated, fixing issues with parameter assignment. 
 
 ## **Dadi Pipeline Overview** <a name="PO"></a>
 
