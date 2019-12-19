@@ -49,6 +49,8 @@ The island model set was recently revised as part of release v3.1.1.
 
 For all the following models, the 'island' population is population 2 (nu2) and the mainland population is population 1 (nu1). Their sizes are based on the parameter s, where 0 < s < 1. Here, s represents the fraction of Nref that enters the island population, with pop2 (island) = s, and pop1 (mainland) = 1-s. When these models are called in the pipeline the upper bound on s is set to 0.5, such that the island population (pop2) must be composed of <50% of the ancestral population. This is to reflect the idea that the size of the island population should be smaller (at least initially). The values of nu1 (mainland) and nu2 (island) are therefore 1-s and s, respectively, unless there is a size change event. The 'vicariance' models involve no population size change, whereas the 'founder' event models always enforce exponential growth in pop2 (the island population). Please see the `Models_2D.py` script for additional details for these models. 
 
+**Note:** These models are not yet depicted accurately in the [Models_2D.pdf](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Models_2D.pdf) file, which show previous versions of some of these models.
+
 + *vic_no_mig*: Vicariance with no migration.
 + *vic_anc_sym_mig*: Vicariance with ancient symmetric migration.
 + *vic_anc_asym_mig*: Vicariance with ancient asymmetric migration.
