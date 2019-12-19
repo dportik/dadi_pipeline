@@ -119,6 +119,11 @@ def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
     # fs_folded: a Boolean (True, False) for whether empirical spectrum is folded or not
     #--------------------------------------------------------------------------------------
 
+    #calculate theta
+    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+    theta = numpy.around(theta, 2)
+    print("\t\t\tTheta = {:,}".format(theta))
+    
     #calculate likelihood
     ll = dadi.Inference.ll_multinom(sim_model, fs)
     ll = numpy.around(ll, 2)
@@ -127,11 +132,6 @@ def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
     #calculate AIC 
     aic = ( -2*( float(ll))) + (2*len(params_opt))
     print("\t\t\tAIC = {:,}".format(aic))
-
-    #calculate theta
-    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
-    theta = numpy.around(theta, 2)
-    print("\t\t\tTheta = {:,}".format(theta))
 
     #get Chi^2
     scaled_sim_model = sim_model*theta
@@ -178,7 +178,7 @@ def write_log(outfile, model_name, rep_results, roundrep):
 
 def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True,
                          reps=None, maxiters=None, folds=None, in_params=None,
-                         in_upper=None, in_lower=None, param_labels=" "):
+                         in_upper=None, in_lower=None, param_labels=None):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
     #(1) fs:  spectrum object name
@@ -197,7 +197,7 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
     #(12) in_params: a list of parameter values 
     #(13) in_upper: a list of upper bound values
     #(14) in_lower: a list of lower bound values
-    #(15) param_labels: list of labels for parameters that will be written to the output file to keep track of their order
+    #(15) param_labels: a string, labels for parameters that will be written to the output file to keep track of their order
     #--------------------------------------------------------------------------------------
 
     #call function that determines if our params and bounds have been set or need to be generated for us
@@ -215,7 +215,10 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
     # We need an output file that will store all summary info for each replicate, across rounds
     outname = "{0}.{1}.optimized.txt".format(outfile, model_name)
     with open(outname, 'a') as fh_out:
-        fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params({})\n".format(param_labels))
+        if param_labels:
+            fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params({})\n".format(param_labels))
+        else:
+            fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params\n")
         
     #Create list to store sublists of [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values] for every replicate
     results_list = []
@@ -235,7 +238,7 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
         #perform an optimization routine for each rep number in this round number
         for rep in range(1, (reps_list[r]+1) ):
             print("\n\t\tRound {0} Replicate {1} of {2}:".format(r+1, rep, (reps_list[r])))
-            
+                
             #keep track of start time for rep
             tb_rep = datetime.now()
             
@@ -246,8 +249,12 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
             params_perturbed = dadi.Misc.perturb_params(best_params, fold=folds_list[r],
                                                             upper_bound=upper_bound, lower_bound=lower_bound)
             
-            print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
-            
+            if param_labels:
+                print("\n\t\t\tModel parameters = {}".format(param_labels))
+                print("\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
+            else:
+                print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
+                
             #optimize from perturbed parameters
             params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
                                                               lower_bound=lower_bound, upper_bound=upper_bound,
