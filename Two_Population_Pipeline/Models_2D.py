@@ -544,4 +544,448 @@ def sec_contact_asym_mig_size_three_epoch(params, ns, pts):
     return fs
 
 
+#######################################################################################################
+#Island Models - simple set
+# Here populations are fractions derived from the ancestral population. The assumption is that 
+# pop 2 is the 'island' population. This pop is set to s*Nref, and when these models are called 
+# the upper bound on s is set to 0.5, such that the island pop can never have >50% of the 
+# ancestral population (Nref = Na = 1). The values of nu1 and nu2 are therefore 1-s and s,
+# (unless there is a size change event, and then it is explicit). In the absence of size change, 
+# you will need to calculate these values manually, as only the s value is returned in the param list.
 
+def vic_no_mig(params, ns, pts):
+    """
+    Split into two populations, no migration. Populations are fractions of the reference 
+    population, where population 2 is represented by Nref*(s), and population 1 is represented 
+    by Nref*(1-s). Nref implicitly has size = 1. 
+    
+    params = 2
+    
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    T: Time in the past of split (in units of 2*Na generations) 
+    """
+    T, s = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def vic_anc_sym_mig(params, ns, pts):
+    """
+    Split with symmetric migration followed by isolation. Populations are fractions of the reference 
+    population, where population 2 is represented by Nref*(s), and population 1 is represented 
+    by Nref*(1-s). Nref implicitly has size = 1. 
+    
+    params = 4
+    
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    m: Migration between pop 2 and pop 1 (2*Na*m).
+    T1: The scaled time between the split and the ancient migration (in units of 2*Na generations).
+    T2: The scaled time between the ancient migration and present.
+    """
+    m, T1, T2, s = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+   
+    phi = Integration.two_pops(phi, xx, T1, nu1=1-s, nu2=s, m12=m, m21=m)
+    
+    phi = Integration.two_pops(phi, xx, T2, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def vic_anc_asym_mig(params, ns, pts):
+    """
+    Split with asymmetric migration followed by isolation. Populations are fractions of the reference 
+    population, where population 2 is represented by Nref*(s), and population 1 is represented 
+    by Nref*(1-s). Nref implicitly has size = 1. 
+    
+    params = 5
+    
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    m12: Migration from pop 2 to pop 1 (2*Na*m12).
+    m21: Migration from pop 1 to pop 2.
+    T1: The scaled time between the split and the ancient migration (in units of 2*Na generations).
+    T2: The scaled time between the ancient migration and present.
+    """
+    m12, m21, T1, T2, s = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+   
+    phi = Integration.two_pops(phi, xx, T1, nu1=1-s, nu2=s, m12=m12, m21=m21)
+    
+    phi = Integration.two_pops(phi, xx, T2, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+    
+    
+def vic_sec_contact_sym_mig(params, ns, pts):
+    """
+    Split with no gene flow, followed by period of symmetrical gene flow. Populations are 
+    fractions of the reference population, where population 2 is represented by Nref*(s), and 
+    population 1 is represented by Nref*(1-s). Nref implicitly has size = 1. 
+    
+    params = 4
+    
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    m: Migration between pop 2 and pop 1 (2*Na*m).
+    T1: The scaled time between the split and the secondary contact (in units of 2*Na generations).
+    T2: The scaled time between the secondary contact and present.
+    """
+    m, T1, T2, s = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    
+    phi = Integration.two_pops(phi, xx, T1, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    phi = Integration.two_pops(phi, xx, T2, nu1=1-s, nu2=s, m12=m, m21=m)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def vic_sec_contact_asym_mig(params, ns, pts):
+    """
+    Split with no gene flow, followed by period of asymmetrical gene flow. Populations are 
+    fractions of the reference population, where population 2 is represented by Nref*(s), and 
+    population 1 is represented by Nref*(1-s). Nref implicitly has size = 1. 
+    
+    params = 5
+    
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    m12: Migration from pop 2 to pop 1 (2*Na*m12).
+    m21: Migration from pop 1 to pop 2.
+    T1: The scaled time between the split and the secondary contact (in units of 2*Na generations).
+    T2: The scaled time between the secondary contact and present.
+    """
+    m12, m21, T1, T2, s = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    
+    phi = Integration.two_pops(phi, xx, T1, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    phi = Integration.two_pops(phi, xx, T2, nu1=1-s, nu2=s, m12=m12, m21=m21)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def founder_nomig(params, ns, pts):
+    """
+    Split into two populations, with no migration. Populations are fractions of the reference 
+    population, where population 2 is represented by Nref*(s), and population 1 is 
+    represented by Nref*(1-s). Population two undergoes an exponential growth event to 
+    obtain size nu2, while population one is constant. Nref implicitly has size = 1. 
+	
+	params = 3
+	
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    nu2: Final size of pop 2, after exponential growth.
+    T: Time in the past of split (in units of 2*Na generations) 
+    """
+    nu2, T, s = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    nu2_func = lambda t: s * (nu2/s)**(t/T)
+    
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=nu2_func, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def founder_sym(params, ns, pts):
+    """
+    Split into two populations, with one migration rate. Populations are fractions of the 
+    reference population, where population 2 is represented by Nref*(s), and population 1 
+    is represented by Nref*(1-s). Population two undergoes an exponential growth event to 
+    obtain size nu2, while population one is constant. Nref implicitly has size = 1. 
+	
+	params = 4
+	
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    nu2: Final size of pop 2, after exponential growth.
+    T: Time in the past of split (in units of 2*Na generations) 
+    m: Migration (2*Na*m12)
+    """
+    nu2, m, T, s = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    nu2_func = lambda t: s * (nu2/s)**(t/T)
+    
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=nu2_func, m12=m, m21=m)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def founder_asym(params, ns, pts):
+    """
+    Split into two populations, with two migration rates. Populations are fractions of the 
+    reference population, where population 2 is represented by Nref*(s), and population 1 
+    is represented by Nref*(1-s). Population two undergoes an exponential growth event to 
+    obtain size nu2, while population one is constant. Nref implicitly has size = 1. 
+	
+	params = 5
+
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    nu2: Final size of pop 2, after exponential growth.
+    T: Time in the past of split (in units of 2*Na generations) 
+    m12: Migration from pop 2 to pop 1 (2*Na*m12)
+    m21: Migration from pop 1 to pop 2
+    """
+    nu2, m12, m21, T, s = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    nu2_func = lambda t: s * (nu2/s)**(t/T)
+
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=nu2_func, m12=m12, m21=m21)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+
+
+#######################################################################################################
+#Island Models - discrete admixture events
+
+# Here populations are fractions derived from the ancestral population. The assumption is that 
+# pop 2 is the 'island' population. This pop is set to s*Nref, and when these models are called 
+# the upper bound on s is set to 0.5, such that the island pop can never have >50% of the 
+# ancestral population (Nref or Na, which = 1). The values of nu1 and nu2 are therefore 1-s and s,
+# (unless there is a size change event). You will need to calculate these values manually, as only
+# the s value is returned in the param list.
+
+
+def vic_no_mig_admix_early(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs (before drift). Populations are fractions of the reference population, 
+    where population 2 is represented by Nref*(s), and population 1 is represented by Nref*(1-s). 
+    Nref implicitly has size = 1. 
+     
+	params = 3
+	
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1. 
+    """
+    T, s, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def vic_no_mig_admix_late(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs (after drift). Populations are fractions of the reference population, 
+    where population 2 is represented by Nref*(s), and population 1 is represented by Nref*(1-s). 
+    Nref implicitly has size = 1. 
+    
+	params = 3
+	
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1. 
+    """
+    T, s, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=s, m12=0, m21=0)
+    
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+    
+    
+def vic_two_epoch_admix(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs (between two drift events). Populations are fractions of the reference population, 
+    where population 2 is represented by Nref*(s), and population 1 is represented by Nref*(1-s). 
+    Nref implicitly has size = 1. 
+    
+	params = 4
+    
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    T1: The scaled time between the split and admixture event (in units of 2*Na generations).
+    T2: The scaled time between the admixture event and present.
+    f: Fraction of updated population 2 to be derived from population 1. 
+    """
+    T1, T2, s, f = params
+
+    xx = Numerics.default_grid(pts)
+    
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    phi = Integration.two_pops(phi, xx, T1, nu1=1-s, nu2=s, m12=0, m21=0)
+    
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    phi = Integration.two_pops(phi, xx, T2, nu1=1-s, nu2=s, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def founder_nomig_admix_early(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs (before drift). Populations are fractions of the reference population, 
+    where population 2 is represented by Nref*(s), and population 1 is represented by Nref*(1-s). 
+	Population two undergoes an exponential growth event to obtain size nu2, while 
+	population one is constant. Nref implicitly has size = 1. 
+	
+	params = 4
+	
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    nu2: Final size of pop 2, after exponential growth.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1.
+    """
+    nu2, T, s, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    nu2_func = lambda t: s * (nu2/s)**(t/T)
+    
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=nu2_func, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def founder_nomig_admix_late(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs (after drift). Populations are fractions of the reference population, 
+    where population 2 is represented by Nref*(s), and population 1 is represented by Nref*(1-s). 
+	Population two undergoes an exponential growth event to obtain size nu2, while 
+	population one is constant. Admixture occurs when size nu2 is achieved. Nref implicitly has size = 1. 
+	
+	params = 4
+	
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    nu2: Final size of pop 2, after exponential growth.
+    T: Time in the past of split (in units of 2*Na generations) 
+    f: Fraction of updated population 2 to be derived from population 1.
+    """
+    nu2, T, s, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    nu2_func = lambda t: s * (nu2/s)**(t/T)
+
+    phi = Integration.two_pops(phi, xx, T, nu1=1-s, nu2=nu2_func, m12=0, m21=0)
+    
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs
+
+
+def founder_nomig_admix_two_epoch(params, ns, pts):
+    """
+    Split into two populations, no migration but a discrete admixture event from pop 1 into
+    pop 2 occurs (between two drift events). Populations are fractions of the reference population, 
+    where population 2 is represented by Nref*(s), and population 1 is represented by Nref*(1-s). 
+	Population two undergoes an exponential growth event to obtain size nu2, while 
+	population one is constant. Admixture occurs after size nu2 is achieved. Nref implicitly has size = 1. 
+	
+	params = 5
+
+    s: Fraction of Nref that goes to pop2. Pop2 size = s. Pop 1 size = 1-s.
+    nu2: Final size of pop 2, after exponential growth.
+    T1: Time in the past of split (in units of 2*Na generations)
+    T2: The scaled time between the admixture event and present.
+    f: Fraction of updated population 2 to be derived from population 1.
+    """
+    nu2, T1, T2, s, f = params
+
+    xx = Numerics.default_grid(pts)
+
+    phi = PhiManip.phi_1D(xx)
+    
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+
+    nu2_func = lambda t: s * (nu2/s)**(t/T1)
+    
+    phi = Integration.two_pops(phi, xx, T1, nu1=1-s, nu2=nu2_func, m12=0, m21=0)
+    
+    phi = PhiManip.phi_2D_admix_1_into_2(phi, f, xx,xx)
+    
+    phi = Integration.two_pops(phi, xx, T2, nu1=1-s, nu2=nu2, m12=0, m21=0)
+
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
+    return fs

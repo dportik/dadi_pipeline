@@ -312,3 +312,131 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sec_contact_asym_mig_size_
 
 
 
+'''
+Island Diversification Model Set
+
+This model set comes from the following publication:
+
+    Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K.,
+    Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. Sky, sea,
+    and forest islands: diversification in the African leaf-folding frog
+    Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae).
+    Journal of Biogeography 45: 1781-1794. 
+    doi: 10.1111/jbi.13365
+
+For all the following models, pop2 is assumed to be the 'island' population and pop1 is the 
+mainland population. Their sizes are based on the parameter s, where 0 < s < 1. Here, s 
+represents the fraction of Nref that enters a population, with pop2 = s, and pop1 = 1-s. 
+When these models are called the upper bound on s is set to 0.5, such that the island pop 
+(pop2) can never contain >50% of the ancestral population. The values of nu1 and nu2 are 
+therefore 1-s and s, unless there is a size change event. 
+
+The 'vicariance' models involve no population size change, whereas the 'founder' event 
+models always enforce exponential growth in pop2 (the island population).
+
+NOTE: For these models, we must include an optional upper bound  argument in
+order to constrain the parameter 's' to be no more than 0.5, and we must also
+supply a starting parameter list to keep the initial value of s within these bounds. 
+For models with discrete admixture events, we need to constrain 'f' to between 0-1, 
+and do so in a similar fashion.
+
+'''
+
+# Island: Vicariance with no migration.
+up = [10, 0.5]
+ps = [1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig", Models_2D.vic_no_mig, rounds, 2, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "T, s", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance with ancient symmetric migration.
+up = [10, 10, 10, 0.5]
+ps = [1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_anc_sym_mig", Models_2D.vic_anc_sym_mig, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "m, T1, T2, s", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance with ancient asymmetric migration.
+up = [10, 10, 10, 10, 0.5]
+ps = [1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_anc_asym_mig", Models_2D.vic_anc_asym_mig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "m12, m21, T1, T2, s", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance with no migration, secondary contact with symmetric migration
+up = [10, 10, 10, 0.5]
+ps = [1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_sec_contact_sym_mig", Models_2D.vic_sec_contact_sym_mig, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "m, T1, T2, s", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance with no migration, secondary contact with asymmetric migration
+up = [10, 10, 10, 10, 0.5]
+ps = [1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_sec_contact_asym_mig", Models_2D.vic_sec_contact_asym_mig, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "m12, m21, T1, T2, s", in_upper=up, in_params=ps)
+
+
+# Island: Founder event with no migration.
+up = [20, 10, 0.5]
+ps = [1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig", Models_2D.founder_nomig, rounds, 3, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu2, T, s", in_upper=up, in_params=ps)
+
+
+# Island: Founder event with symmetric migration.
+up = [20, 20, 10, 0.5]
+ps = [1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_sym", Models_2D.founder_sym, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu2, m, T, s", in_upper=up, in_params=ps)
+
+
+# Island: Founder event with asymmetric migration.
+up = [20, 20, 20, 10, 0.5]
+ps = [1, 1, 1, 1, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_asym", Models_2D.founder_asym, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu2, m12, m21, T, s", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance, early unidirectional discrete admixture event (before drift).
+up = [10, 0.5, 0.99]
+ps = [1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig_admix_early", Models_2D.vic_no_mig_admix_early, rounds, 3, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "T, s, f", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance, late unidirectional discrete admixture event (after drift).
+up = [10, 0.5, 0.99]
+ps = [1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_no_mig_admix_late", Models_2D.vic_no_mig_admix_late, rounds, 3, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "T, s, f", in_upper=up, in_params=ps)
+
+
+# Island: Vicariance, middle unidirectional discrete admixture event (between two drift events).
+up = [10, 10, 0.5, 0.99]
+ps = [1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_two_epoch_admix", Models_2D.vic_two_epoch_admix, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "T1, T2, s, f", in_upper=up, in_params=ps)
+
+
+# Founder event with no migration, early unidirectional discrete admixture event (before drift).
+up = [20, 10, 0.5, 0.99]
+ps = [1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_early", Models_2D.founder_nomig_admix_early, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu2, T, s, f", in_upper=up, in_params=ps)
+
+
+# Founder event with no migration, late unidirectional discrete admixture event (after drift).
+up = [20, 10, 0.5, 0.99]
+ps = [1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_late", Models_2D.founder_nomig_admix_late, rounds, 4, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu2, T, s, f", in_upper=up, in_params=ps)
+
+
+# Island: Founder event, middle unidirectional discrete admixture event (between two drift events).
+up = [20, 10, 10, 0.5, 0.99]
+ps = [1, 1, 1, 0.25, 0.25]
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "founder_nomig_admix_two_epoch", Models_2D.founder_nomig_admix_two_epoch, rounds, 5, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu2, T1, T2, s, f", in_upper=up, in_params=ps)
+
+
