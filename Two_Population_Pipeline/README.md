@@ -45,7 +45,24 @@ Here is a running list of the models currently available. The name of the model 
 
 **Island Model Set**
 
-The island model set is currently in revision, please check back soon!
+The island model set was recently revised as part of release v3.1.1.
+
+For all the following models, the 'island' population is population 2 (nu2) and the mainland population is population 1 (nu1). Their sizes are based on the parameter s, where 0 < s < 1. Here, s represents the fraction of Nref that enters the island population, with pop2 (island) = s, and pop1 (mainland) = 1-s. When these models are called in the pipeline the upper bound on s is set to 0.5, such that the island population (pop2) must be composed of <50% of the ancestral population. This is to reflect the idea that the size of the island population should be smaller (at least initially). The values of nu1 (mainland) and nu2 (island) are therefore 1-s and s, respectively, unless there is a size change event. The 'vicariance' models involve no population size change, whereas the 'founder' event models always enforce exponential growth in pop2 (the island population). Please see the `Models_2D.py` script for additional details for these models. 
+
++ *vic_no_mig*: Vicariance with no migration.
++ *vic_anc_sym_mig*: Vicariance with ancient symmetric migration.
++ *vic_anc_asym_mig*: Vicariance with ancient asymmetric migration.
++ *vic_sec_contact_sym_mig*: Vicariance with no migration, secondary contact with symmetric migration.
++ *vic_sec_contact_asym_mig*: Vicariance with no migration, secondary contact with asymmetric migration.
++ *founder_nomig*: Founder event with no migration.
++ *founder_sym*: Founder event with symmetric migration.
++ *founder_asym*: Founder event with asymmetric migration.
++ *vic_no_mig_admix_early*: Vicariance, early unidirectional discrete admixture event (before drift).
++ *vic_no_mig_admix_late*: Vicariance, late unidirectional discrete admixture event (after drift).
++ *vic_two_epoch_admix*: Vicariance, middle unidirectional discrete admixture event (between two drift events).
++ *founder_nomig_admix_early*: Founder event with no migration, early unidirectional discrete admixture event (before drift).
++ *founder_nomig_admix_late*: Founder event with no migration, late unidirectional discrete admixture event (after drift).
++ *founder_nomig_admix_two_epoch*: Founder event, middle unidirectional discrete admixture event (between two drift events).
 
 
 ## Optimization Routine Settings:

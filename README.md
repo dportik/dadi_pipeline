@@ -32,9 +32,9 @@ The most current version of this pipeline is designed to run in Python 3 and req
 
 ## **Version** <a name="V"></a>
 
-The current version of **dadi_pipeline** is v3.1. 
+The current version of **dadi_pipeline** is v3.1.1. 
 
-What's new in version 3.1?
+What's new in version 3.1+?
 
 + All scripts have been upgraded to Python 3 (tested with 3.7), allowing compatibility with dadi v2.
 + Prints perturbed starting parameters to screen for each replicate, allowing comparison to final optimized parameters and to starting parameters of other replicates.
@@ -377,6 +377,8 @@ Here is a list of the publications mentioned above, for easy reference:
 The following is a running list of publications that have used this demographic modeling workflow (dadi_pipeline):
 
 #### Pre-Prints
+
++ Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. Draft Genome Sequence and intraspecific diversification of the wild crop relative *Brassica cretica* Lam. using demographic model selection. ***bioRxiv***. *https://doi.org/10.1101/521138*
 
 + Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***bioRxiv***. *https://doi.org/10.1101/450692*
 
