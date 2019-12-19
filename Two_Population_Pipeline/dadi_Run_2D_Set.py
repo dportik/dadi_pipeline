@@ -334,7 +334,7 @@ therefore 1-s and s, unless there is a size change event.
 The 'vicariance' models involve no population size change, whereas the 'founder' event 
 models always enforce exponential growth in pop2 (the island population).
 
-NOTE: For these models, we must include an optional upper bound  argument in
+NOTE: For these models, we must include an optional upper bound argument in
 order to constrain the parameter 's' to be no more than 0.5, and we must also
 supply a starting parameter list to keep the initial value of s within these bounds. 
 For models with discrete admixture events, we need to constrain 'f' to between 0-1, 
@@ -363,14 +363,14 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_anc_asym_mig", Models_
                                         reps=reps, maxiters=maxiters, folds=folds, param_labels = "m12, m21, T1, T2, s", in_upper=up, in_params=ps)
 
 
-# Island: Vicariance with no migration, secondary contact with symmetric migration
+# Island: Vicariance with no migration, secondary contact with symmetric migration.
 up = [10, 10, 10, 0.5]
 ps = [1, 1, 1, 0.25]
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_sec_contact_sym_mig", Models_2D.vic_sec_contact_sym_mig, rounds, 4, fs_folded=fs_folded,
                                         reps=reps, maxiters=maxiters, folds=folds, param_labels = "m, T1, T2, s", in_upper=up, in_params=ps)
 
 
-# Island: Vicariance with no migration, secondary contact with asymmetric migration
+# Island: Vicariance with no migration, secondary contact with asymmetric migration.
 up = [10, 10, 10, 10, 0.5]
 ps = [1, 1, 1, 1, 0.25]
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "vic_sec_contact_asym_mig", Models_2D.vic_sec_contact_asym_mig, rounds, 5, fs_folded=fs_folded,
