@@ -344,24 +344,17 @@ If you encounter any issues while using *dadi_pipeline*, it could be the result 
 
 ### How to cite *dadi_pipeline*:
 
-This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, *dadi_pipeline* is not a 'wrapper' for dadi, but rather an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used *dadi_pipeline* to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
+This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, *dadi_pipeline* should not be considered a 'wrapper' for dadi, but rather an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used *dadi_pipeline* to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
 > To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using the demographic modeling workflow (dadi_pipeline) from Portik et al. (2017).
 
 The main motivation behind the creation of this workflow was to increase transparency and reproducibility in demographic modeling. In your publication you should report the key parameters of the optimization routine. The goal is to allow other researchers to plug your data into *dadi_pipeline* and run the same analyses. For example:
 
-
 > For all models, we performed consecutive rounds of optimizations following Portik et al. (2017). For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.
 
 The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. This can include changes to the number of rounds, replicates, maxiters, folds, or other optional features (such as supplying parameter values or changing the default parameter bounds).
 
-There are other features of *dadi_pipeline* that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365) and [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and the goodness of fit tests were published as part of [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers. For example:
-
-
-> We included a set of 24 models (Portik et al. 2017; Charles et al. 2018)...
-
-> To determine if the top-ranked models were reasonable explanations of the JSFS, we also performed goodness of fit tests following Barratt et al. (2018).
-
+There are additional features of *dadi_pipeline* that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365) and [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and the goodness of fit tests were published as part of [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers.
 
 Here is a list of the publications mentioned above, for easy reference:
 
@@ -375,11 +368,11 @@ Here is a list of the publications mentioned above, for easy reference:
 
 ### **Publications** <a name="PUBS"></a>
 
-The following is a running list of publications that have used this demographic modeling workflow (dadi_pipeline):
+The following is a running list of publications that have used the *dadi_pipeline* demographic modeling workflow:
 
 #### Pre-Prints
 
-+ Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. Draft Genome Sequence and intraspecific diversification of the wild crop relative *Brassica cretica* Lam. using demographic model selection. ***bioRxiv***. *https://doi.org/10.1101/521138*
++ Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. **2019**. Draft genome sequence and intraspecific diversification of the wild crop relative *Brassica cretica* Lam. using demographic model selection. ***bioRxiv***. *https://doi.org/10.1101/521138*
 
 + Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***bioRxiv***. *https://doi.org/10.1101/450692*
 
