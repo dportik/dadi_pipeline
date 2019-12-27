@@ -260,15 +260,15 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
                                                               lower_bound=lower_bound, upper_bound=upper_bound,
                                                               verbose=1, maxiter=maxiters_list[r],
                                                               output_file = "{}.log.txt".format(model_name))
-            
-            print("\t\t\tOptimized parameters =[{}]\n".format(", ".join([str(numpy.around(x, 6)) for x in params_opt[0]])))
+                                                              
+            print("\t\t\tOptimized parameters =[{}]\n".format(", ".join([str(numpy.around(x, 6)) for x in params_opt])))
             
             #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt[0], fs.sample_sizes, pts)
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
 
             #collect results into a list using function above - [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values]
             roundrep = "Round_{0}_Replicate_{1}".format(r+1, rep)
-            rep_results = collect_results(fs, sim_model, params_opt[0], roundrep, fs_folded)
+            rep_results = collect_results(fs, sim_model, params_opt, roundrep, fs_folded)
             
             #reproduce replicate log to bigger log file, because constantly re-written
             write_log(outfile, model_name, rep_results, roundrep)

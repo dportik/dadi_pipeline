@@ -168,7 +168,7 @@ def write_log(outfile, model_name, rep_results, roundrep):
 
 def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded,
                              reps=None, maxiters=None, folds=None, in_params=None,
-                             in_upper=None, in_lower=None, param_labels=" "):
+                             in_upper=None, in_lower=None, param_labels=None):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
     #(1) fs:  spectrum object name
@@ -202,7 +202,10 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
     # We need an output file that will store all summary info for each replicate, across rounds
     outname = "{0}.{1}.optimized.txt".format(outfile,model_name)
     with open(outname, 'a') as fh_out:
-        fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params({})\n".format(param_labels))
+        if param_labels:
+            fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params({})\n".format(param_labels))
+        else:
+            fh_out.write("Model\tReplicate\tlog-likelihood\tAIC\tchi-squared\ttheta\toptimized_params\n")
     
     #Create list to store sublists of [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values] for every replicate
     results_list = []
@@ -232,21 +235,25 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
             #perturb starting parameters
             params_perturbed = dadi.Misc.perturb_params(best_params, fold=folds_list[r],
                                                             upper_bound=upper_bound, lower_bound=lower_bound)
-            print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
+            if param_labels:
+                print("\n\t\t\tModel parameters = {}".format(param_labels))
+                print("\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
+            else:
+                print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
 
             #optimize from perturbed parameters
             params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
                                                               lower_bound=lower_bound, upper_bound=upper_bound,
                                                               verbose=1, maxiter=maxiters_list[r],
                                                               output_file = "{}.log.txt".format(model_name))
-            print("\t\t\tOptimized parameters =[{}]\n".format(", ".join([str(numpy.around(x, 6)) for x in params_opt[0]])))
+            print("\t\t\tOptimized parameters =[{}]\n".format(", ".join([str(numpy.around(x, 6)) for x in params_opt])))
 
             #simulate the model with the optimized parameters
-            sim_model = func_exec(params_opt[0], fs.sample_sizes, pts)
+            sim_model = func_exec(params_opt, fs.sample_sizes, pts)
 
             #collect results into a list using function above - [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values]
             roundrep = "Round_{0}_Replicate_{1}".format(r+1, rep)
-            rep_results = collect_results(fs, sim_model, params_opt[0], roundrep, fs_folded)
+            rep_results = collect_results(fs, sim_model, params_opt, roundrep, fs_folded)
             
             #reproduce replicate log to bigger log file, because constantly re-written
             write_log(outfile, model_name, rep_results, roundrep)
@@ -344,7 +351,7 @@ def Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded=
     
 
 def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded=True,
-                     reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" "):
+                     reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=None):
     #--------------------------------------------------------------------------------------
 	# Mandatory Arguments =
 		#(1) sim_number: the number of simulations to perform
@@ -382,7 +389,7 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
                   "\n{}\n============================================================================\n\n".format(outfile))
 
         #optimize the simulated SFS
-        best_rep = Optimize_Routine_GOF(sim_fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps, maxiters)
+        best_rep = Optimize_Routine_GOF(sim_fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps, maxiters, param_labels=param_labels)
         #best_rep list is [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values, sfs_sum]
 
         #add result for this simulation to output file

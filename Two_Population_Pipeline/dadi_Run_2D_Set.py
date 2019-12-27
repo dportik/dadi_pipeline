@@ -93,7 +93,7 @@ import Models_2D
 #===========================================================================
 
 #**************
-snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/dadi_pipeline/Two_Population_Pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)

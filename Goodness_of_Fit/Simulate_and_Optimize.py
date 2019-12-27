@@ -96,7 +96,7 @@ Updated September 2018
 #===========================================================================
 
 #**************
-snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/dadi_pipeline/Two_Population_Pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = dadi.Misc.make_data_dict(snps)
@@ -220,10 +220,13 @@ reps = [20,30,50]
 maxiters = [5,10,20]
 folds = [3,2,1]
 
+#**************
+#parameter labels
+p_labels = "nu1, nu2, m, T"
 
 #Execute the optimization routine for each of the simulated SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is (as the actual values can be changed above).
 Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, pnum, fs_folded=fs_folded,
-                                        reps=reps, maxiters=maxiters, folds=folds)
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels=p_labels)
 
