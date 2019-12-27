@@ -380,6 +380,8 @@ The following is a running list of publications that have used the *dadi_pipelin
 
 #### Published Articles
 
++ Beuadry, F.E.G., Barrett, S.C.H., & S.I. Wright. **2019**. Ancestral and neo-sex chromosomes contribute to population divergence in a dioecious plant. ***Evolution*** Early View. *https://doi.org/10.1111/evo.13892*
+
 + Mattingsdal, M., Jorde, P.E., Knutsen, H., Jentoft, S., Stenseth, N.C., Sodeland, M., Robalo, J.I., Hansen, M.M., Andre, C., & E.B. Gonzalez. **2019**. Demographic history has shaped the strongly differentiated corkwing wrasse populations in Northern Europe. ***Molecular Ecology*** Early View. *https://doi.org/10.1111/mec.15310*
 
 + Kreiner, J.M., Giacomini, D.A., Bemm, F., Waithaka, B., Regalado, J., Lanz, C., Hildebrandt, J., Sikkema, P.H., Tranel, P.J., Weigel, D., Stinchcombe, J.R., & S.I. Wright. **2019**. Multiple modes of convergent adaptation in the spread of glyphosate-resistant *Amaranthus tuberculatus*. ***Proceedings of the National Academy of Sciences, USA*** 2019 pii: 201900870. *https://doi.org/10.1073/pnas.1900870116*
