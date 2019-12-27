@@ -34,7 +34,7 @@ The most current version of this pipeline is designed to run in Python 3 and req
 
 **The current version of `dadi_pipeline` is v3.1.3, and it has been tested with `dadi` v2.0.5. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
 
-### What's new in `dadi_pipeline` Version 3.1+?
+### What's new in version 3.1+?
 
 Version 3.1.3:
 + Added option to select which optimizer to use. Includes the following functions from the `Inferenence.py` module in `dadi`: optimize_log (BFGS method), optimize_log_lbfgsb (L-BFGS-B method), optimize_log_fmin (Nelder-Mead method), and optimize_log_powell (Powell's method). For usage details please see section: [Default Optimization Routine Settings](#DOR).
