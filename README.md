@@ -28,13 +28,13 @@ Perform demographic model optimizations and comparisons with this accessible and
 
 This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) and assumes you already have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related questions is the [dadi user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting to use these scripts, read over the user manual for dadi and try running the program with the example files.
 
-The most current version of this pipeline is designed to run in Python 3 and requires the Python 3 version of `dadi` (tested for v2.0.5). The pipeline has been tested with Python 3.7. If you need to run the pipeline with Python 2, you could download and use the [v3.0 release here](https://github.com/dportik/dadi_pipeline/releases/tag/v3.0), but this also requires obtaining an older version of `dadi` (v1.x). For many reasons, this is not recommended, and you should use the most current versions of dadi and `dadi_pipeline`.
+The most current version of this pipeline is designed to run in Python 3 and requires the Python 3 version of `dadi` (tested for v2.0.5). The pipeline has been tested with Python 3.7. If you need to run the pipeline with Python 2, you could download and use the [v3.0 release here](https://github.com/dportik/dadi_pipeline/releases/tag/v3.0), but this also requires obtaining an older version of `dadi` (v1.x). For many reasons, this is not recommended. You should use the most current versions of `dadi` and `dadi_pipeline`, and run them using Python 3.
 
 ## **Version** <a name="V"></a>
 
 **The current version of `dadi_pipeline` is v3.1.3, and it has been tested with `dadi` v2.0.5. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
 
-What's new in version 3.1+?
+### What's new in `dadi_pipeline` Version 3.1+?
 
 Version 3.1.3:
 + Added option to select which optimizer to use. Includes the following functions from the `Inferenence.py` module in `dadi`: optimize_log (BFGS method), optimize_log_lbfgsb (L-BFGS-B method), optimize_log_fmin (Nelder-Mead method), and optimize_log_powell (Powell's method). For usage details please see section: [Default Optimization Routine Settings](#DOR).
