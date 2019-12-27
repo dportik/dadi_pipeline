@@ -4,7 +4,7 @@
 
 ## Purpose:
 
-Create figures comparing the data and model sfs for 1D, 2D, or 3D spectra.
+Create figures comparing the data and model sfs for 1D, 2D, or 3D spectra. This workflow is a component of the `dadi_pipeline` package.
 
 This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) 
 and assumes you already have the package installed. You'll need to be familiar with how dadi works, 
@@ -15,7 +15,7 @@ example files.
 
 ## Overview:
 
-This is meant to be a general use script to run dadi to fit any model on an afs/jsfs with one to three populations, then create figures comparing the data and model sfs. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `Make_Plots.py` that will have to be edited. 
+This is meant to be a general use script to run `dadi` to fit any model on an afs/jsfs with one to three populations, then create figures comparing the data and model sfs. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `Make_Plots.py` that will have to be edited. 
 
 The user provides a model and the previously optimized parameters for their empirical 
 data. The model is fit using these parameters, and the resulting model SFS is used to
@@ -26,7 +26,7 @@ The `Make_Plots.py` script and `Plotting_Functions.py` script must be in the sam
 
 ## What to Edit:
 
-Within the script, you will need to edit information about your input file and spectrum characteristics, similar to all other scripts in *dadi_pipeline*. In addition, you will need to copy and paste the demographic model into the script. This can be copy/pasted directly from the [Models_2D.py](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Models_2D.py) file or [Models_3D.py](https://github.com/dportik/dadi_pipeline/blob/master/Three_Population_Pipeline/Models_3D.py) file. The parameter values of the best-fit replicate will need to be supplied, which are used to generate the model SFS. More details about what to edit are provided in the two sections below. 
+Within the script, you will need to edit information about your input file and spectrum characteristics, similar to all other scripts in `dadi_pipeline`. In addition, you will need to copy and paste the demographic model into the script. This can be copy/pasted directly from the [Models_2D.py](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Models_2D.py) file or [Models_3D.py](https://github.com/dportik/dadi_pipeline/blob/master/Three_Population_Pipeline/Models_3D.py) file. The parameter values of the best-fit replicate will need to be supplied, which are used to generate the model SFS. More details about what to edit are provided in the two sections below. 
 
 ## Empirical Data Optimization:
 
@@ -34,7 +34,7 @@ Within the `Make_Plots.py` script, let's assume you've supplied the correct info
 
 The model will first be fit to the empirical data using the following function:
 
-***Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)***
+`Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)`
  
 ***Mandatory Arguments:***
 
@@ -76,7 +76,7 @@ the basic argument structure. I will show the 2D example below.
 
 The 2D plotting is performed with the following function:
 
-***Plot_2D(fs, model_fit, outfile, model_name, vmin_val=None)***
+`Plot_2D(fs, model_fit, outfile, model_name, vmin_val=None)`
  
 ***Mandatory Arguments:***
 
@@ -107,14 +107,14 @@ the basic plotting and also change the vmin in the second plot.
     vmin_val = float(0.01)
     Plotting_Functions.Plot_2D(fs, model_fit, prefix, "sym_mig_vmin", vmin_val = vmin_val)
     
-Notice that running the ***Plot_2D*** function creates a pop-up window with the plot in it. To move along to the second plot,
+Notice that running the `Plot_2D` function creates a pop-up window with the plot in it. To move along to the second plot,
 simply close this window. **IF YOU DO NOT CLOSE THE PLOT WINDOW BETWEEN MULTIPLE PLOTS, IT WILL NOT UPDATE WITH THE NEXT PLOT**. The plot will be saved to a PDF file in the working directory automatically.
 
 The functions are nearly identical for 1D and 3D plotting:
 
-***Plot_3D(fs, model_fit, outfile, model_name, vmin_val=None)***
+`Plot_3D(fs, model_fit, outfile, model_name, vmin_val=None)`
 
-***Plot_1D(fs, model_fit, outfile, model_name)***
+`Plot_1D(fs, model_fit, outfile, model_name)`
 
 Note that there is no vmin_val optional argument for 1D plots, but there is for the 3D plotting.
 
@@ -128,7 +128,7 @@ You would use these in the same fashion:
 
 ## Outputs:
 
-The ***Optimize_Empirical*** function will produce an output file for the empirical fit, which will be in tab-delimited format:
+The `Optimize_Empirical` function will produce an output file for the empirical fit, which will be in tab-delimited format:
 
      Model	Replicate	log-likelihood	theta	sfs_sum	chi-squared
      sym_mig	1	-591.21	619.83	1552.44	758.21
@@ -191,7 +191,7 @@ You should test the script using these data to ensure everything is working prop
 
 ## Citation Information:
 
-The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
+The optimization strategy and the scripts associated with `dadi_pipeline` were originally published as part of the following work:
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 

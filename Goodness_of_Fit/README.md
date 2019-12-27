@@ -2,20 +2,12 @@
 
 ---------------------------------
 
-## Purpose:
+Perform goodness of fit tests for demographic models. This workflow is a component of the `dadi_pipeline` package.
 
-Perform goodness of fit tests for demographic models using dadi.
 
-This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) 
-and assumes you already have the package installed. You'll need to be familiar with how dadi works, 
-and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related 
-questions is the [user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting
-to use these scripts, read over the user manual for dadi and try running the program with the 
-example files.
+## General Overview:
 
-## Overview:
-
-This is meant to be a general use script to run dadi to perform simulations and goodness of fit tests for any model on an afs/jsfs with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `Simulate_and_Optimize.py` that will have to be edited. 
+This is meant to be a general use script to run `dadi` to perform simulations and goodness of fit tests for any model on an afs/jsfs with one to three populations. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the `Simulate_and_Optimize.py` that will have to be edited. 
 The frequency spectrum object can be unfolded or folded, which requires minimal script changes (see Caveats section).
 
 The user provides a model and the previously optimized parameters for their empirical 
@@ -38,7 +30,7 @@ Within the `Simulate_and_Optimize.py` script, let's assume you've supplied the c
 
 The model will first be fit to the empirical data using the following function:
 
-***Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)***
+`Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)`
  
 ***Mandatory Arguments:***
 
@@ -83,7 +75,7 @@ perturbation of starting parameters (fold) can be supplied by the user for more 
 
 The simulations and optimizations are performed with the following function:
 
-***Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None)***
+`Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None)`
  
 ***Mandatory Arguments:***
 
@@ -101,6 +93,8 @@ The simulations and optimizations are performed with the following function:
 + **reps**: a list of integers controlling the number of replicates in each of the optimization rounds
 + **maxiters**: a list of integers controlling the maxiter argument in each of the optimization rounds
 + **folds**: a list of integers controlling the fold argument when perturbing input parameter values
++ **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
++ **optimizer**: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
 
 
 ***Example Usage:***
@@ -148,14 +142,14 @@ the optimization routine accordingly, or change the number of simulations. In ge
 
 ## Analysis Outputs:
 
-The ***Optimize_Empirical*** function will produce an output file for the empirical fit, which will be in tab-delimited format:
+The `Optimize_Empirical` function will produce an output file for the empirical fit, which will be in tab-delimited format:
 
      Model	Replicate	log-likelihood	theta	sfs_sum	chi-squared
      sym_mig	1	-591.21	619.83	1552.44	758.21
 
 This is based on the parameter values supplied, as no optimization routine is performed. 
 
-The ***Perform_Sims*** function will produce many output files.
+The `Perform_Sims` function will produce many output files.
 For each simulation performed, a log file and optimization summary output file will be produced 
 with a prefix matching the simulation number. The optimization summary output file will be in tab-delimited format:
 
@@ -254,7 +248,7 @@ You may choose to test the script using these data to ensure everything is worki
 
 ## Citation Information:
 
-The optimization strategy and the scripts associated with this pipeline were originally published as part of the following work:
+The optimization strategy and the scripts associated with `dadi_pipeline` were originally published as part of the following work:
 
 + *Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. 2017. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. Molecular Ecology 26: 5245-5263. https://doi.org/10.1111/mec.14266*
 
