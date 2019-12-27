@@ -168,7 +168,7 @@ def write_log(outfile, model_name, rep_results, roundrep):
 
 def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded,
                              reps=None, maxiters=None, folds=None, in_params=None,
-                             in_upper=None, in_lower=None, param_labels=None):
+                             in_upper=None, in_lower=None, param_labels=None, optimizer="log_fmin"):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
     #(1) fs:  spectrum object name
@@ -188,6 +188,7 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
     #(13) in_upper: a list of upper bound values
     #(14) in_lower: a list of lower bound values
     #(15) param_labels: list of labels for parameters that will be written to the output file to keep track of their order
+    #(16) optimizer: a string, to select the optimizer. Choices include: log (BFGS method), log_lbfgsb (L-BFGS-B method), log_fmin (Nelder-Mead method), and log_powell (Powell's method).
     #--------------------------------------------------------------------------------------
 
     #call function that determines if our params and bounds have been set or need to be generated for us
@@ -198,6 +199,9 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
     
     #start keeping track of time it takes to complete optimizations for this model
     tb_round = datetime.now()
+    
+    #optimizer dict
+    optdict = {"log":"BFGS method", "log_lbfgsb":"L-BFGS-B method", "log_fmin":"Nelder-Mead method", "log_powell":"Powell's method"}
     
     # We need an output file that will store all summary info for each replicate, across rounds
     outname = "{0}.{1}.optimized.txt".format(outfile,model_name)
@@ -242,11 +246,32 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
                 print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
 
             #optimize from perturbed parameters
-            params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
-                                                              lower_bound=lower_bound, upper_bound=upper_bound,
-                                                              verbose=1, maxiter=maxiters_list[r],
-                                                              output_file = "{}.log.txt".format(model_name))
-            print("\t\t\tOptimized parameters =[{}]\n".format(", ".join([str(numpy.around(x, 6)) for x in params_opt])))
+            if optimizer == "log_fmin":
+                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                                                                  lower_bound=lower_bound, upper_bound=upper_bound,
+                                                                  verbose=1, maxiter=maxiters_list[r],
+                                                                  output_file = "{}.log.txt".format(model_name))
+            elif optimizer == "log":
+                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                                                                  lower_bound=lower_bound, upper_bound=upper_bound,
+                                                                  verbose=1, maxiter=maxiters_list[r],
+                                                                  output_file = "{}.log.txt".format(model_name))
+            elif optimizer == "log_lbfgsb":
+                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                                                                  lower_bound=lower_bound, upper_bound=upper_bound,
+                                                                  verbose=1, maxiter=maxiters_list[r],
+                                                                  output_file = "{}.log.txt".format(model_name))
+            elif optimizer == "log_powell":
+                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                                                                  lower_bound=lower_bound, upper_bound=upper_bound,
+                                                                  verbose=1, maxiter=maxiters_list[r],
+                                                                  output_file = "{}.log.txt".format(model_name))
+                
+            else:
+                 raise ValueError("\n\nERROR: Unrecognized optimizer option: {}\nPlease select from: log, log_lbfgsb, log_fmin, or log_powell.\n\n".format(optimizer))
+             
+            print("\t\t\tOptimized parameters =[{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_opt])))
+            print("\t\t\tOptimized using: {0} ({1})\n".format(optimizer, optdict[optimizer]))
 
             #simulate the model with the optimized parameters
             sim_model = func_exec(params_opt, fs.sample_sizes, pts)
@@ -351,7 +376,8 @@ def Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded=
     
 
 def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded=True,
-                     reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=None):
+                     reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None,
+                     param_labels=None, optimizer="log_fmin"):
     #--------------------------------------------------------------------------------------
 	# Mandatory Arguments =
 		#(1) sim_number: the number of simulations to perform
@@ -367,6 +393,8 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
 		 # reps: a list of integers controlling the number of replicates in each of the optimization rounds
 		 # maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
 		 # folds: a list of integers controlling the fold argument when perturbing input parameter values
+         # param_labels: list of labels for parameters that will be written to the output file to keep track of their order
+         # optimizer: a string, to select the optimizer. Choices include: log (BFGS method), log_lbfgsb (L-BFGS-B method), log_fmin (Nelder-Mead method), and log_powell (Powell's method).
     #--------------------------------------------------------------------------------------
 
     #Define number of simulations to perform
@@ -389,7 +417,8 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
                   "\n{}\n============================================================================\n\n".format(outfile))
 
         #optimize the simulated SFS
-        best_rep = Optimize_Routine_GOF(sim_fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps, maxiters, param_labels=param_labels)
+        best_rep = Optimize_Routine_GOF(sim_fs, pts, outfile, model_name, func, rounds, param_number, fs_folded,
+                                            reps, maxiters, param_labels=param_labels, optimizer=optimizer)
         #best_rep list is [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values, sfs_sum]
 
         #add result for this simulation to output file

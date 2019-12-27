@@ -36,10 +36,19 @@ The most current version of this pipeline is designed to run in Python 3 and req
 
 What's new in version 3.1+?
 
+Version 3.1.0:
+
 + All scripts have been upgraded to Python 3 (tested with 3.7), allowing compatibility with dadi v2.
 + Prints parameter labels and perturbed starting parameters to screen for each replicate. This allows quick visual comparisons of the initial and final optimized parameters among replicates.
+
+Version 3.1.1:
 + The 2D island model set has been revised and updated, fixing issues with parameter assignment. 
-+ Issue causing crash when referencing optimized params list is fixed. 
+
+Version 3.1.2:
++ Issue causing crash when referencing optimized params list is fixed. Compatible with dadi v2.0.5.
+
+Version 3.1.3:
++ Added option to select which optimizer to use. Includes the following functions from the dadi `Inferenence.py` module: optimize_log (BFGS method), optimize_log_lbfgsb (L-BFGS-B method), optimize_log_fmin (Nelder-Mead method), and optimize_log_powell (Powell's method). For usage details please see section: [Default Optimization Routine Settings](#DOR).
 
 ## **Dadi Pipeline Overview** <a name="PO"></a>
 
@@ -72,7 +81,7 @@ I will show several ways to use the main function for model fitting to highlight
 
 We will use always use the following function from the `Optimize_Functions.py` script, which requires some explanation:
 
-***Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=" ")***
+***Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=None, optimizer="log_fmin")***
  
 ***Mandatory Arguments:***
 
@@ -94,6 +103,7 @@ We will use always use the following function from the `Optimize_Functions.py` s
 + **in_upper**: a list of upper bound values
 + **in_lower**: a list of lower bound values
 + **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
++ **optimizer**: optimizer: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
 
 The mandatory arguments must always be included when using the ***Optimize_Routine*** function, and the arguments must be provided in the exact order listed above (also known as positional arguments). The optional arguments can be included in any order after the required arguments, and are referred to by their name, followed by an equal sign, followed by a value (example: `reps = 4`). The usage is explained in the following examples.
 
@@ -266,6 +276,27 @@ based on the number of rounds selected:
 | reps    | 10 | 10 | 10 | 10 | 20 |
 | maxiter | 5 |  5  | 5 | 5 | 5 |
 | fold |  3 |  3  | 3 | 2 | 1 |
+
+
+The default optimizer used is the Nelder-Mead method (`Inference.py` function `optimize_log_fmin`). This can be changed by supplying the optional optimizer argument 
+with any of the following choices:
+
++ log - Optimize log(params) to fit model to data using the BFGS method.
++ log_lbfgsb - Optimize log(params) to fit model to data using the L-BFGS-B method.
++ log_fmin - Optimize log(params) to fit model to data using Nelder-Mead. **This is the default option.**
++ log_powell - Optimize log(params) to fit model to data using Powell's method.
+
+In Example 1 above, we could use the L-BFGS-B method instead by using the following command:
+
+```
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, optimizer="log_lbfgsb")
+```
+
+Or we could use Powell's method with the following command:
+```
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True, optimizer="log_powell")
+```
+
 
 ## **Why Perform Multiple Rounds of Optimizations?** <a name="WMR"></a>
 

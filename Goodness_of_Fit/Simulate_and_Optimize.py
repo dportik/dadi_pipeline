@@ -185,7 +185,7 @@ scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym
 '''
  We will use a function from the Optimize_Functions_GOF.py script:
  	Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded,
- 				reps=None, maxiters=None, folds=None)
+ 				reps=None, maxiters=None, folds=None, param_labels=None, optimizer="log_fmin")
 
 Mandatory Arguments =
 	sim_number: the number of simulations to perform
@@ -201,6 +201,9 @@ Optional Arguments =
      reps: a list of integers controlling the number of replicates in each of the optimization rounds
      maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
      folds: a list of integers controlling the fold argument when perturbing input parameter values
+     param_labels: list of labels for parameters that will be written to the output file to keep track of their order
+     optimizer: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), 
+                "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
 '''
 
 #**************

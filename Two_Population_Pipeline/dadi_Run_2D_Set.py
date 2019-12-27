@@ -126,7 +126,7 @@ print("\n=======================================================================
  
  Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True, 
                         reps=None, maxiters=None, folds=None, in_params=None, 
-                        in_upper=None, in_lower=None, param_labels=" ")
+                        in_upper=None, in_lower=None, param_labels=None, optimizer="log_fmin")
  
    Mandatory Arguments =
     fs:  spectrum object name
@@ -147,6 +147,8 @@ print("\n=======================================================================
      in_upper: a list of upper bound values
      in_lower: a list of lower bound values
      param_labels: list of labels for parameters that will be written to the output file to keep track of their order
+     optimizer: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), 
+                "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
 
 Below, I give all the necessary information to call each model available in the
 Models_2D.py script. I have set the optimization routine to be the same for each

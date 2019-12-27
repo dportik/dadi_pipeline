@@ -69,6 +69,15 @@ of the arguments across rounds are summarized in the table below.
 
 If you change the number of rounds, you have to change the list length of the reps, maxiters, and folds arguments to match.
 
+The default optimizer used is the Nelder-Mead method (`Inference.py` function `optimize_log_fmin`). This can be changed by supplying the optional optimizer argument 
+with any of the following choices:
+
++ log - Optimize log(params) to fit model to data using the BFGS method.
++ log_lbfgsb - Optimize log(params) to fit model to data using the L-BFGS-B method.
++ log_fmin - Optimize log(params) to fit model to data using Nelder-Mead. **This is the default option.**
++ log_powell - Optimize log(params) to fit model to data using Powell's method.
+
+
 ## Why Perform Multiple Rounds of Optimizations?
 
 When fitting demographic models, it is important to perform multiple runs and ensure that final optimizations are converging on a similar log-likelihood score. In this workflow, the starting parameters used for all replicates in first round are random. After each round is completed, the parameters of the best scoring replicate from the previous round are then used to generate perturbed starting parameters for the replicates of the subsequent round. This optimization strategy of focusing the parameter search space improves the log-likelihood scores and generally results in convergence in the final round. 
