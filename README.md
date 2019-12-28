@@ -63,14 +63,14 @@ If you'd like to assess the goodness of fit for your demographic model, please l
 
 If you'd like to create a figure comparing the empirical SFS and model SFS for a demographic model (with residuals), please look in the [Plotting](https://github.com/dportik/dadi_pipeline/tree/master/Plotting) repository.
 
-**For information on how to cite *dadi_pipeline*, please see the Citation section at the bottom of this page.**
+For information on how to cite `dadi_pipeline`, please see the Citation section at the bottom of this page.
 
 
 ## **Optimization Routine Overview** <a name="OR"></a>
 
 The `dadi_Run_Optimizations.py` and associated 2D and 3D population pipelines are components of `dadi_pipeline` that each were designed to implement the optimization routine proposed by [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). This optimization routine includes fitting the model using particular settings for a given number of replicates, then using the parameters from the best scoring replicate to seed a subsequent round of model fitting using updated settings. This process occurs across multiple rounds, which improves the log-likelihood scores and generally results in convergence in the final round.
 
-In the `dadi_Run_Optimizations.py` script, the optimization routine contains a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. This flexibility should allow these scripts to be generally useful for fitting any model to any data set. 
+In the `dadi_Run_Optimizations.py` script, the optimization routine contains a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. As of v3.1.3, the user can also choose which optimizer to use. This flexibility should allow these scripts to be generally useful for fitting any model to any data set. 
 
 
 ## **Examples of Usage** <a name="EU"></a>
@@ -103,7 +103,7 @@ We will use always use the following function from the `Optimize_Functions.py` s
 + **in_upper**: a list of upper bound values
 + **in_lower**: a list of lower bound values
 + **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
-+ **optimizer**: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
++ **optimizer**: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), "log_fmin" (Nelder-Mead method; the default), and "log_powell" (Powell's method).
 
 The mandatory arguments must always be included when using the `Optimize_Routine` function, and the arguments must be provided in the exact order listed above (also known as positional arguments). The optional arguments can be included in any order after the required arguments, and are referred to by their name, followed by an equal sign, followed by a value (example: `reps = 4`). The usage is explained in the following examples.
 
@@ -125,7 +125,7 @@ rounds of optimizations, using a default number of replicates for each round. Fo
 ### Example 2
 
 It is a good idea to include the labels of the parameters so they can get written to the
-output file, otherwise you'll have to go back to the model each time you wanted to see their order. Notice that the optional arguments require using the = sign to assign a variable or value to the argument.
+output file, otherwise you'll have to go back to the model each time you wanted to see their order. Notice that the optional arguments require using the `=` sign to assign a variable or value to the argument.
 
     prefix = "V2"
     pts = [50,60,70]
@@ -200,9 +200,9 @@ That's why I have written a range of 1-6 to perform this 5 times.
 
 ## **Test Data** <a name="TD"></a>
 
-In the folder labeled *Example_Data* you will find a SNPs input file that will run with the `dadi_Run_Optimizations.py` script.
+In the folder labeled [Example_Data](https://github.com/dportik/dadi_pipeline/tree/master/Example_Data) you will find a SNPs input file that will run with the `dadi_Run_Optimizations.py` script.
 You will only need to edit the path to the file in the script, and then you will be able to run all five examples above. The 
-outputs for these examples are also contained within the *Example_Data* folder, in a separate folder labeled *Example_Outputs*.
+outputs for these examples are also contained within the [Example_Data](https://github.com/dportik/dadi_pipeline/tree/master/Example_Data) folder, in a separate folder labeled [Example_Outputs](https://github.com/dportik/dadi_pipeline/tree/master/Example_Data/Example_Outputs).
 Please test the script using these data to ensure everything is working properly before examining your own empirical data. 
 
 
@@ -221,18 +221,18 @@ Here is an example of the output from a summary file, which will be in tab-delim
 
 ## **Designating Folded vs. Unfolded Spectra** <a name="FU"></a>
 
- To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the `polarized` argument:
  
      #Convert this dictionary into folded AFS object
      #[polarized = False] creates folded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the *fs_folded* argument:
+The above code will create a folded spectrum. When calling the optimization function, this must also be indicated in the `fs_folded` argument:
 
      #this is from the first example:
      Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sym_mig", sym_mig, 3, 4, fs_folded=True)
      
-To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
+To create an unfolded spectrum, the `polarized` and `fs_folded`  arguments in the above lines need to be changed accordingly:
 
      #[polarized = True] creates an unfolded spectrum object
      fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
@@ -365,7 +365,7 @@ That will allow you to more or less pick up where you left off. Please note that
 
 ## **Reporting Bugs/Errors** <a name="RBE"></a>
 
-If you encounter any issues while using `dadi_pipeline`, it could be the result of a dadi-specific problem or an error in `dadi_pipeline`. I strongly recommend looking through the [dadi user group](https://groups.google.com/forum/#!forum/dadi-user) to see if a similar issue has been raised previously. This community resource is extremely helpful for troubleshooting. Ryan Gutenkunst has always been extremely helpful and generous with his time when it comes to resolving issues with `dadi`. However, it is important not to bother him with questions related specifically to this pipeline. If you have questions about `dadi_pipeline`, or have found an issue you believe is specific to `dadi_pipeline`, please post on the [issues page](https://github.com/dportik/dadi_pipeline/issues) here and not on the dadi user group! 
+If you encounter any issues while using `dadi_pipeline`, it could be the result of a dadi-specific problem or an error in `dadi_pipeline`. I strongly recommend looking through the [dadi user group](https://groups.google.com/forum/#!forum/dadi-user) to see if a similar issue has been raised previously. This community resource is extremely helpful for troubleshooting. Ryan Gutenkunst has always been extremely helpful and generous with his time when it comes to resolving issues with `dadi`. However, it is important not to bother him with questions related specifically to this pipeline, as it is an independent project. If you have questions about `dadi_pipeline`, or have found an issue you believe is specific to `dadi_pipeline`, please post on the [issues page](https://github.com/dportik/dadi_pipeline/issues) here and not on the dadi user group! 
 
 ## **Caveats** <a name="C"></a>
 
@@ -374,7 +374,7 @@ If you encounter any issues while using `dadi_pipeline`, it could be the result 
 
 ## **Citation Information** <a name="CI"></a>
 
-### How to cite `dadi_pipeline`:
+### How to cite dadi_pipeline:
 
 This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, `dadi_pipeline` is best considered as an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used `dadi_pipeline` to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
