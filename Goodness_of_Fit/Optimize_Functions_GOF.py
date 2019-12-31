@@ -252,17 +252,17 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
                                                                   verbose=1, maxiter=maxiters_list[r],
                                                                   output_file = "{}.log.txt".format(model_name))
             elif optimizer == "log":
-                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                params_opt = dadi.Inference.optimize_log(params_perturbed, fs, func_exec, pts,
                                                                   lower_bound=lower_bound, upper_bound=upper_bound,
                                                                   verbose=1, maxiter=maxiters_list[r],
                                                                   output_file = "{}.log.txt".format(model_name))
             elif optimizer == "log_lbfgsb":
-                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                params_opt = dadi.Inference.optimize_log_lbfgsb(params_perturbed, fs, func_exec, pts,
                                                                   lower_bound=lower_bound, upper_bound=upper_bound,
                                                                   verbose=1, maxiter=maxiters_list[r],
                                                                   output_file = "{}.log.txt".format(model_name))
             elif optimizer == "log_powell":
-                params_opt = dadi.Inference.optimize_log_fmin(params_perturbed, fs, func_exec, pts,
+                params_opt = dadi.Inference.optimize_log_powell(params_perturbed, fs, func_exec, pts,
                                                                   lower_bound=lower_bound, upper_bound=upper_bound,
                                                                   verbose=1, maxiter=maxiters_list[r],
                                                                   output_file = "{}.log.txt".format(model_name))
