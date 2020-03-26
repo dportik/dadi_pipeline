@@ -402,19 +402,23 @@ Here is a list of the publications mentioned above, for easy reference:
 
 The following is a running list of publications that have used the `dadi_pipeline` demographic modeling workflow:
 
-#### Pre-Prints
-
-+ Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. **2019**. Draft genome sequence and intraspecific diversification of the wild crop relative *Brassica cretica* Lam. using demographic model selection. ***bioRxiv***. *https://doi.org/10.1101/521138*
-
-+ Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***bioRxiv***. *https://doi.org/10.1101/450692*
-
-+ Choi, J.Y., Purugganan, M., and E.A. Stacy. **2019**. Divergent selection and primary gene flow shape incipient speciation of a riparian tree on Hawaii Island. ***bioRxiv***. *https://doi.org/10.1101/698225*
-
 #### Published Articles
 
-+ Beuadry, F.E.G., Barrett, S.C.H., & S.I. Wright. **2019**. Ancestral and neo-sex chromosomes contribute to population divergence in a dioecious plant. ***Evolution*** Early View. *https://doi.org/10.1111/evo.13892*
++ Ebersbach, J., Posso-Terranova, A., Bogdanowicz, S., Gomez-Diaz, M., Garcia-Gonzalez, M.X., Bolivar-Garcia, W., and J. Andres. **2020**. Complex patterns of differentiation and gene flow underly the divergence of aposematic phenotypes in *Oophaga* poison frogs. ***Molecular Ecology***, *Online Early*. *https://doi.org/10.1111/mec.15360*
 
-+ Mattingsdal, M., Jorde, P.E., Knutsen, H., Jentoft, S., Stenseth, N.C., Sodeland, M., Robalo, J.I., Hansen, M.M., Andre, C., & E.B. Gonzalez. **2019**. Demographic history has shaped the strongly differentiated corkwing wrasse populations in Northern Europe. ***Molecular Ecology*** Early View. *https://doi.org/10.1111/mec.15310*
++ Sun, Y., and X. Wen. **2020**. Demographic inference of divergence and gene exchange between *Castanopsis fabri* and *Castanopsis lamontii*. ***Frontiers in Plant Science*** 11: 198. *https://doi.org/10.3389/fpls.2020.00198*
+
++ Park, B., and J.M. Burke. **2020**. Phylogeography and the evolutionary history of sunflower (*Helianthus annuus** L.): wild diversity and the dynamics of domestication. ***Genes*** 11: 266. *https://doi.org/10.3390/genes11030266**
+
++ Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. **2020**. Intraspecific diversification of the crop wild relative *Brassica cretica* Lam. using demographic model selection. ***BMC Genomics*** 21: 48. *https://doi.org/10.1186/s12864-019-6439-x*
+
++ Choi, J.Y., Purugganan, M., and E.A. Stacy. **2020**. Divergent selection and primary gene flow shape incipient speciation of a riparian tree on Hawaii Island. ***Molecular Biology and Evolution*** 37: 695-710. *https://doi.org/10.1093/molbev/msz259*
+
++ Beuadry, F.E.G., Barrett, S.C.H., & S.I. Wright. **2020**. Ancestral and neo-sex chromosomes contribute to population divergence in a dioecious plant. ***Evolution*** 74: 256-269. *https://doi.org/10.1111/evo.13892*
+
++ Mattingsdal, M., Jorde, P.E., Knutsen, H., Jentoft, S., Stenseth, N.C., Sodeland, M., Robalo, J.I., Hansen, M.M., Andre, C., & E.B. Gonzalez. **2020**. Demographic history has shaped the strongly differentiated corkwing wrasse populations in Northern Europe. ***Molecular Ecology*** 29: 160-171. *https://doi.org/10.1111/mec.15310*
+
++ Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***Nature Communications*** 10: 4811. *https://doi.org/10.1038/s41467-019-12695-4*
 
 + Kreiner, J.M., Giacomini, D.A., Bemm, F., Waithaka, B., Regalado, J., Lanz, C., Hildebrandt, J., Sikkema, P.H., Tranel, P.J., Weigel, D., Stinchcombe, J.R., & S.I. Wright. **2019**. Multiple modes of convergent adaptation in the spread of glyphosate-resistant *Amaranthus tuberculatus*. ***Proceedings of the National Academy of Sciences, USA*** 2019 pii: 201900870. *https://doi.org/10.1073/pnas.1900870116*
 
@@ -436,18 +440,4 @@ The following is a running list of publications that have used the `dadi_pipelin
 
 + Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. **2017**. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
 
-
-## **License** <a name="LIC"></a>
-
-GNU Lesser General Public License v3.0
-
-## **Contact** <a name="CON"></a>
-
-Daniel Portik, PhD
-
-Postdoctoral Researcher
-
-California Academy of Sciences 
-
-daniel.portik@gmail.com
 
