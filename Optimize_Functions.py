@@ -19,15 +19,16 @@ import dadi
 from datetime import datetime
 
 def parse_params(param_number, in_params=None, in_upper=None, in_lower=None):
-    #--------------------------------------------------------------------------------------
-    # function to correctly deal with parameters and bounds, if none were provided, generate them automatically
+    """    
+    Function to correctly deal with parameters and bounds, and if none were provided, 
+    to generate them automatically.
     
-    # Arguments
-    # param_number: number of parameters in the model selected (can count in params line for the model)
-    # in_params: a list of parameter values 
-    # in_upper: a list of upper bound values
-    # in_lower: a list of lower bound values
-    #--------------------------------------------------------------------------------------
+    Arguments
+    param_number: number of parameters in the model selected (can count in params line for the model)
+    in_params: a list of parameter values 
+    in_upper: a list of upper bound values
+    in_lower: a list of lower bound values
+    """
     param_number = int(param_number)
     
     #param set
@@ -57,15 +58,15 @@ def parse_params(param_number, in_params=None, in_upper=None, in_lower=None):
     return params, upper_bound, lower_bound
 
 def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
-    #--------------------------------------------------------------------------------------
-    # function to correctly deal with replicate numbers, maxiter and fold args
+    """    
+    Function to correctly deal with replicate numbers, maxiter and fold args.
     
-    # Arguments
-    # rounds: number of optimization rounds to perform
-    # reps: a list of integers controlling the number of replicates in each of three optimization rounds
-    # maxiters: a list of integers controlling the maxiter argument in each of three optimization rounds
-    # folds: a list of integers controlling the fold argument when perturbing input parameter values
-    #--------------------------------------------------------------------------------------
+    Arguments
+    rounds: number of optimization rounds to perform
+    reps: a list of integers controlling the number of replicates in each of three optimization rounds
+    maxiters: a list of integers controlling the maxiter argument in each of three optimization rounds
+    folds: a list of integers controlling the fold argument when perturbing input parameter values
+    """    
     rounds = int(rounds)
     
     #rep set
@@ -109,15 +110,16 @@ def parse_opt_settings(rounds, reps=None, maxiters=None, folds=None):
     return reps_list, maxiters_list, folds_list
 
 def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
-    #--------------------------------------------------------------------------------------
-    # gather up a bunch of results, return a list = [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values] 
+    """    
+    Gather up a bunch of results, return a list with following elements: 
+    [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values] 
     
-    # Arguments
-    # fs: spectrum object name
-    # sim_model: model fit with optimized parameters
-    # params_opt: list of the optimized parameters
-    # fs_folded: a Boolean (True, False) for whether empirical spectrum is folded or not
-    #--------------------------------------------------------------------------------------
+    Arguments
+    fs: spectrum object name
+    sim_model: model fit with optimized parameters
+    params_opt: list of the optimized parameters
+    fs_folded: a Boolean (True, False) for whether empirical spectrum is folded or not
+    """    
 
     #calculate theta
     theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
@@ -152,15 +154,16 @@ def collect_results(fs, sim_model, params_opt, roundrep, fs_folded):
     return temp_results
 
 def write_log(outfile, model_name, rep_results, roundrep):
-    #--------------------------------------------------------------------------------------
-    #reproduce replicate log to bigger log file, because constantly re-written
+    """    
+    Reproduce replicate log to bigger log file, because constantly re-written.
     
-    # Arguments =
-    # outfile: prefix for output naming
-    # model_name: a label to slap on the output files; ex. "no_mig"
-    # rep_results: the list returned by collect_results function: [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values]
-    # roundrep: name of replicate (ex, "Round_1_Replicate_10")
-    #--------------------------------------------------------------------------------------
+    Arguments
+    outfile: prefix for output naming
+    model_name: a label to slap on the output files; ex. "no_mig"
+    rep_results: the list returned by collect_results function: 
+                 [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values]
+    roundrep: name of replicate (ex, "Round_1_Replicate_10")
+    """    
     fh_log = open("{0}.{1}.log.txt".format(outfile, model_name), 'a')
     fh_log.write("\n{}\n".format(roundrep))
     templogname = "{}.log.txt".format(model_name)
@@ -179,27 +182,30 @@ def write_log(outfile, model_name, rep_results, roundrep):
 def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, fs_folded=True,
                          reps=None, maxiters=None, folds=None, in_params=None,
                          in_upper=None, in_lower=None, param_labels=None, optimizer="log_fmin"):
-    #--------------------------------------------------------------------------------------
-    # Mandatory Arguments =
-    #(1) fs:  spectrum object name
-    #(2) pts: grid size for extrapolation, list of three values
-    #(3) outfile:  prefix for output naming
-    #(4) model_name: a label to slap on the output files; ex. "no_mig"
-    #(5) func: access the model function from within 'moments_optimize.py' or from a separate python model script, ex. Models_2D.no_mig
-    #(6) rounds: number of optimization rounds to perform
-    #(7) param_number: number of parameters in the model selected (can count in params line for the model)
-    #(8) fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
+    """
+    Main function for running dadi routine.
 
-    # Optional Arguments =
-    #(9) reps: a list of integers controlling the number of replicates in each of three optimization rounds
-    #(10) maxiters: a list of integers controlling the maxiter argument in each of three optimization rounds
-    #(11) folds: a list of integers controlling the fold argument when perturbing input parameter values
-    #(12) in_params: a list of parameter values 
-    #(13) in_upper: a list of upper bound values
-    #(14) in_lower: a list of lower bound values
-    #(15) param_labels: a string, labels for parameters that will be written to the output file to keep track of their order
-    #(16) optimizer: a string, to select the optimizer. Choices include: log (BFGS method), log_lbfgsb (L-BFGS-B method), log_fmin (Nelder-Mead method), and log_powell (Powell's method).
-    #--------------------------------------------------------------------------------------
+    Mandatory/Positional Arguments
+    (1) fs:  spectrum object name
+    (2) pts: grid size for extrapolation, list of three values
+    (3) outfile:  prefix for output naming
+    (4) model_name: a label to slap on the output files; ex. "no_mig"
+    (5) func: access the model function from within 'moments_optimize.py' or from a separate python model script, ex. Models_2D.no_mig
+    (6) rounds: number of optimization rounds to perform
+    (7) param_number: number of parameters in the model selected (can count in params line for the model)
+    (8) fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
+
+    Optional Arguments
+    (9) reps: a list of integers controlling the number of replicates in each of three optimization rounds
+    (10) maxiters: a list of integers controlling the maxiter argument in each of three optimization rounds
+    (11) folds: a list of integers controlling the fold argument when perturbing input parameter values
+    (12) in_params: a list of parameter values 
+    (13) in_upper: a list of upper bound values
+    (14) in_lower: a list of lower bound values
+    (15) param_labels: a string, labels for parameters that will be written to the output file to keep track of their order
+    (16) optimizer: a string, to select the optimizer. Choices include: log (BFGS method), 
+                    log_lbfgsb (L-BFGS-B method), log_fmin (Nelder-Mead method, DEFAULT), and log_powell (Powell's method).
+    """    
 
     #call function that determines if our params and bounds have been set or need to be generated for us
     params, upper_bound, lower_bound = parse_params(param_number, in_params, in_upper, in_lower)
@@ -310,8 +316,7 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
 
             #calculate elapsed time for replicate
             tf_rep = datetime.now()
-            te_rep = tf_rep - tb_rep
-            print("\n\t\t\tReplicate time: {0} (H:M:S)\n".format(te_rep))
+            print("\n\t\t\tReplicate time: {0} (H:M:S)\n".format(tf_rep - tb_rep))
 
         #Now that this round is over, sort results in order of likelihood score
         #we'll use the parameters from the best rep to start the next round as the loop continues
@@ -324,13 +329,12 @@ def Optimize_Routine(fs, pts, outfile, model_name, func, rounds, param_number, f
                                                                               results_list[0][1],
                                                                               results_list[0][2],
                                                                               results_list[0][3],
-                                                                              ", ".join([str(numpy.around(x, 4)) for x in rep_results[5]])))
+                                                                              ", ".join([str(numpy.around(x, 4)) for x in results_list[0][5]])))
 
     #Now that all rounds are over, calculate elapsed time for the whole model
     tfr = datetime.now()
-    ter = tfr - tbr
     print("\nAnalysis Time for Model '{0}': {1} (H:M:S)\n\n"
-              "============================================================================".format(model_name, ter))
+              "============================================================================".format(model_name, tfr - tbr))
 
     #cleanup file
     os.remove("{}.log.txt".format(model_name))
