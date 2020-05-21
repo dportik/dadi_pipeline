@@ -311,7 +311,7 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
                                                                               results_list[0][1],
                                                                               results_list[0][2],
                                                                               results_list[0][3],
-                                                                              ", ".join([str(numpy.around(x, 4)) for x in rep_results[5]])))
+                                                                              ", ".join([str(numpy.around(x, 4)) for x in results_list[0][5]])))
 
     
     #Now that all rounds are over, calculate elapsed time for the whole model
