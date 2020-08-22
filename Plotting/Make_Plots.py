@@ -54,7 +54,7 @@ import os
 import numpy
 import dadi
 import Plotting_Functions
-from dadi import Numerics, PhiManip, Integration
+from dadi import Numerics, PhiManip, Integration, Misc
 from dadi.Spectrum_mod import Spectrum
 
 #===========================================================================
@@ -63,7 +63,7 @@ from dadi.Spectrum_mod import Spectrum
 
 #**************
 #path to your input file
-snps = "/Users/portik/Documents/GitHub/Testing_version/dadi_pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
+snps = "/Users/portik/Documents/GitHub/dadi_pipeline/Two_Population_Pipeline/Example_Data/dadi_2pops_North_South_snps.txt"
 
 #Create python dictionary from snps file
 dd = Misc.make_data_dict(snps)
@@ -78,7 +78,7 @@ proj = [16, 32]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
-fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+fs = Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
 #print some useful information about the afs or jsfs
 print("\n\n============================================================================")
@@ -121,11 +121,11 @@ def sym_mig(params, ns, pts):
     """
     nu1, nu2, m, T = params
 
-    xx = dadi.Numerics.default_grid(pts)
-    phi = dadi.PhiManip.phi_1D(xx)
-    phi = dadi.PhiManip.phi_1D_to_2D(xx, phi)
-    phi = dadi.Integration.two_pops(phi, xx, T, nu1, nu2, m12=m, m21=m)
-    fs = dadi.Spectrum.from_phi(phi, ns, (xx,xx))
+    xx = Numerics.default_grid(pts)
+    phi = PhiManip.phi_1D(xx)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    phi = Integration.two_pops(phi, xx, T, nu1, nu2, m12=m, m21=m)
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
     return fs
 
 #create a prefix based on the population names to label the output files
