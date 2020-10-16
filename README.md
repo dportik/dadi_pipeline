@@ -32,12 +32,15 @@ The most current version of this pipeline is designed to run in Python 3 and req
 
 ## **Version** <a name="V"></a>
 
-**The current version of `dadi_pipeline` is v3.1.4, and it has been tested with `dadi` v2.0.5. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
+**The current version of `dadi_pipeline` is v3.1.5, and it has been tested with `dadi` v2.0.5. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
 
 ### What's new in version 3.1+?
 
+Version 3.1.5:
++ Added 15 new 3D models that were developed for [Firneno et al. 2020]( https://doi.org/10.1111/mec.15496). Included is a new class of model involving an admixed (or "hybrid") origin for the third population. All new models are fully integrated in the [Three_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Three_Population_Pipeline).
+
 Version 3.1.4:
-+ Added option to select which optimizer to use. Includes the following functions from the `Inferenence.py` module in `dadi`: optimize_log (BFGS method), optimize_log_lbfgsb (L-BFGS-B method), optimize_log_fmin (Nelder-Mead method), and optimize_log_powell (Powell's method). For usage details please see section: [Default Optimization Routine Settings](#DOR).
++ Added option to select which optimizer to use. Includes the following functions from the `Inference.py` module in `dadi`: optimize_log (BFGS method), optimize_log_lbfgsb (L-BFGS-B method), optimize_log_fmin (Nelder-Mead method), and optimize_log_powell (Powell's method). For usage details please see section: [Default Optimization Routine Settings](#DOR).
 
 Version 3.1.2:
 + Issue causing crash when referencing optimized params list is fixed. Compatible with `dadi` v2.0.5.
@@ -378,7 +381,7 @@ If you encounter any issues while using `dadi_pipeline`, it could be the result 
 
 This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, `dadi_pipeline` is best considered as an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used `dadi_pipeline` to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
-> To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using dadi_pipeline v3.1.4 (Portik et al. 2017).
+> To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using dadi_pipeline v3.1.5 (Portik et al. 2017).
 
 The main motivation behind the creation of this workflow was to increase transparency and reproducibility in demographic modeling. In your publication you should report the key parameters of the optimization routine. The goal is to allow other researchers to plug your data into `dadi_pipeline` and run the same analyses. For example:
 
@@ -406,9 +409,21 @@ The following is a running list of publications that have used the `dadi_pipelin
 
 #### Published Articles
 
-+ Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. **2020**. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. ***Molecular Ecology***, 29: 3543–3559. *https://doi.org/10.1111/mec.15496*
++ Leder, E.H., Andre, C., Le Moan, A., Topel, M., Blomberg, A., Havenhand, J.N., Lindstrom, K., Volckaert, F.A.M., Kvarnemo, C., Johannesson, K., and O. Svensson. Post-glacial establishment of locally adapted fish populations over a steep salinity gradient. **2020**. ***Journal of Evolutionary Biology***, *Early View*.  *https://doi.org/10.1111/jeb.13668*
 
-+ Ebersbach, J., Posso-Terranova, A., Bogdanowicz, S., Gomez-Diaz, M., Garcia-Gonzalez, M.X., Bolivar-Garcia, W., and J. Andres. **2020**. Complex patterns of differentiation and gene flow underly the divergence of aposematic phenotypes in *Oophaga* poison frogs. ***Molecular Ecology***, *Online Early*. *https://doi.org/10.1111/mec.15360*
++ Liu, C., Sarnat, E.M., Friedman, N.R., Garcia, F.H., Darwell, C., Booher, D., Kubota, Y., Mikheyev, A.S., and E.P. Economo. **2020**. Colonize, radiate, decline: Unraveling the dynamics of island community assembly with Fijian trap-jaw ants. ***Evolution*** 74: 1082-1097. *https://doi.org/10.1111/evo.13983*
+
++ Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. **2020**. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. ***Molecular Ecology*** 29: 3543–3559. *https://doi.org/10.1111/mec.15496*
+
++ Talla, V., Pierce, A.A., Adams, K.L., de Man, T.J.B., Nallu, S., Villablanca, F.X., Kronforst, M.R., and J.C. de Roode. **2020**. Genomic evidence for gene flow between monarchs with divergent migratory phenotypes and flight performance. ***Molecular Ecology*** 29: 2567-2582. *https://doi.org/10.1111/mec.15508*
+
++ Ebersbach, J., Posso-Terranova, A., Bogdanowicz, S., Gomez-Diaz, M., Garcia-Gonzalez, M.X., Bolivar-Garcia, W., and J. Andres. **2020**. Complex patterns of differentiation and gene flow underly the divergence of aposematic phenotypes in *Oophaga* poison frogs. ***Molecular Ecology*** 29: 1944-1956. *https://doi.org/10.1111/mec.15360*
+
++ Feng, L., Ruhsam, M., Wang, Y-.H., Li, Z-.H., and X-.M. Wang. **2020**. Using demographic model selection to untangle allopatric divergence and diversification mechanisms in the *Rheum palmatum* complex in the Eastern Asiatic Region. ***Molecular Ecology*** 29: 1791-1805. 
+
++ Darwell, C.T., Fischer, G., Sarnat, E.M., Friedman, N.R., Liu, C., Baiao, G., Mikheyev, A.S., and E.P. Economo. **2020**. Genomic and phenomic analysis of island ant community assembly. ***Molecular Ecology*** 29: 1611-1627. *https://doi.org/10.1111/mec.15326*
+
++ Mattingsdal, M., Jorde, P.E., Knutsen, H., Jentoft, S., Stenseth, N.C., Sodeland, M., Robalo, J.I., Hansen, M.M., Andre, C., and E.B. Gonzalez. **2020**. Demographic history has shaped the strongly differentiated corkwing wrasse populations in Northern Europe. ***Molecular Ecology*** 29: 160-171. *https://doi.org/10.1111/mec.15310*
 
 + Sun, Y., and X. Wen. **2020**. Demographic inference of divergence and gene exchange between *Castanopsis fabri* and *Castanopsis lamontii*. ***Frontiers in Plant Science*** 11: 198. *https://doi.org/10.3389/fpls.2020.00198*
 
@@ -419,8 +434,6 @@ The following is a running list of publications that have used the `dadi_pipelin
 + Choi, J.Y., Purugganan, M., and E.A. Stacy. **2020**. Divergent selection and primary gene flow shape incipient speciation of a riparian tree on Hawaii Island. ***Molecular Biology and Evolution*** 37: 695-710. *https://doi.org/10.1093/molbev/msz259*
 
 + Beuadry, F.E.G., Barrett, S.C.H., & S.I. Wright. **2020**. Ancestral and neo-sex chromosomes contribute to population divergence in a dioecious plant. ***Evolution*** 74: 256-269. *https://doi.org/10.1111/evo.13892*
-
-+ Mattingsdal, M., Jorde, P.E., Knutsen, H., Jentoft, S., Stenseth, N.C., Sodeland, M., Robalo, J.I., Hansen, M.M., Andre, C., & E.B. Gonzalez. **2020**. Demographic history has shaped the strongly differentiated corkwing wrasse populations in Northern Europe. ***Molecular Ecology*** 29: 160-171. *https://doi.org/10.1111/mec.15310*
 
 + Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***Nature Communications*** 10: 4811. *https://doi.org/10.1038/s41467-019-12695-4*
 
