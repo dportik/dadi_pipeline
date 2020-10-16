@@ -8,7 +8,9 @@ This is a modified version of the `dadi_Run_Optimizations.py` script in which we
 
 ## General Overview:
 
-There are many 3D models available that can be applied to your data set. The commands for using all of the available models are in the `dadi_Run_3D_Set.py` script, and these can be modified to only analyze a subset of the models. The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the `Summarize_Outputs.py` script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
+There are a variety of 3D models available that can be applied to your data set. The commands for using all of the available models are in the `dadi_Run_3D_Set.py` script, and these can be modified to only analyze a subset of the models. **In general, you should NOT try to run all of these models. Some models were created for specific projects and only make sense in particular biological contexts. Look at the available models in [Models_3D.pdf](https://github.com/dportik/dadi_pipeline/blob/master/Three_Population_Pipeline/Models_3D.pdf) and decide which ones make sense for your project and for your system.**
+
+The optimization routine runs a user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting parameters for the replicates of the subsequent round. The arguments controlling steps of the optimization algorithm (maxiter) and perturbation of starting parameters (fold) can be supplied by the user for more control across rounds. The user can also supply their own set of initial parameters, or set custom bounds on the parameters (upper_bound and lower_bound) to meet specific model needs. Because this script will generate many output files for all the models included to analyze, the `Summarize_Outputs.py` script can be used to find the best scoring replicate from each model, which will be written to a summary output file.
 
 To use this workflow, you'll need a SNPs input text file to create the 3D joint site frequency spectrum object. Check the dadi website for instructions on the basic format for this file. This pipeline is written to create folded spectra (lacking outgroup information to polarize SNPs), but can easily be modified to created unfolded spectrum objects (see Caveats section).
 
@@ -31,6 +33,8 @@ Here is a running list of the models currently available. The name of the model 
 + *ancmig_adj_3*: Adjacent ancient migration, longest isolation. See full description in script.
 + *ancmig_adj_2*: Adjacent ancient migration, shorter isolation. See full description in script.
 + *ancmig_adj_1*: Adjacent ancient migration, shortest isolation. See full description in script.
+
+**The following 3D models were developed for Barratt et al. (2018):**
 + *sim_split_no_mig*: Simultaneous split, no migration.
 + *sim_split_no_mig_size*: Simultaneous split, no migration, size change.
 + *sim_split_sym_mig_all*: Simultaneous split, symmetric migration between all populations (1<->2, 2<->3, and 1<->3).
@@ -40,6 +44,11 @@ Here is a running list of the models currently available. The name of the model 
 + *split_nomig_size*:  Split into three populations, no migration, size change.
 + *ancmig_2_size*: Adjacent ancient migration, shorter isolation, size change.
 + *sim_split_refugia_sym_mig_adjacent_size*: Simultaneous split, between 'adjacent' populations, size change.
+
+**NEW 3D MODELS AVAILABLE (October 2020)**
+
+There are 15 new 3D models that were developed for [Firneno et al. 2020]( https://doi.org/10.1111/mec.15496). These models focus on distinguishing the origin of a third population that is geographically located between two populations. These models can help distinguish between simultaneous splitting origins for all three populations, a clear branching pattern with variations in migration, or a "hybrid" origin. The "hybrid" origin models may be particularly useful. For these models, a proportion of populations one and two create an instantaneously admixed third population. The full set of models is described in [Firneno et al. 2020]( https://doi.org/10.1111/mec.15496), and are also shown visually in the [Models_3D.pdf](https://github.com/dportik/dadi_pipeline/blob/master/Three_Population_Pipeline/Models_3D.pdf) file.
+
 
 
 ## Optimization Settings:
@@ -251,20 +260,19 @@ If you see this, check to make sure both relevant arguments actually agree on th
  
 ## Citation Information:
 
-### How to cite `dadi_pipeline`:
+### How to cite dadi_pipeline:
 
-This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, `dadi_pipeline` is best considered as an additional package.. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used `dadi_pipeline` to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
+This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, `dadi_pipeline` is best considered as an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used `dadi_pipeline` to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
-> To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using the demographic modeling workflow (dadi_pipeline) from Portik et al. (2017).
+> To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using dadi_pipeline v3.1.4 (Portik et al. 2017).
 
 The main motivation behind the creation of this workflow was to increase transparency and reproducibility in demographic modeling. In your publication you should report the key parameters of the optimization routine. The goal is to allow other researchers to plug your data into `dadi_pipeline` and run the same analyses. For example:
 
-
-> For all models, we performed consecutive rounds of optimizations following Portik et al. (2017). For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.
+> For all models, we performed consecutive rounds of optimizations. For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.
 
 The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. This can include changes to the number of rounds, replicates, maxiters, folds, or other optional features (such as supplying parameter values or changing the default parameter bounds).
 
-There are other features of `dadi_pipeline` that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365) and [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and the goodness of fit tests were published as part of [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers. 
+There are additional features of `dadi_pipeline` that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365)[Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and [Firneno et al. 2020]( https://doi.org/10.1111/mec.15496). The goodness of fit tests were published as part of [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers.
 
 Here is a list of the publications mentioned above, for easy reference:
 
@@ -276,14 +284,12 @@ Here is a list of the publications mentioned above, for easy reference:
 
 + *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. Molecular Ecology 27: 4289-4308. https://doi.org/10.1111/mec.14862*
 
++ *Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. 2020. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. Molecular Ecology, 29: 3543–3559. https://doi.org/10.1111/mec.15496*
+
 
 ## Contact:
 
 Daniel Portik, PhD
-
-Postdoctoral Researcher
-
-California Academy of Sciences 
 
 daniel.portik@gmail.com
 

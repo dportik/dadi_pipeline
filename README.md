@@ -378,15 +378,15 @@ If you encounter any issues while using `dadi_pipeline`, it could be the result 
 
 This demographic modeling pipeline was built with a novel multi-round optimization routine, it includes many original models, and it generates custom output files. Because of these important features, `dadi_pipeline` is best considered as an additional package. It was published as part of [Portik et al. (2017)](https://doi.org/10.1111/mec.14266). If you have used `dadi_pipeline` to run your analyses, please indicate so in your publication. Here is an example of how to cite this workflow:
 
-> To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using the demographic modeling workflow (dadi_pipeline) from Portik et al. (2017).
+> To explore alternative demographic models, we used the diffusion approximation method of dadi (Gutenkunst et al. 2009) to analyze joint site frequency spectra. We fit 15 demographic models using dadi_pipeline v3.1.4 (Portik et al. 2017).
 
 The main motivation behind the creation of this workflow was to increase transparency and reproducibility in demographic modeling. In your publication you should report the key parameters of the optimization routine. The goal is to allow other researchers to plug your data into `dadi_pipeline` and run the same analyses. For example:
 
-> For all models, we performed consecutive rounds of optimizations following Portik et al. (2017). For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.
+> For all models, we performed consecutive rounds of optimizations. For each round, we ran multiple replicates and used parameter estimates from the best scoring replicate (highest log-likelihood) to seed searches in the following round. We used the default settings in dadi_pipeline for each round (replicates = 10, 20, 30, 40; maxiter = 3, 5, 10, 15; fold = 3, 2, 2, 1), and optimized parameters using the Nelder-Mead method (optimize_log_fmin). Across all analyses, we used the optimized parameter sets of each replicate to simulate the 3D-JSFS, and the multinomial approach was used to estimate the log-likelihood of the 3D-JSFS given the model.
 
 The above example explains all the parameters used to run the analyses. If you change any of the default options, you should report them here in your methods section. This can include changes to the number of rounds, replicates, maxiters, folds, or other optional features (such as supplying parameter values or changing the default parameter bounds).
 
-There are additional features of `dadi_pipeline` that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365) and [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and the goodness of fit tests were published as part of [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers.
+There are additional features of `dadi_pipeline` that were developed for other publications. For example, several 2D and 3D models were published as part of [Charles et al. (2018)](https://doi.org/10.1111/jbi.13365)[Barratt et al. (2018)](https://doi.org/10.1111/mec.14862), and [Firneno et al. 2020]( https://doi.org/10.1111/mec.15496). The goodness of fit tests were published as part of [Barratt et al. (2018)](https://doi.org/10.1111/mec.14862). Depending on what you include in your own analyses, you may also choose to cite these papers.
 
 Here is a list of the publications mentioned above, for easy reference:
 
@@ -398,11 +398,15 @@ Here is a list of the publications mentioned above, for easy reference:
 
 + *Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. 2018. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. Molecular Ecology 27: 4289-4308. https://doi.org/10.1111/mec.14862*
 
++ *Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. 2020. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. Molecular Ecology, 29: 3543–3559. https://doi.org/10.1111/mec.15496*
+
 ### **Publications** <a name="PUBS"></a>
 
 The following is a running list of publications that have used the `dadi_pipeline` demographic modeling workflow:
 
 #### Published Articles
+
++ Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. **2020**. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. ***Molecular Ecology***, 29: 3543–3559. *https://doi.org/10.1111/mec.15496*
 
 + Ebersbach, J., Posso-Terranova, A., Bogdanowicz, S., Gomez-Diaz, M., Garcia-Gonzalez, M.X., Bolivar-Garcia, W., and J. Andres. **2020**. Complex patterns of differentiation and gene flow underly the divergence of aposematic phenotypes in *Oophaga* poison frogs. ***Molecular Ecology***, *Online Early*. *https://doi.org/10.1111/mec.15360*
 
@@ -448,10 +452,6 @@ GNU Lesser General Public License v3.0
 ## Contact: <a name="CON"></a>
 
 Daniel Portik, PhD
-
-Postdoctoral Researcher
-
-California Academy of Sciences 
 
 daniel.portik@gmail.com
 

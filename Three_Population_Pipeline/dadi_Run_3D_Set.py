@@ -56,6 +56,7 @@ Citations:
 	for five co-distributed amphibians. Molecular Ecology 27: 4289-4308.
     doi: 10.1111/mec.14862
 
+
  If you are interesting in contributing your 3D models to this workflow, please email me!
 
 -------------------------
@@ -287,3 +288,65 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_
 
 
 
+'''
+This third set of models were developed for the following publication:
+
+    Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., 
+    and M.K. Fujita. 2020. Mito-nuclear discordance reveals cryptic genetic 
+    diversity, introgression, and an intricate demographic history in a problematic 
+    species complex of Mesoamerican toads. Molecular Ecology, 29: 3543–3559. 
+    doi: 10.1111/mec.15496
+
+'''
+# For these models, it is assumed that population 3 is geographically intermediate between 1 and 2.
+
+############# Divergence with gene flow variations (mostly with gene flow centered on pop3)
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_2_var_sym", Models_3D.refugia_adj_2_var_sym, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m2, m3, T1, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_2_var_uni", Models_3D.refugia_adj_2_var_uni, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, m32, m31, T1, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_3_var_sym", Models_3D.refugia_adj_3_var_sym, rounds, 10, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m2, m3, T1a, T1b, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "refugia_adj_3_var_uni", Models_3D.refugia_adj_3_var_uni, rounds, 10, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m32, m31, T1a, T1b, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_sym_mig_adjacent_var1", Models_3D.split_sym_mig_adjacent_var1, rounds, 9, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m2, m3, T1, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_uni_mig_adjacent_var1", Models_3D.split_uni_mig_adjacent_var1, rounds, 9, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m32, m31, T1, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_sym_mig_adjacent_var2", Models_3D.split_sym_mig_adjacent_var2, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m3, T1, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "split_uni_mig_adjacent_var2", Models_3D.split_uni_mig_adjacent_var2, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nuA, nu2, nu3, mA, m31, T1, T2")
+
+############# Simultaneous splitting variations
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_sym_mig_adjacent_var", Models_3D.sim_split_sym_mig_adjacent_var, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m2, m3, T1")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_uni_mig_adjacent_var", Models_3D.sim_split_uni_mig_adjacent_var, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m32, m31, T1")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_sym_mig_adjacent_var", Models_3D.sim_split_refugia_sym_mig_adjacent_var, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m2, m3, T1, T2")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_uni_mig_adjacent_var", Models_3D.sim_split_refugia_uni_mig_adjacent_var, rounds, 7, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m32, m31, T1, T2")
+
+############# Admixed ("hybrid") origins models
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "admix_origin_no_mig", Models_3D.admix_origin_no_mig, rounds, 6, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, T1, T2, f")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "admix_origin_sym_mig_adj", Models_3D.admix_origin_sym_mig_adj, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m3, T1, T2, f")
+
+Optimize_Functions.Optimize_Routine(fs, pts, prefix, "admix_origin_uni_mig_adj", Models_3D.admix_origin_uni_mig_adj, rounds, 8, fs_folded=fs_folded,
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m32, m31, T1, T2, f")
