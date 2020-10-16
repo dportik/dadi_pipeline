@@ -316,9 +316,5 @@ Here is a list of the publications mentioned above, for easy reference:
 
 Daniel Portik, PhD
 
-Postdoctoral Researcher
-
-California Academy of Sciences
-
 daniel.portik@gmail.com
 

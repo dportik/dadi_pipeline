@@ -264,9 +264,5 @@ If you conduct goodness of fit tests using these scripts, please also cite this 
 
 Daniel Portik, PhD
 
-Postdoctoral Researcher
-
-California Academy of Sciences
-
 daniel.portik@gmail.com
 
