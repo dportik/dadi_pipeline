@@ -393,6 +393,9 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
 		 # reps: a list of integers controlling the number of replicates in each of the optimization rounds
 		 # maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
 		 # folds: a list of integers controlling the fold argument when perturbing input parameter values
+         # in_params: a list of parameter values 
+         # in_upper: a list of upper bound values
+         # in_lower: a list of lower bound values
          # param_labels: list of labels for parameters that will be written to the output file to keep track of their order
          # optimizer: a string, to select the optimizer. Choices include: log (BFGS method), log_lbfgsb (L-BFGS-B method), log_fmin (Nelder-Mead method), and log_powell (Powell's method).
     #--------------------------------------------------------------------------------------
@@ -418,7 +421,8 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
 
         #optimize the simulated SFS
         best_rep = Optimize_Routine_GOF(sim_fs, pts, outfile, model_name, func, rounds, param_number, fs_folded,
-                                            reps, maxiters, param_labels=param_labels, optimizer=optimizer)
+                                            reps, maxiters, in_params=in_params, in_upper=in_upper, in_lower=in_lower, 
+                                            param_labels=param_labels, optimizer=optimizer)
         #best_rep list is [roundnum_repnum, log-likelihood, AIC, chi^2 test stat, theta, parameter values, sfs_sum]
 
         #add result for this simulation to output file

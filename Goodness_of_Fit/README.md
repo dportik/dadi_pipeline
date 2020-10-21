@@ -75,7 +75,7 @@ perturbation of starting parameters (fold) can be supplied by the user for more 
 
 The simulations and optimizations are performed with the following function:
 
-`Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None)`
+`Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded, reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None, param_labels=None, optimizer="log_fmin")`
  
 ***Mandatory Arguments:***
 
@@ -93,6 +93,9 @@ The simulations and optimizations are performed with the following function:
 + **reps**: a list of integers controlling the number of replicates in each of the optimization rounds
 + **maxiters**: a list of integers controlling the maxiter argument in each of the optimization rounds
 + **folds**: a list of integers controlling the fold argument when perturbing input parameter values
++ **in_params**: a list of parameter values (allows starting parameters to be specified, useful when setting upper and lower bounds for specific models)
++ **in_upper**: a list of upper bound values (will constrain the upper bounds in simulations)
++ **in_lower**: a list of lower bound values (will constrain the lower bounds in simulations)
 + **param_labels**: list of labels for parameters that will be written to the output file to keep track of their order
 + **optimizer**: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
 

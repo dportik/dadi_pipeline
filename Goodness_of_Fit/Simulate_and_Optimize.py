@@ -2,7 +2,8 @@ import sys
 import os
 import numpy
 import dadi
-import pylab
+from dadi import Numerics, PhiManip, Integration
+from dadi.Spectrum_mod import Spectrum
 from datetime import datetime
 import Optimize_Functions_GOF
 
@@ -151,11 +152,11 @@ def sym_mig(params, ns, pts):
     """
     nu1, nu2, m, T = params
 
-    xx = dadi.Numerics.default_grid(pts)
-    phi = dadi.PhiManip.phi_1D(xx)
-    phi = dadi.PhiManip.phi_1D_to_2D(xx, phi)
-    phi = dadi.Integration.two_pops(phi, xx, T, nu1, nu2, m12=m, m21=m)
-    fs = dadi.Spectrum.from_phi(phi, ns, (xx,xx))
+    xx = Numerics.default_grid(pts)
+    phi = PhiManip.phi_1D(xx)
+    phi = PhiManip.phi_1D_to_2D(xx, phi)
+    phi = Integration.two_pops(phi, xx, T, nu1, nu2, m12=m, m21=m)
+    fs = Spectrum.from_phi(phi, ns, (xx,xx))
     return fs
 
 #**************
@@ -185,7 +186,8 @@ scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym
 '''
  We will use a function from the Optimize_Functions_GOF.py script:
  	Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded,
- 				reps=None, maxiters=None, folds=None, param_labels=None, optimizer="log_fmin")
+ 				  reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None,
+                  param_labels=None, optimizer="log_fmin")
 
 Mandatory Arguments =
 	sim_number: the number of simulations to perform
@@ -201,9 +203,12 @@ Optional Arguments =
      reps: a list of integers controlling the number of replicates in each of the optimization rounds
      maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
      folds: a list of integers controlling the fold argument when perturbing input parameter values
+     in_params: a list of parameter values 
+     in_upper: a list of upper bound values
+     in_lower: a list of lower bound values
      param_labels: list of labels for parameters that will be written to the output file to keep track of their order
-     optimizer: a string, to select the optimizer. Choices include: "log" (BFGS method), "log_lbfgsb" (L-BFGS-B method), 
-                "log_fmin" (Nelder-Mead method), and "log_powell" (Powell's method).
+     optimizer: a string, to select the optimizer. Choices include: log (BFGS method), log_lbfgsb (L-BFGS-B method), 
+                log_fmin (Nelder-Mead method), and log_powell (Powell's method).
 '''
 
 #**************
