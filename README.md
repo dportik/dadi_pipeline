@@ -409,6 +409,8 @@ The following is a running list of publications that have used the `dadi_pipelin
 
 + Leder, E.H., Andre, C., Le Moan, A., Topel, M., Blomberg, A., Havenhand, J.N., Lindstrom, K., Volckaert, F.A.M., Kvarnemo, C., Johannesson, K., and O. Svensson. Post-glacial establishment of locally adapted fish populations over a steep salinity gradient. **2020**. ***Journal of Evolutionary Biology***, *Early View*.  *https://doi.org/10.1111/jeb.13668*
 
++ Nolen, Z.J., Yildirim, B., Irisarri, I., Liu, S., Crego, C.G., Amby, D.B., Mayer, F., Gilbert, M.T.P., and R.J. Pereira. **2020**. Historical isolation facilitates species radiation by sexual selection: insights from *Chorthippus* grasshoppers. ***Molecular Ecology*** 29: 4985–5002. *https://doi.org/10.1111/mec.15695*
+
 + Liu, C., Sarnat, E.M., Friedman, N.R., Garcia, F.H., Darwell, C., Booher, D., Kubota, Y., Mikheyev, A.S., and E.P. Economo. **2020**. Colonize, radiate, decline: Unraveling the dynamics of island community assembly with Fijian trap-jaw ants. ***Evolution*** 74: 1082-1097. *https://doi.org/10.1111/evo.13983*
 
 + Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. **2020**. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. ***Molecular Ecology*** 29: 3543–3559. *https://doi.org/10.1111/mec.15496*
@@ -425,7 +427,7 @@ The following is a running list of publications that have used the `dadi_pipelin
 
 + Sun, Y., and X. Wen. **2020**. Demographic inference of divergence and gene exchange between *Castanopsis fabri* and *Castanopsis lamontii*. ***Frontiers in Plant Science*** 11: 198. *https://doi.org/10.3389/fpls.2020.00198*
 
-+ Park, B., and J.M. Burke. **2020**. Phylogeography and the evolutionary history of sunflower (*Helianthus annuus** L.): wild diversity and the dynamics of domestication. ***Genes*** 11: 266. *https://doi.org/10.3390/genes11030266**
++ Park, B., and J.M. Burke. **2020**. Phylogeography and the evolutionary history of sunflower (*Helianthus annuus* L.): wild diversity and the dynamics of domestication. ***Genes*** 11: 266. *https://doi.org/10.3390/genes11030266*
 
 + Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. **2020**. Intraspecific diversification of the crop wild relative *Brassica cretica* Lam. using demographic model selection. ***BMC Genomics*** 21: 48. *https://doi.org/10.1186/s12864-019-6439-x*
 
