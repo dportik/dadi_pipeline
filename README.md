@@ -28,13 +28,16 @@ Perform demographic model optimizations and comparisons with this accessible and
 
 This tool is designed to work with the Python package [dadi](https://bitbucket.org/gutenkunstlab/dadi) and assumes you already have the package installed. You'll need to be familiar with how dadi works, and some of the basic syntax for writing dadi scripts with python. A good resource for all dadi-related questions is the [dadi user group](https://groups.google.com/forum/#!forum/dadi-user). Before attempting to use these scripts, read over the user manual for dadi and try running the program with the example files.
 
-The most current version of this pipeline is designed to run in Python 3 and requires the Python 3 version of `dadi` (tested for v2.1.0). You should use the most current versions of `dadi` and `dadi_pipeline`, and run them using Python 3.
+The most current version of this pipeline is designed to run in Python 3 and requires the Python 3 version of `dadi` (tested for v2.1+). You should use the most current versions of `dadi` and `dadi_pipeline`, and run them using Python 3.
 
 ## **Version** <a name="V"></a>
 
 **The current version of `dadi_pipeline` is v3.1.5, and it has been tested with `dadi` v2.1.0. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
 
 ### What's new in version 3.1+?
+
+Version 3.1.6:
++ Added `dadi-test-projections.py` module to examine the number of segregating sites resulting from all combinations of projection sites: [Find-Best-Projections](https://github.com/dportik/dadi_pipeline/tree/master/Find-Best-Projections).
 
 Version 3.1.5:
 + Added 15 new 3D models that were developed for [Firneno et al. 2020]( https://doi.org/10.1111/mec.15496). Included is a new class of models involving an admixed (or "hybrid") origin for the third population. All new models are fully integrated in the [Three_Population_Pipeline](https://github.com/dportik/dadi_pipeline/tree/master/Three_Population_Pipeline).
