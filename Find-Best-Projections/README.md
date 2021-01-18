@@ -15,7 +15,7 @@ example files.
 
 ## Overview:
 
-This is meant to be a general use script to run `dadi` to fit any model on an afs/jsfs with one to three populations, then create figures comparing the data and model sfs. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the script that will have to be edited. 
+This is meant to be a general use script to generate combinations of projection sizes to determine the resulting numbers of segregating sites. To use this workflow, you'll need a SNPs input text file to create an allele frequency or joint site frequency spectrum object. Alternatively, you can import a frequency spectrum of your own creation, editing the script appropriately (see dadi manual). The user will have to edit information about their allele frequency spectrum, and a #************** marks lines in the script that will have to be edited. 
 
 The user provides an input SNPs file along with the relevant information (population IDs, folded vs. unfolded). Finally, a maximum projection size is set and a minimum fraction required for the projection sizes. The script will then generate all permutations of projection size combinations and write the results to stdout. 
 
