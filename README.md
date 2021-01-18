@@ -32,7 +32,7 @@ The most current version of this pipeline is designed to run in Python 3 and req
 
 ## **Version** <a name="V"></a>
 
-**The current version of `dadi_pipeline` is v3.1.5, and it has been tested with `dadi` v2.1.0. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
+**The current version of `dadi_pipeline` is v3.1.6, and it has been tested with `dadi` v2.1+. Please ensure you have the latest versions of both `dadi_pipeline` and `dadi` installed.**
 
 ### What's new in version 3.1+?
 
