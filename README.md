@@ -312,7 +312,7 @@ Below is a summary of the log-likelihood scores obtained using the default four-
 
 ![Rounds](https://github.com/dportik/dadi_pipeline/blob/master/Example_Data/NoMig_Zoom.png)
 
-For a compelling summary of scores across optimization rounds, please refer to the figures provided in the supplementary material in the recent study by Rendon-Anaya et al. (2021)[**available here**](https://www.biorxiv.org/content/10.1101/2021.02.23.432466v1).
+For a compelling summary of scores across optimization rounds, please refer to Figure S4 provided in the supplementary material in the recent study by Rendon-Anaya et al. (2021) [**available here**](https://www.biorxiv.org/content/10.1101/2021.02.23.432466v1).
 
 **Please understand that it is possible for a single execution of the pipeline to get stuck on a local optima for any given model! This is why I strongly recommend running the pipeline multiple times for a given model.** If several independent runs for this model each converge on similar log-likelihood scores in their last optimization rounds, you can be mostly confident that analyses are not getting trapped on local optima, and that the true log-likelihood has been obtained.
 
