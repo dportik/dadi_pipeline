@@ -229,7 +229,7 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
         #perform an optimization routine for each rep number in this round number
         for rep in range(1, (reps_list[r]+1) ):
             print("\n\t\tRound {0} Replicate {1} of {2}:".format(r+1, rep, (reps_list[r])))
-            
+            print("\n\t\t\tSample sizes = {}".format(fs.sample_sizes))
             #keep track of start time for rep
             tbr = datetime.now()
             
@@ -240,10 +240,10 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
             params_perturbed = dadi.Misc.perturb_params(best_params, fold=folds_list[r],
                                                             upper_bound=upper_bound, lower_bound=lower_bound)
             if param_labels:
-                print("\n\t\t\tModel parameters = {}".format(param_labels))
+                print("\t\t\tModel parameters = {}".format(param_labels))
                 print("\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
             else:
-                print("\n\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
+                print("\t\t\tStarting parameters = [{}]".format(", ".join([str(numpy.around(x, 6)) for x in params_perturbed])))
 
             #optimize from perturbed parameters
             if optimizer == "log_fmin":
@@ -329,55 +329,74 @@ def Optimize_Routine_GOF(fs, pts, outfile, model_name, func, rounds, param_numbe
     return results_list[0]
 
 
-def Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded=True):
+def Get_Empirical(fs, max_fs, pts, outfile, model_name, func, in_params, down_projections, fs_folded=True):
     #--------------------------------------------------------------------------------------
     # Mandatory Arguments =
-    #(1) fs:  spectrum object name
+    #(1) max_fs:  spectrum object name (made from maximum projection sizes)
     #(2) pts: grid size for extrapolation, list of three values
     #(3) outfile:  prefix for output naming
     #(4) model_name: a label to slap on the output files; ex. "no_mig"
     #(5) func: access the model function from within script or from a separate python model script, ex. Models_2D.no_mig
     #(6) in_params: the previously optimized parameters to use
-    #(7) fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
+    #(7) down_projections: list of integers to use for down-projections
+    #(8) fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
     #--------------------------------------------------------------------------------------
-    
-    print("\n\n============================================================================"
-              "\nFitting model '{}' to empirical data..."
-              "\n============================================================================\n\n".format(model_name))
-    print("Input parameters = {}\n".format(in_params))
 
-    
     #create an extrapolating function 
     func_exec = dadi.Numerics.make_extrap_log_func(func)
 
-    #simulate the model with the optimized parameters
-    sim_model = func_exec(in_params, fs.sample_sizes, pts)
+    # Step 1: We need to get the optimal theta from the original model-fit using the
+    # down-projected JSFS.
+    
+    print("\n\n{0}\nFitting model '{1}' to down-projected JSFS...\n{0}\n\n".format("="*80, model_name))
+    print("Input parameters = {}\n".format(in_params))
+    print("\t\t\tSample sizes = {}".format(down_projections))
 
-    #collect results 
-    rep_results = collect_results(fs, sim_model, in_params, "1", fs_folded)
+    #simulate the model with the optimized parameters and original down-projections
+    orig_model = func_exec(in_params, down_projections, pts)
+    #get summary of the values; [roundrep, ll, aic, chi2, theta, params_opt, sfs_sum]
+    orig_results = collect_results(fs, orig_model, in_params, "Optimized", fs_folded)
+    orig_theta = orig_results[4]
+
     
     # We need an output file that will store empirical results
     outname = "{0}.{1}.optimized.txt".format(outfile,model_name)
     with open(outname, 'a') as fh_out:
         fh_out.write("Model\tReplicate\tlog-likelihood\ttheta\tsfs_sum\tchi-squared\n")
-        fh_out.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\n".format(model_name, rep_results[0],
-                                                             rep_results[1], rep_results[4],
-                                                             rep_results[6], rep_results[3]))
+        fh_out.write("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\n".format(model_name, orig_results[0],
+                                                             orig_results[1], orig_results[4],
+                                                             orig_results[6], orig_results[3]))
     
-    theta = dadi.Inference.optimal_sfs_scaling(sim_model, fs)
+    # Step 2: We need to fit the model to the MAXIMUM projection size JSFS, then scale
+    #by the original theta. This will create a proper JSFS to sample from.
     
-    scaled_sim_model = sim_model*theta
+    print("\n\n{0}\nFitting model '{1}' to maximum projection JSFS...\n{0}\n\n".format("="*80, model_name))
+    print("Input parameters = {}\n".format(in_params))
+    print("\t\t\tSample sizes = {}".format(max_fs.sample_sizes))
+
+    #simulate the model with the optimized parameters and MAXIMUM projections
+    sim_model = func_exec(in_params, max_fs.sample_sizes, pts)
+    
+    #get summary of the values; [roundrep, ll, aic, chi2, theta, params_opt, sfs_sum]
+    max_results = collect_results(max_fs, sim_model, in_params, "Optimized", fs_folded)
+
+    #now scale with original theta
+    scaled_sim_model = sim_model*orig_theta
+
+    #because scaled_sim_model can potentially have negative values, so use abs()function
+    scaled_sim_model_abs = abs(scaled_sim_model)
+
     if fs_folded is True:
-        return_model = scaled_sim_model.fold()
+        return_model = scaled_sim_model_abs.fold()
     elif fs_folded is False:
-        return_model = scaled_sim_model
+        return_model = scaled_sim_model_abs
     
     return return_model
     
 
-def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, fs_folded=True,
-                     reps=None, maxiters=None, folds=None, in_params=None, in_upper=None, in_lower=None,
-                     param_labels=None, optimizer="log_fmin"):
+def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_number, projections,
+                     fs_folded=True, reps=None, maxiters=None, folds=None, in_params=None,
+                     in_upper=None, in_lower=None, param_labels=None, optimizer="log_fmin"):
     #--------------------------------------------------------------------------------------
 	# Mandatory Arguments =
 		#(1) sim_number: the number of simulations to perform
@@ -387,9 +406,10 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
 		#(5) func: access the model function from within this script
 		#(6) rounds: number of optimization rounds to perform
 		#(7) param_number: number of parameters in the model selected (can count in params line for the model)
-        #(8) fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
+        #(8) projections: list of projection sizes that were used for actual model fitting & optimization
 
 	# Optional Arguments =
+         # fs_folded: A Boolean value (True or False) indicating whether the empirical fs is folded (True) or not (False). Default is True.
 		 # reps: a list of integers controlling the number of replicates in each of the optimization rounds
 		 # maxiters: a list of integers controlling the maxiter argument in each of the optimization rounds
 		 # folds: a list of integers controlling the fold argument when perturbing input parameter values
@@ -412,12 +432,14 @@ def Perform_Sims(sim_number, model_fs, pts, model_name, func, rounds, param_numb
     for i in range(1,(sims+1)):
         
         #create the simulated data
-        sim_fs = model_fs.sample()
+        max_sim_fs = model_fs.sample()
+
+        #down-project to correct values
+        sim_fs = max_sim_fs.project(projections)
         
         #label sim number
         outfile = "Simulation_{}".format(i)
-        print("\n\n============================================================================"
-                  "\n{}\n============================================================================\n\n".format(outfile))
+        print("\n\n{0}\n{1}\n{0}\n\n".format("="*80, outfile))
 
         #optimize the simulated SFS
         best_rep = Optimize_Routine_GOF(sim_fs, pts, outfile, model_name, func, rounds, param_number, fs_folded,

@@ -107,20 +107,32 @@ dd = dadi.Misc.make_data_dict(snps)
 pop_ids=["North", "South"]
 
 #**************
-#projection sizes, in ALLELES not individuals
+#projection sizes, in ALLELES not individuals.
+#These values should match those you used for the
+#original model-fitting optimizations.
 proj = [16,32]
 
-#Convert this dictionary into folded AFS object
+#Convert this dictionary into folded AFS object based on
+#down-projection sizes
 #[polarized = False] creates folded spectrum object
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
 
-#print some useful information about the afs or jsfs
-print("\n\n============================================================================")
-print("\nData for site frequency spectrum\n")
-print("Projection: {}".format(proj))
-print("Sample sizes: {}".format(fs.sample_sizes))
-print("Sum of SFS: {}".format(numpy.around(fs.S(), 2)))
-print("\n============================================================================\n")
+
+#**************
+#MAXIMUM projection sizes, in ALLELES not individuals.
+#This should represent the maximum alleles per population,
+#in other words the sizes for the "full" frequency spectrum.
+#This is used to generate the simulations, and then those
+#simulations are in turn down-projected to the projection
+#sizes listed above (which you have used for your actual model-fitting).
+#If your max and preferred projection sizes are the same,
+#that is fine too.
+max_proj = [22,46]
+
+#Convert this dictionary into folded AFS object based on
+#MAXIMUM projection sizes
+#[polarized = False] creates folded spectrum object
+max_fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = max_proj, polarized = False)
 
 #================================================================================
 # Fit the empirical data based on prior optimization results, obtain model SFS
@@ -130,12 +142,14 @@ print("\n=======================================================================
  	Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)
 
 Mandatory Arguments =
- 	fs:  spectrum object name
+    fs: spectrum object created with original down-projections
+ 	max_fs: spectrum object created with MAXIMUM projections
  	pts: grid size for extrapolation, list of three values
  	outfile: prefix for output naming
  	model_name: a label to help name the output files; ex. "no_mig"
  	func: access the model function from within script
  	in_params: the previously optimized parameters to use
+    proj: the original down-projection sizes
     fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False).
 '''
 
@@ -174,11 +188,12 @@ fs_folded = True
 
 
 #Fit the model using these parameters and return the folded or unfolded model SFS (scaled by theta).
+#This will account for potential differences between the max-projection sizes and the projections
+#used for your actual model fitting, to allow correct simulations of the sfs.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is. See above for argument explanations.
-scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
-
-
+#The log-likelihood returned from this should match what you found with your empirical optimizations.
+fs_for_sims = Optimize_Functions_GOF.Get_Empirical(fs, max_fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, proj, fs_folded=fs_folded)
 
 #================================================================================
 # Performing simulations and optimizing
@@ -235,6 +250,7 @@ p_labels = "nu1, nu2, m, T"
 #Execute the optimization routine for each of the simulated SFS.
 #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
 #everything else can stay as it is (as the actual values can be changed above).
-Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, pnum, fs_folded=fs_folded,
-                                        reps=reps, maxiters=maxiters, folds=folds, param_labels=p_labels)
+Optimize_Functions_GOF.Perform_Sims(sims, fs_for_sims, pts, "sym_mig", sym_mig, rounds, pnum, proj,
+                                        fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds,
+                                        param_labels=p_labels)
 
