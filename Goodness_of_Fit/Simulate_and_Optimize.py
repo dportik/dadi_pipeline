@@ -139,7 +139,7 @@ max_fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = max_pro
 #================================================================================
 ''' 
  We will use a function from the Optimize_Functions_GOF.py script:
- 	Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)
+ 	Get_Empirical(fs, max_fs, pts, outfile, model_name, func, in_params, proj, fs_folded)
 
 Mandatory Arguments =
     fs: spectrum object created with original down-projections
@@ -186,7 +186,6 @@ emp_params = [0.1487,0.1352,0.2477,0.1877]
 #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
 fs_folded = True
 
-
 #Fit the model using these parameters and return the folded or unfolded model SFS (scaled by theta).
 #This will account for potential differences between the max-projection sizes and the projections
 #used for your actual model fitting, to allow correct simulations of the sfs.
@@ -206,12 +205,13 @@ fs_for_sims = Optimize_Functions_GOF.Get_Empirical(fs, max_fs, pts, "Empirical",
 
 Mandatory Arguments =
 	sim_number: the number of simulations to perform
-    model_fs:  the scaled model spectrum object name
+    fs_for_sims:  the scaled model spectrum object name (from the "full" JSFS, scaled by correct theta)
     pts: grid size for extrapolation, list of three values
     model_name: a label to help label on the output files; ex. "no_mig"
     func: access the model function from within this script
     rounds: number of optimization rounds to perform
     param_number: number of parameters in the model selected (can count in params line for the model)
+    proj: original down-projection sizes
     fs_folded: A Boolean value indicating whether the empirical fs is folded (True) or not (False).
 
 Optional Arguments =

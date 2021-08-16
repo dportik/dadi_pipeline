@@ -22,7 +22,43 @@ the SFS, and the optimized parameters are also saved.
 
 For a general discussion on this workflow, please see the thread [here](https://groups.google.com/forum/#!topic/dadi-user/cjBOopEhIlQ).
 
+**UPDATE (8/15/21):** The code has been fixed to account for sampling from JSFS where 
+down-projections are used. You must now provide the original projection sizes used when 
+you optimized the model on your data, as well as the maximum projection sizes of your dataset. The down-projected SFS is used to obtain theta, the model fit is repeated using the "full" JSFS, and it is scaled by the original theta. During the simulations, the simulated JSFS are then down-projected to match the correct numbers used. This prevents odd behavior, such as when the empirical data fit better than the simulated data. See discussion [here](https://groups.google.com/g/dadi-user/c/kSszi_bTB0g/m/M4mZCtOSAAAJ).
+
 The `Simulate_and_Optimize.py` script and `Optimize_Functions_GOF.py` script must be in the same working directory to run properly.
+
+## Importing the Site Frequency Spectrum:
+In the new version you will create two JSFS, one with the desired down-projection sizes and one with the maximum projection sizes. Both are needed to correctly perform the simulations. You'll need to edit the projection sections appropriately:
+```
+#**************
+#projection sizes, in ALLELES not individuals.
+#These values should match those you used for the
+#original model-fitting optimizations.
+proj = [16,32]
+
+#Convert this dictionary into folded AFS object based on
+#down-projection sizes
+#[polarized = False] creates folded spectrum object
+fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
+
+
+#**************
+#MAXIMUM projection sizes, in ALLELES not individuals.
+#This should represent the maximum alleles per population,
+#in other words the sizes for the "full" frequency spectrum.
+#This is used to generate the simulations, and then those
+#simulations are in turn down-projected to the projection
+#sizes listed above (which you have used for your actual model-fitting).
+#If your max and preferred projection sizes are the same,
+#that is fine too.
+max_proj = [22,46]
+
+#Convert this dictionary into folded AFS object based on
+#MAXIMUM projection sizes
+#[polarized = False] creates folded spectrum object
+max_fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = max_proj, polarized = False)
+```
 
 ## Empirical Data Optimization:
 
@@ -30,16 +66,18 @@ Within the `Simulate_and_Optimize.py` script, let's assume you've supplied the c
 
 The model will first be fit to the empirical data using the following function:
 
-`Optimize_Empirical(fs, pts, outfile, model_name, func, in_params, fs_folded)`
+`Get_Empirical(fs, max_fs, pts, outfile, model_name, func, in_params, proj, fs_folded)`
  
 ***Mandatory Arguments:***
 
-+ **fs**:  spectrum object name
++ **fs**:  spectrum object created with original down-projections
++ **max_fs**:  spectrum object created with MAXIMUM projections
 + **pts**: grid size for extrapolation, list of three values
 + **outfile**:  prefix for output naming
 + **model_name**: a label help name the output files; ex. "sym_mig"
 + **func**: access the model function from within 'Simulate_and_Optimize.py' or from a separate model script
 + **in_params**: the previously optimized parameter values to use
++ **proj**: the original down-projection sizes
 + **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
 ***Example Usage:***
@@ -47,26 +85,30 @@ The model will first be fit to the empirical data using the following function:
 In the script you will need to define the extrapolation grid size and the parameter values. The 
 number of parameter values must match the number in the model. 
 
-    #Make sure to define your extrapolation grid size.
-    pts = [50,60,70]
+```
+#Make sure to define your extrapolation grid size.
+pts = [50,60,70]
     
-    #Provide best optimized parameter set for empirical data.
-    #These will come from previous analyses you have already completed
-	emp_params = [0.1487,0.1352,0.2477,0.1877]
+#Provide best optimized parameter set for empirical data.
+#These will come from previous analyses you have already completed
+emp_params = [0.1487,0.1352,0.2477,0.1877]
     
-    #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
-    fs_folded = True
+#Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+fs_folded = True
 
-    #Fit the model using these parameters and return the folded model SFS (scaled by theta).
-	#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model function,
-	#but everything else can stay as it is. See above for argument explanations.
-	scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
-
+#Fit the model using these parameters and return the folded or unfolded model SFS (scaled by theta).
+#This will account for potential differences between the max-projection sizes and the projections
+#used for your actual model fitting, to allow correct simulations of the sfs.
+#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model, but
+#everything else can stay as it is. See above for argument explanations.
+#The log-likelihood returned from this should match what you found with your empirical optimizations.
+fs_for_sims = Optimize_Functions_GOF.Get_Empirical(fs, max_fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, proj, fs_folded=fs_folded)
+```
 	
 ## Performing Simulations and Model Optimizations:
 
 After the model is fit to the empirical data, the model SFS can be used to generate a user-selected number of Poisson-sampled SFS,
-in other words, the simulated data. For each simulation, an optimization routine is performed that is similar in structure
+in other words, the simulated data. Note that the model SFS is based on the "full" JSFS which is scaled by theta obtained from the down-projected JSFS model-fit. Each simulation is created from this "full" JSFS model fit, but then the simulated JSFS is down-projected to the correct value. For each simulation, an optimization routine is performed that is similar in structure
 to that described in the original model-fitting script [here](https://github.com/dportik/dadi_pipeline). The routine contains a 
 user-defined number of rounds, each with a user-defined or default number of replicates. The starting parameters are initially random, 
 but after each round is complete the parameters of the best scoring replicate from that round are used to generate perturbed starting 
@@ -80,12 +122,13 @@ The simulations and optimizations are performed with the following function:
 ***Mandatory Arguments:***
 
 + **sim_number**: the number of simulations to perform
-+ **model_fs**:  the scaled model spectrum object name
++ **fs_for_sims**: the scaled model spectrum object name (from the "full" JSFS, scaled by correct theta)
 + **pts**: grid size for extrapolation, list of three values
 + **model_name**: a name to help label on the output files; ex. "sym_mig"
 + **func**: access the model function from within this script
 + **rounds**: number of optimization rounds to perform
 + **param_number**: number of parameters in the model to fit
++ **proj**: the original down-projection sizes
 + **fs_folded**: A Boolean value indicating whether the empirical fs is folded (True) or not (False)
 
 ***Optional Arguments:***
@@ -105,28 +148,27 @@ The simulations and optimizations are performed with the following function:
 The important arguments will need to be defined in the script. Below shows how to perform
 100 simulations and define an optimization routine. 
 
-    #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
-    fs_folded = True
-
-    #Set the number of simulations to perform here. This should be ~100 or more.
-    sims = 100
+```
+#Set the number of simulations to perform here. This should be ~100 or more.
+sims = 100
     
-    #Enter the number of parameters found in the model to test.
-    p_num = 4
+#Enter the number of parameters found in the model to test.
+p_num = 4
     
-    #Set the number of rounds here.
-    rounds = 3
+#Set the number of rounds here.
+rounds = 3
     
-    #I strongly recommend defining the lists for optional arguments to control the settings 
-    #of the optimization routine for all the simulated data.
-    reps = [20,30,50]
-    maxiters = [5,10,20]
-    folds = [3,2,1]
+#I strongly recommend defining the lists for optional arguments to control the settings 
+#of the optimization routine for all the simulated data.
+reps = [20,30,50]
+maxiters = [5,10,20]
+folds = [3,2,1]
     
-    #Execute the optimization routine for each of the simulated SFS.
-    #Here, you will want to change the "sym_mig" and sym_mig arguments to match your model 
-    #function name, but everything else can stay as it is.
-    Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
+#Execute the optimization routine for each of the simulated SFS.
+#Here, you will want to change the "sym_mig" and sym_mig arguments to match your model 
+#function name, but everything else can stay as it is.
+Optimize_Functions_GOF.Perform_Sims(sims, fs_for_sims, pts, "sym_mig", sym_mig, rounds, pnum, proj, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels=p_labels)
+```
 
 The optimization routine set here will have the following settings:
 
@@ -199,35 +241,14 @@ test is not considered passed.
 
 ## Using Folded vs. Unfolded Spectra:
 
- To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. The first is where the spectrum object is created, indicated by the *polarized* argument:
+ To change whether the frequency spectrum is folded vs. unfolded requires two changes in the script. First, change `polarized = False` to `polarized = True` when creating both JSFS spectrum objects. Second, set the following argument to `False`:
  
-     #Convert this dictionary into folded AFS object
-     #[polarized = False] creates folded spectrum object
-     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = False)
-
-The above code will create a folded spectrum. When calling the empirical optimization function for the model, this is indicated by the *fs_folded* argument:
-
-     #Note that in the script fs_folded is assigned a variable and referred to in the empirical and simulation optimization functions:
-     
-     #**************
-     #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
-     fs_folded = True
-     
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
-     
-To create an unfolded spectrum, the *polarized* and *fs_folded*  arguments in the above lines need to be changed accordingly:
-
-     #[polarized = True] creates an unfolded spectrum object
-     fs = dadi.Spectrum.from_data_dict(dd, pop_ids=pop_ids, projections = proj, polarized = True)
-     
-
-     #Change this variable to False to set the argument fs_folded in all the empirical and simulation optimizations
-     fs_folded = False
-     
-     scaled_fs = Optimize_Functions_GOF.Optimize_Empirical(fs, pts, "Empirical", "sym_mig", sym_mig, emp_params, fs_folded=fs_folded)
-     Optimize_Functions_GOF.Perform_Sims(sims, scaled_fs, pts, "sym_mig", sym_mig, rounds, p_num, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds)
-     
+ ```
+ #**************
+#Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
+fs_folded = True
+```
+      
 It will be clear if either argument has been misspecified because the calculation of certain statistics will cause a crash with the following error:
 
      ValueError: Cannot operate with a folded Spectrum and an unfolded one.
