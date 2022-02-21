@@ -494,7 +494,7 @@ def split_nomig_size(params, ns, pts):
     xx = Numerics.default_grid(pts)
     phi = PhiManip.phi_1D(xx)
     phi = PhiManip.phi_1D_to_2D(xx, phi)
-    phi = Integration.two_pops(phi, xx, T1, nu1a, nu2a, m12=0, m21=0)
+    phi = Integration.two_pops(phi, xx, T1, nu1a, nuA, m12=0, m21=0)
     phi = PhiManip.phi_2D_to_3D_split_2(xx, phi)
     phi = Integration.three_pops(phi, xx, T2, nu1a, nu2a, nu3a, m12=0, m21=0, m23=0, m32=0, m13=0, m31=0)
     phi = Integration.three_pops(phi, xx, T3, nu1b, nu2b, nu3b, m12=0, m21=0, m23=0, m32=0, m13=0, m31=0)
