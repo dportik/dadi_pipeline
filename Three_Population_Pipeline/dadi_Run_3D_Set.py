@@ -342,11 +342,17 @@ Optimize_Functions.Optimize_Routine(fs, pts, prefix, "sim_split_refugia_uni_mig_
 
 ############# Admixed ("hybrid") origins models
 
+up = [20, 20, 20, 10, 10, 0.999]
+ps = [1, 1, 1, 1, 1, 0.5]
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "admix_origin_no_mig", Models_3D.admix_origin_no_mig, rounds, 6, fs_folded=fs_folded,
-                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, T1, T2, f")
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, T1, T2, f", in_upper=up, in_params=ps)
 
+up = [20, 20, 20, 20, 20, 10, 10, 0.999]
+ps = [1, 1, 1, 1, 1, 1, 1, 0.5]
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "admix_origin_sym_mig_adj", Models_3D.admix_origin_sym_mig_adj, rounds, 8, fs_folded=fs_folded,
-                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m3, T1, T2, f")
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m1, m3, T1, T2, f", in_upper=up, in_params=ps)
 
+up = [20, 20, 20, 20, 20, 10, 10, 0.999]
+ps = [1, 1, 1, 1, 1, 1, 1, 0.5]
 Optimize_Functions.Optimize_Routine(fs, pts, prefix, "admix_origin_uni_mig_adj", Models_3D.admix_origin_uni_mig_adj, rounds, 8, fs_folded=fs_folded,
-                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m32, m31, T1, T2, f")
+                                        reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1, nu2, nu3, m32, m31, T1, T2, f", in_upper=up, in_params=ps)
