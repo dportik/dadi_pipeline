@@ -408,59 +408,11 @@ Here is a list of the publications mentioned above, for easy reference:
 
 ### **Publications** <a name="PUBS"></a>
 
-The following is a running list of publications that have used the `dadi_pipeline` demographic modeling workflow:
+Several publications have used the `dadi_pipeline` demographic modeling workflow, and many of them can be found [**here**](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=7883224503264651907&as_sdt=5).
 
 #### Published Articles
 
-+ Leder, E.H., Andre, C., Le Moan, A., Topel, M., Blomberg, A., Havenhand, J.N., Lindstrom, K., Volckaert, F.A.M., Kvarnemo, C., Johannesson, K., and O. Svensson. Post-glacial establishment of locally adapted fish populations over a steep salinity gradient. **2020**. ***Journal of Evolutionary Biology***, *Early View*.  *https://doi.org/10.1111/jeb.13668*
 
-+ Nolen, Z.J., Yildirim, B., Irisarri, I., Liu, S., Crego, C.G., Amby, D.B., Mayer, F., Gilbert, M.T.P., and R.J. Pereira. **2020**. Historical isolation facilitates species radiation by sexual selection: insights from *Chorthippus* grasshoppers. ***Molecular Ecology*** 29: 4985–5002. *https://doi.org/10.1111/mec.15695*
-
-+ Liu, C., Sarnat, E.M., Friedman, N.R., Garcia, F.H., Darwell, C., Booher, D., Kubota, Y., Mikheyev, A.S., and E.P. Economo. **2020**. Colonize, radiate, decline: Unraveling the dynamics of island community assembly with Fijian trap-jaw ants. ***Evolution*** 74: 1082-1097. *https://doi.org/10.1111/evo.13983*
-
-+ Firneno Jr., T.J., Emery, A.H., Gerstner, B.E., Portik, D.M., Townsend, J.H., and M.K. Fujita. **2020**. Mito-nuclear discordance reveals cryptic genetic diversity, introgression, and an intricate demographic history in a problematic species complex of Mesoamerican toads. ***Molecular Ecology*** 29: 3543–3559. *https://doi.org/10.1111/mec.15496*
-
-+ Talla, V., Pierce, A.A., Adams, K.L., de Man, T.J.B., Nallu, S., Villablanca, F.X., Kronforst, M.R., and J.C. de Roode. **2020**. Genomic evidence for gene flow between monarchs with divergent migratory phenotypes and flight performance. ***Molecular Ecology*** 29: 2567-2582. *https://doi.org/10.1111/mec.15508*
-
-+ Ebersbach, J., Posso-Terranova, A., Bogdanowicz, S., Gomez-Diaz, M., Garcia-Gonzalez, M.X., Bolivar-Garcia, W., and J. Andres. **2020**. Complex patterns of differentiation and gene flow underly the divergence of aposematic phenotypes in *Oophaga* poison frogs. ***Molecular Ecology*** 29: 1944-1956. *https://doi.org/10.1111/mec.15360*
-
-+ Feng, L., Ruhsam, M., Wang, Y-.H., Li, Z-.H., and X-.M. Wang. **2020**. Using demographic model selection to untangle allopatric divergence and diversification mechanisms in the *Rheum palmatum* complex in the Eastern Asiatic Region. ***Molecular Ecology*** 29: 1791-1805. 
-
-+ Darwell, C.T., Fischer, G., Sarnat, E.M., Friedman, N.R., Liu, C., Baiao, G., Mikheyev, A.S., and E.P. Economo. **2020**. Genomic and phenomic analysis of island ant community assembly. ***Molecular Ecology*** 29: 1611-1627. *https://doi.org/10.1111/mec.15326*
-
-+ Mattingsdal, M., Jorde, P.E., Knutsen, H., Jentoft, S., Stenseth, N.C., Sodeland, M., Robalo, J.I., Hansen, M.M., Andre, C., and E.B. Gonzalez. **2020**. Demographic history has shaped the strongly differentiated corkwing wrasse populations in Northern Europe. ***Molecular Ecology*** 29: 160-171. *https://doi.org/10.1111/mec.15310*
-
-+ Sun, Y., and X. Wen. **2020**. Demographic inference of divergence and gene exchange between *Castanopsis fabri* and *Castanopsis lamontii*. ***Frontiers in Plant Science*** 11: 198. *https://doi.org/10.3389/fpls.2020.00198*
-
-+ Park, B., and J.M. Burke. **2020**. Phylogeography and the evolutionary history of sunflower (*Helianthus annuus* L.): wild diversity and the dynamics of domestication. ***Genes*** 11: 266. *https://doi.org/10.3390/genes11030266*
-
-+ Kioukis, A., Michalopoulou, V.A., Briers, L., Pirintsos, S., Studholme, D.J., Pavlidis, P., and P.F. Sarris. **2020**. Intraspecific diversification of the crop wild relative *Brassica cretica* Lam. using demographic model selection. ***BMC Genomics*** 21: 48. *https://doi.org/10.1186/s12864-019-6439-x*
-
-+ Choi, J.Y., Purugganan, M., and E.A. Stacy. **2020**. Divergent selection and primary gene flow shape incipient speciation of a riparian tree on Hawaii Island. ***Molecular Biology and Evolution*** 37: 695-710. *https://doi.org/10.1093/molbev/msz259*
-
-+ Beuadry, F.E.G., Barrett, S.C.H., & S.I. Wright. **2020**. Ancestral and neo-sex chromosomes contribute to population divergence in a dioecious plant. ***Evolution*** 74: 256-269. *https://doi.org/10.1111/evo.13892*
-
-+ Salle, G., Doyle, S.R., Cabaret, J., Berriman, M., Holroyd, N., and J.A. Cotton. **2019**. The global diversity of the major parasitic nematode *Haemonchus contortus* is shaped by human intervention and climate. ***Nature Communications*** 10: 4811. *https://doi.org/10.1038/s41467-019-12695-4*
-
-+ Kreiner, J.M., Giacomini, D.A., Bemm, F., Waithaka, B., Regalado, J., Lanz, C., Hildebrandt, J., Sikkema, P.H., Tranel, P.J., Weigel, D., Stinchcombe, J.R., & S.I. Wright. **2019**. Multiple modes of convergent adaptation in the spread of glyphosate-resistant *Amaranthus tuberculatus*. ***Proceedings of the National Academy of Sciences, USA*** 2019 pii: 201900870. *https://doi.org/10.1073/pnas.1900870116*
-
-+ Merondun, J., Murray, D.L., and A.B.A. Shafer. **2019**. Genome-scale sampling suggests cryptic epigenetic structuring and insular divergence in Canada lynx. ***Molecular Ecology*** 28: 3186-3196. *https://doi.org/10.1111/mec.15131*
-
-+ Schield, D.R., Perry, B.W., Adams, R.H., Card, D.C., Jezkova, T., Pasquesi, G.I.M., Nikolakis, Z.L., Row, K., Meik, J.M., Smith, C.F., Mackessy, S.P., and T.A. Castoe. **2019**. Allopatric divergence and secondary contact with gene flow: a recurring theme in rattlesnake speciation. ***Biological Journal of the Linnaean Society*** 128: 149-169. *https://doi.org/10.1093/biolinnean/blz077*
-
-+ Krohn, A.R., Diepeveen, E.T., Bi, K., and E.B. Rosenblum. **2019**. Local adaptation does not lead to genome-wide differentiation in lava flow lizards. ***Ecology and Evolution*** 9: 6810-6820. *https://doi.org/10.1002/ece3.5231*
-
-+ Gray, L.N., Barley, A.J., Poe, S., Thomson, R.C., Nieto-Montes de Oca, A., and I.J. Wang. **2019**. Phylogeography of a widespread lizard complex reflects patterns of both geographic and ecological isolation. ***Molecular Ecology*** 28: 644-657. *https://doi.org/10.1111/mec.14970*
-
-+ Barratt, C.D., Bwong, B.A., Jehle, R., Liedtke, H.C., Nagel, P., Onstein, R.E., Portik, D.M., Streicher, J.W., and S.P. Loader. **2018**. Vanishing refuge: testing the forest refuge hypothesis in coastal East Africa using genome-wide sequence data for five co-distributed amphibians. ***Molecular Ecology*** 27: 4289-4308. *https://doi.org/10.1111/mec.14862*
-
-+ Schield, D.R., Adams, R.H., Card, D.C., Corbin, A.C., Jezkova, T., Hales, N.R., Meik, J.M., Perry, B.W., Spencer, C.L., Smith, L.L., Garcia, G.C., Bouzid, N.M., Strickland, J.L., Parkinson, C.L., Borja, M., Castañeda-Gaytán, G., Bryson, R.W., Flores-Villela, O.A., Mackessy, S.P., and T.A. Castoe. **2018**. Cryptic genetic diversity, population structure, and gene flow in the Mojave rattlesnake (Crotalus scutulatus). ***Molecular Phylogenetics and Evolution*** 127: 669-681. *https://doi.org/10.1016/j.ympev.2018.06.013*
-
-+ Charles, K.C., Bell, R.C., Blackburn, D.C., Burger, M., Fujita, M.K., Gvozdik, V., Jongsma, G.F.M., Leache, A.D., and D.M. Portik. **2018**. Sky, sea, and forest islands: diversification in the African leaf-folding frog Afrixalus paradorsalis (Order: Anura, Family: Hyperoliidae). ***Journal of Biogeography*** 45: 1781-1794. *https://doi.org/10.1111/jbi.13365*
-
-+ Schield, D.R., Adams, R.H., Card, D.C., Perry, B.W., Pasquesi, G.M., Jezkova, T., Portik, D.M., Andrew, A.L., Spencer, C.L., Sanchez, E.E., Fujita, M.K., Mackessy, S.P., and T.A. Castoe. **2017**. Genomic patterns of divergence and admixture in a widely-distributed rattlesnake provide insight into speciation with gene flow. ***Ecology and Evolution*** 7: 3951–3966. *https://doi.org/10.1002/ece3.2996*
-
-+ Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O., Barej, M.F., Hirschfeld, M., Burger, M., and M.K. Fujita. **2017**. Evaluating mechanisms of diversification in a Guineo-Congolian forest frog using demographic model selection. ***Molecular Ecology*** 26: 5245-5263. *https://doi.org/10.1111/mec.14266*
 
 ## License <a name="LIC"></a>
 
