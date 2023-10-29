@@ -1,4 +1,4 @@
-# Perform Demographic Modeling with dadi using dadi_pipeline
+![Logo](https://github.com/dportik/dadi_pipeline/blob/main/logo.png)
 
 ---------------------------------
 
