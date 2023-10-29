@@ -1,4 +1,4 @@
-![Logo](https://github.com/dportik/dadi_pipeline/blob/main/logo.png)
+![Logo](https://github.com/dportik/dadi_pipeline/blob/master/logo.png)
 
 ---------------------------------
 
