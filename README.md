@@ -410,18 +410,9 @@ Here is a list of the publications mentioned above, for easy reference:
 
 Several publications have used the `dadi_pipeline` demographic modeling workflow, and many of them can be found [**here**](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=7883224503264651907&as_sdt=5).
 
-#### Published Articles
-
 
 
 ## License <a name="LIC"></a>
 
 GNU Lesser General Public License v3.0
-
-
-## Contact: <a name="CON"></a>
-
-Daniel Portik, PhD
-
-daniel.portik@gmail.com
 
